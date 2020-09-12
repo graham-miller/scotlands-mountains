@@ -12,7 +12,7 @@ namespace ScotlandsMountains.Import
         public string Name { get; set; }
 
         [Name("Parent (SMC)")]
-        public string ParentSMC { get; set; }
+        public int? ParentSMC { get; set; }
 
         [Name("Parent name (SMC)")]
         public string ParentNameSMC { get; set; }
@@ -45,10 +45,10 @@ namespace ScotlandsMountains.Import
         public string Map1To25k { get; set; }
 
         [Name("Metres")]
-        public string Metres { get; set; }
+        public decimal Metres { get; set; }
 
         [Name("Feet")]
-        public string Feet { get; set; }
+        public decimal Feet { get; set; }
 
         [Name("Grid ref")]
         public string GridRef { get; set; }
@@ -57,13 +57,13 @@ namespace ScotlandsMountains.Import
         public string GridRef10 { get; set; }
 
         [Name("Drop")]
-        public string Drop { get; set; }
+        public decimal Drop { get; set; }
 
         [Name("Col grid ref")]
         public string ColGridRef { get; set; }
 
         [Name("Col height")]
-        public string ColHeight { get; set; }
+        public decimal ColHeight { get; set; }
 
         [Name("Feature")]
         public string Feature { get; set; }
@@ -84,7 +84,7 @@ namespace ScotlandsMountains.Import
         public string CountyTop { get; set; }
 
         [Name("Revision")]
-        public string Revision { get; set; }
+        public DateTime Revision { get; set; }
 
         [Name("Comments")]
         public string Comments { get; set; }
@@ -99,31 +99,31 @@ namespace ScotlandsMountains.Import
         public string HillBagging { get; set; }
 
         [Name("Xcoord")]
-        public string Xcoord { get; set; }
+        public int Xcoord { get; set; }
 
         [Name("Ycoord")]
-        public string Ycoord { get; set; }
+        public int Ycoord { get; set; }
 
         [Name("Latitude")]
-        public string Latitude { get; set; }
+        public decimal Latitude { get; set; }
 
         [Name("Longitude")]
-        public string Longitude { get; set; }
+        public decimal Longitude { get; set; }
 
         [Name("GridrefXY")]
         public string GridrefXY { get; set; }
 
         [Name("_Section")]
-        public string SectionNumber { get; set; }
+        public decimal SectionNumber { get; set; }
 
         [Name("Parent (Ma)")]
-        public string ParentMa { get; set; }
+        public int ParentMa { get; set; }
 
         [Name("Parent name (Ma)")]
         public string ParentNameMa { get; set; }
 
         [Name("MVNumber")]
-        public string MVNumber { get; set; }
+        public int? MVNumber { get; set; }
 
         [Name("Ma")]
         [ClassificationName("Marilyn")]

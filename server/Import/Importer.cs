@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Reflection;
 using CsvHelper;
-using Humanizer;
 
 namespace ScotlandsMountains.Import
 {
     public class Importer
     {
+        private readonly List<Record> _records = new List<Record>();
+
         public void Import()
         {
-            var records = new List<Record>();
+            ReadCsv();
+        }
 
-            var resourceStream = Assembly.GetAssembly(GetType()).GetManifestResourceStream($"{GetType().Namespace}.Resources.hillcsv.zip");
+        private void ReadCsv()
+        {
+            using (var resourceStream = Assembly.GetAssembly(GetType()).GetManifestResourceStream($"{GetType().Namespace}.Resources.hillcsv.zip"))
             using (var zipArchive = new ZipArchive(resourceStream))
             using (var fileStream = zipArchive.Entries[0].Open())
             using (var textReader = new StreamReader(fileStream))
@@ -24,17 +26,11 @@ namespace ScotlandsMountains.Import
             {
                 csv.Read();
                 csv.ReadHeader();
-
-                var headerRecord = csv.Context.HeaderRecord;
-                
-                RecordPropertyNames.Generate(headerRecord);
+                //RecordPropertyNames.Generate(csv.Context.HeaderRecord);
 
                 while (csv.Read())
-                {
-                    records.Add(csv.GetRecord<Record>());
-                }
+                    _records.Add(csv.GetRecord<Record>());
             }
         }
-
     }
 }
