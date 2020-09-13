@@ -10,18 +10,7 @@ namespace ScotlandsMountains.Import.Tests
         [Test]
         public void Runner()
         {
-            var importer = new Importer();
-            importer.Import();
-            var mountains = importer.Mountains;
-
-            var options = new JsonSerializerOptions()
-            {
-                WriteIndented = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-
-            var json = JsonSerializer.Serialize(mountains, options);
-
+            new Importer().Import();
         }
     }
 }

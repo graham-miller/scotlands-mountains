@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
 using CsvHelper;
 using ScotlandsMountains.Domain;
 
@@ -14,15 +16,15 @@ namespace ScotlandsMountains.Import
     {
         private readonly List<Record> _records = new List<Record>();
 
-        public IList<Classification> Classifications { get; } = new List<Classification>();
+        private readonly IList<Classification> _classifications = new List<Classification>();
 
-        public IList<Section> Sections { get; } = new List<Section>();
+        private readonly IList<Section> _sections = new List<Section>();
         
-        public IList<County> Counties { get; } = new List<County>();
+        private readonly IList<County> _counties  = new List<County>();
         
-        public IList<Map> Maps { get; } = new List<Map>();
+        private readonly IList<Map> _maps = new List<Map>();
 
-        public IList<Mountain> Mountains { get; } = new List<Mountain>();
+        private readonly IList<Mountain> _mountains = new List<Mountain>();
 
         public void Import()
         {
@@ -34,15 +36,16 @@ namespace ScotlandsMountains.Import
             ParseMountains();
             ParseAliases();
             AssignIds();
+            WriteToDataFile();
         }
 
         private void AssignIds()
         {
-            IdGenerator.ApplyIdsTo(Classifications);
-            IdGenerator.ApplyIdsTo(Sections);
-            IdGenerator.ApplyIdsTo(Counties);
-            IdGenerator.ApplyIdsTo(Maps);
-            IdGenerator.ApplyIdsTo(Mountains);
+            IdGenerator.ApplyIdsTo(_classifications);
+            IdGenerator.ApplyIdsTo(_sections);
+            IdGenerator.ApplyIdsTo(_counties);
+            IdGenerator.ApplyIdsTo(_maps);
+            IdGenerator.ApplyIdsTo(_mountains);
         }
 
         private void ReadCsv()
@@ -82,7 +85,7 @@ namespace ScotlandsMountains.Import
                     Name = classificationLookup[key]
                 })
                 .ToList()
-                .ForEach(classification => Classifications.Add(classification));
+                .ForEach(classification => _classifications.Add(classification));
         }
 
         private void ParseSections()
@@ -102,7 +105,7 @@ namespace ScotlandsMountains.Import
                 })
                 .OrderBy(section => section.Number)
                 .ToList()
-                .ForEach(section => Sections.Add(section));
+                .ForEach(section => _sections.Add(section));
         }
 
         private void ParseCounties()
@@ -117,7 +120,7 @@ namespace ScotlandsMountains.Import
                 })
                 .OrderBy(county => county.Name)
                 .ToList()
-                .ForEach(county => Counties.Add(county));
+                .ForEach(county => _counties.Add(county));
         }
 
         private void ParseMaps()
@@ -153,7 +156,7 @@ namespace ScotlandsMountains.Import
             maps1To50k
                 .Concat(maps1To25k)
                 .ToList()
-                .ForEach(map => Maps.Add(map));
+                .ForEach(map => _maps.Add(map));
         }
 
         private void ParseMountains()
@@ -163,21 +166,21 @@ namespace ScotlandsMountains.Import
                 {
                     var classifications = record.Classification.Split(',')
                         .Select(key => key.Trim())
-                        .Select(key => Classifications.Single(classification => classification.DobihId == key))
+                        .Select(key => _classifications.Single(classification => classification.DobihId == key))
                         .ToList();
 
                     var maps1To25k = record.Map1To25k.Split(' ')
                         .Select(code => code.Trim())
-                        .Select(code => Maps.Single(map => map.Scale == Map.Scale1To25000 && map.Code == code));
+                        .Select(code => _maps.Single(map => map.Scale == Map.Scale1To25000 && map.Code == code));
                     var maps1To50k = record.Map1To50k.Split(' ')
                         .Select(code => code.Trim())
-                        .Select(code => Maps.Single(map => map.Scale == Map.Scale1To50000 && map.Code == code));
+                        .Select(code => _maps.Single(map => map.Scale == Map.Scale1To50000 && map.Code == code));
 
                     return new Mountain
                     {
                         DobihId = record.Number,
                         Name = record.Name,
-                        Section = Sections.Single(section => section.DobihId == record.Region),
+                        Section = _sections.Single(section => section.DobihId == record.Region),
                         Classifications = classifications,
                         Height = record.Metres,
                         Prominence = new Prominence
@@ -192,19 +195,36 @@ namespace ScotlandsMountains.Import
                             Notes = record.Observations
                         },
                         Island = string.IsNullOrEmpty(record.Island) ? null : record.Island,
-                        County = Counties.Single(county => county.Name == record.County),
+                        County = _counties.Single(county => county.Name == record.County),
                         Maps = maps1To50k.Concat(maps1To25k).ToList()
                     };
                 })
                 .OrderByDescending(mountain => mountain.Height)
                 .ToList()
-                .ForEach(mountain => Mountains.Add(mountain));
+                .ForEach(mountain => _mountains.Add(mountain));
         }
 
         private void ParseAliases()
         {
-            foreach (var mountain in Mountains)
+            foreach (var mountain in _mountains)
                 MountainNameParser.Parse(mountain);
+        }
+
+        private void WriteToDataFile()
+        {
+            var root = new Root
+            {
+                Classifications = _classifications,
+                Sections = _sections,
+                Counties = _counties,
+                Maps = _maps,
+                Mountains = _mountains
+            };
+
+            var options = new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
+            var json = JsonSerializer.Serialize(root, options);
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "root.json");
+            File.WriteAllText(path, json, Encoding.UTF8);
         }
     }
 }

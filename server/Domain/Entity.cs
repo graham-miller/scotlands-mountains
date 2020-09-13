@@ -1,4 +1,6 @@
-﻿namespace ScotlandsMountains.Domain
+﻿using System.Text.Json.Serialization;
+
+namespace ScotlandsMountains.Domain
 {
     public class Entity
     {
