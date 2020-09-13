@@ -32,6 +32,7 @@ namespace ScotlandsMountains.Import
             ParseCounties();
             ParseMaps();
             ParseMountains();
+            ParseAliases();
             AssignIds();
         }
 
@@ -198,6 +199,12 @@ namespace ScotlandsMountains.Import
                 .OrderByDescending(mountain => mountain.Height)
                 .ToList()
                 .ForEach(mountain => Mountains.Add(mountain));
+        }
+
+        private void ParseAliases()
+        {
+            foreach (var mountain in Mountains)
+                MountainNameParser.Parse(mountain);
         }
     }
 }
