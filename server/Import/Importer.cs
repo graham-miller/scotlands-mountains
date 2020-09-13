@@ -32,6 +32,16 @@ namespace ScotlandsMountains.Import
             ParseCounties();
             ParseMaps();
             ParseMountains();
+            AssignIds();
+        }
+
+        private void AssignIds()
+        {
+            IdGenerator.ApplyIdsTo(Classifications);
+            IdGenerator.ApplyIdsTo(Sections);
+            IdGenerator.ApplyIdsTo(Counties);
+            IdGenerator.ApplyIdsTo(Maps);
+            IdGenerator.ApplyIdsTo(Mountains);
         }
 
         private void ReadCsv()
