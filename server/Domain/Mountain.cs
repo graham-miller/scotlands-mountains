@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ScotlandsMountains.Domain
+{
+    public class Mountain : Entity
+    {
+        public Section Section { get; set; }
+        
+        public List<Classification> Classifications { get; set; }
+        
+        public decimal Height { get; set; }
+        public Prominence Prominence { get; set; }
+        public Summit Summit { get; set; }
+        public string Island { get; set; }
+        public County County { get; set; }
+        public List<Map> Maps { get; set; }
+    }
+
+    public class Prominence
+    {
+        public decimal Height { get; set; }
+        public string From { get; set; }
+        public decimal FromHeight { get; set; }
+    }
+
+    public class Summit
+    {
+        public string Description { get; set; }
+        public string Notes { get; set; }
+    }
+}
