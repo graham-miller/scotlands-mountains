@@ -1,3 +1,6 @@
+using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using NUnit.Framework;
 
 namespace ScotlandsMountains.Import.Tests
@@ -7,7 +10,18 @@ namespace ScotlandsMountains.Import.Tests
         [Test]
         public void Runner()
         {
-            new Importer().Import();
+            var importer = new Importer();
+            importer.Import();
+            var mountains = importer.Mountains;
+
+            var options = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            var json = JsonSerializer.Serialize(mountains, options);
+
         }
     }
 }
