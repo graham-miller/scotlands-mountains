@@ -10,6 +10,9 @@ namespace ScotlandsMountains.Domain
         public Section Section { get; set; }
         public List<Classification> Classifications { get; set; } = new List<Classification>();
         public decimal Height { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public string GridRef { get; set; }
         public Prominence Prominence { get; set; } = new Prominence();
         public Summit Summit { get; set; }
         public string Island { get; set; }

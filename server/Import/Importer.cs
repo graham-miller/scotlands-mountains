@@ -183,6 +183,9 @@ namespace ScotlandsMountains.Import
                         Section = _sections.Single(section => section.DobihId == record.Region),
                         Classifications = classifications,
                         Height = record.Metres,
+                        Latitude = record.Latitude,
+                        Longitude = record.Longitude,
+                        GridRef = record.GridRef,
                         Prominence = new Prominence
                         {
                             Height = record.Drop,
@@ -223,8 +226,16 @@ namespace ScotlandsMountains.Import
 
             var options = new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
             var json = JsonSerializer.Serialize(root, options);
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "root.json");
-            File.WriteAllText(path, json, Encoding.UTF8);
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "root.json.zip");
+
+            using (var fileStream = File.Open(path, FileMode.Create))
+            using (var zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Create))
+            {
+                var entry = zipArchive.CreateEntry("root.json");
+
+                using (var writer = new StreamWriter(entry.Open()))
+                    writer.Write(json);
+            }
         }
     }
 }
