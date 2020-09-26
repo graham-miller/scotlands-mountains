@@ -6,18 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using ScotlandsMountains.Data;
 
 namespace ScotlandsMountains.Api
 {
     public class ApiFunctions
     {
-        private readonly DaoFactory _daoFactory;
+        private readonly Dao _dao;
 
         public ApiFunctions()
         {
-            _daoFactory = new DaoFactory();
+            _dao = new Dao();
         }
 
         // http://localhost:7071/api/classifications
@@ -26,8 +25,7 @@ namespace ScotlandsMountains.Api
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route="classifications")] HttpRequest req,
             ILogger log)
         {
-            var result = _daoFactory.GetClassificationDao()
-                .GetAll()
+            var result = _dao.Classifications
                 .Select(classification => new
                 {
                     classification.Id,
@@ -44,11 +42,11 @@ namespace ScotlandsMountains.Api
             string id,
             ILogger log)
         {
-            var classification = _daoFactory.GetClassificationDao().GetById(id);
+            var classification = _dao.Classifications.GetById(id);
 
             if (classification == null) return new NotFoundResult();
 
-            var mountains = _daoFactory.GetMountainDao()
+            var mountains = _dao.Mountains
                 .GetByClassification(classification)
                 .OrderByDescending(mountain => mountain.Height)
                 .Select(mountain => new
@@ -82,7 +80,7 @@ namespace ScotlandsMountains.Api
 
             var term = terms.Single();
 
-            var results = _daoFactory.GetMountainDao().Search(term)
+            var results = _dao.Mountains.Search(term)
                 .Where(mountain => mountain.Name.Contains(term, StringComparison.InvariantCultureIgnoreCase))
                 .OrderByDescending(mountain => mountain.Height)
                 .Select(mountain => new
@@ -110,7 +108,7 @@ namespace ScotlandsMountains.Api
             string id,
             ILogger log)
         {
-            var mountain = _daoFactory.GetMountainDao().GetById(id);
+            var mountain = _dao.Mountains.GetById(id);
 
             if (mountain == null) return new NotFoundResult();
 
