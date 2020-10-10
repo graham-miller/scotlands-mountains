@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,21 +9,22 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppBarComponent } from './app-bar/app-bar.component';
+import { AppBarComponent } from './components/app-bar/app-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './home/home.component';
-import { MountainComponent } from './mountain/mountain.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ClassificationsComponent } from './components/classifications/classifications.component';
+import { MountainComponent } from './components/mountain/mountain.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppBarComponent,
-    HomeComponent,
     MountainComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ClassificationsComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

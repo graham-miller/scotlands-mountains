@@ -1,0 +1,9 @@
+<p>classifications works!</p>
+
+<div *ngIf="classifications">
+    <ul>
+        <li *ngFor="let classification of classifications">
+            {{classification.name}}
+        </li>
+    </ul>
+</div>
