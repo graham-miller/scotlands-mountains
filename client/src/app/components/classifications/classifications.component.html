@@ -1,9 +1,37 @@
 <p>classifications works!</p>
 
-<div *ngIf="classifications">
-    <ul>
-        <li *ngFor="let classification of classifications">
+<mat-form-field appearance="fill" *ngIf="classifications">
+    <mat-label>Classification</mat-label>
+    <mat-select [(value)]="selectedClassificationId" (selectionChange)="onClassificationChange($event)">
+        <mat-option *ngFor="let classification of classifications" [value]="classification.id">
             {{classification.name}}
-        </li>
-    </ul>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<div *ngIf="classification">
+    <p>
+        Name: {{classification.name}}
+    </p>
+    <p>
+        Count: {{classification.count}}
+    </p>
+    <p>
+        Mountains:
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Height (m)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let mountain of classification.mountains">
+                <td>{{mountain.name}}</td>
+                <td>{{mountain.height}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>

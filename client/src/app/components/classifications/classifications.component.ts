@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Classification } from 'src/app/models/Classification';
@@ -11,17 +12,27 @@ import { ClassificationsService } from 'src/app/services/classifications.service
 })
 export class ClassificationsComponent implements OnInit {
   classifications: Classification[];
+  selectedClassificationId: string;
+  classification: Classification;
 
   constructor(
     private route: ActivatedRoute,
-    private classificationService: ClassificationsService)
-  { }
+    private classificationService: ClassificationsService) { }
 
   ngOnInit() {
     this.getClassifications();
   }
 
   getClassifications(): void {
-    this.classificationService.getClassifications().subscribe(classifications => this.classifications = classifications);
+    this.classificationService
+      .getClassifications()
+      .subscribe(classifications => this.classifications = classifications);
+  }
+
+  onClassificationChange(event: MatSelectChange): void {
+    this.classification = null;
+    this.classificationService
+      .getClassification(this.selectedClassificationId)
+      .subscribe(classification => this.classification = classification);
   }
 }

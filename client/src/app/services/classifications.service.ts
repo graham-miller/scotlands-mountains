@@ -21,6 +21,14 @@ export class ClassificationsService {
       );
   }
 
+  getClassification(id: string): Observable<Classification> {
+    return this.http.get<Classification>(`${this.classificationsUrl}/${id}`)
+      .pipe(
+        tap(_ => console.log(`fetched classifications id=${id}`)),
+        catchError(this.handleError<Classification>(`getClassification id=${id}`))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   
