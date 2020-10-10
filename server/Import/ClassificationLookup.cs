@@ -15,6 +15,27 @@ namespace ScotlandsMountains.Import
             }
         }
 
+/*
+Munro
+Corbett
+Graham
+Donald
+Donald Dewey
+Marilyn
+Munro Top
+Donald Top
+HuMP
+400m to 499m TuMP
+300m to 399m TuMP
+200m to 299m TuMP
+100m to 199m TuMP
+0m to 99m TuMP
+County Top – current county or unitary authority
+County Top – administrative (1974 to mid-1990s)
+County Top – historic (pre-1974)
+Highland Five
+Trail 100
+*/
         private readonly IDictionary<string, string> _lookup = new Dictionary<string, string>
         {
             {"Ma", "Marilyn"},
