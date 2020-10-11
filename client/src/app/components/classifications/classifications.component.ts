@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -15,19 +16,24 @@ import { ClassificationsService } from 'src/app/services/classifications.service
   styleUrls: ['./classifications.component.css']
 })
 export class ClassificationsComponent implements OnInit, AfterViewInit {
-  classifications: Classification[];
-  selectedClassificationId: string;
-  displayedColumns: string[] = ['name', 'height'];
-  dataSource: MatTableDataSource<Mountain> = new MatTableDataSource<Mountain>([]);
+  all: Classification[];
+  id: string;
+  columns: string[] = ['name', 'height'];
+  mountains: MatTableDataSource<Mountain> = new MatTableDataSource<Mountain>([]);
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private classificationService: ClassificationsService) { }
 
   ngOnInit() {
     this.getClassifications();
+    this.route.params.subscribe(route => {
+      this.id = route.id
+      this.getClassification()
+    });
   }
-  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -38,17 +44,24 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   getClassifications(): void {
     this.classificationService
       .getClassifications()
-      .subscribe(classifications => this.classifications = classifications);
+      .subscribe(c => this.all = c);
+  }
+
+  getClassification() {
+    if (this.id) {
+      this.classificationService
+        .getClassification(this.id)
+        .subscribe(c => {
+          this.mountains = new MatTableDataSource<Mountain>(c.mountains)
+          this.mountains.paginator = this.paginator;
+          this.mountains.sort = this.sort;
+        });
+    }
   }
 
   onClassificationChange(event: MatSelectChange): void {
-    this.dataSource = null;
-    this.classificationService
-      .getClassification(this.selectedClassificationId)
-      .subscribe(classification => {
-        this.dataSource = new MatTableDataSource<Mountain>(classification.mountains)
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+
+    const command = [(this.route.snapshot.paramMap.get('id') ? '../' : '') + this.id];
+    this.router.navigate(command, { relativeTo: this.route });
   }
 }

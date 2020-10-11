@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 const routes: Routes = [
   {path: '', redirectTo: '/classifications', pathMatch: 'full'},
+  { path: 'classifications/:id', component: ClassificationsComponent },
   { path: 'classifications', component: ClassificationsComponent },
   { path: 'mountain/:id', component: MountainComponent },
   { path: '**', component: PageNotFoundComponent }
