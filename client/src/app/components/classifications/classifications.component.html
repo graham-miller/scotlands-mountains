@@ -9,7 +9,7 @@
 
 <mat-tab-group *ngIf="id">
     <mat-tab label="Map">
-
+        <app-map [mountains]="mountains"></app-map>
     </mat-tab>
     <mat-tab label="List">
         <app-mountain-table [mountains]="mountains"></app-mountain-table>
