@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,7 +15,7 @@ import { ClassificationsService } from 'src/app/services/classifications.service
   templateUrl: './classifications.component.html',
   styleUrls: ['./classifications.component.css']
 })
-export class ClassificationsComponent implements OnInit, AfterViewInit {
+export class ClassificationsComponent implements OnInit {
   all: Classification[];
   id: string;
   columns: string[] = ['name', 'height'];
@@ -38,9 +38,6 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  ngAfterViewInit() {
-  }
-
   getClassifications(): void {
     this.classificationService
       .getClassifications()
@@ -60,7 +57,6 @@ export class ClassificationsComponent implements OnInit, AfterViewInit {
   }
 
   onClassificationChange(event: MatSelectChange): void {
-
     const command = [(this.route.snapshot.paramMap.get('id') ? '../' : '') + this.id];
     this.router.navigate(command, { relativeTo: this.route });
   }
