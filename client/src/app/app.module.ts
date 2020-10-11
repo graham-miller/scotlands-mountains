@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClassificationsComponent } from './components/classifications/classifications.component';
 import { MountainComponent } from './components/mountain/mountain.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { MetersToFeetPipe } from './pipes/meters-to-feet.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     AppBarComponent,
     MountainComponent,
     PageNotFoundComponent,
-    ClassificationsComponent
+    ClassificationsComponent,
+    MetersToFeetPipe
   ],
   imports: [
     HttpClientModule,

@@ -1,4 +1,4 @@
-<mat-form-field appearance="fill" *ngIf="all">
+<mat-form-field appearance="fill" [disabled]="!all">
     <mat-label>Classification</mat-label>
     <mat-select [(value)]="id" (selectionChange)="onClassificationChange($event)">
         <mat-option *ngFor="let c of all" [value]="c.id">
@@ -7,7 +7,7 @@
     </mat-select>
 </mat-form-field>
 
-<div *ngIf="id">
+<div *ngIf="mountains">
     <mat-table [dataSource]="mountains" matSort>
 
         <ng-container matColumnDef="name">
@@ -17,7 +17,9 @@
 
         <ng-container matColumnDef="height">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-cell-right" start="desc">Height</mat-header-cell>
-            <mat-cell *matCellDef="let row" class="mat-cell-right">{{row.height | number:'1.0-0'}}m</mat-cell>
+            <mat-cell *matCellDef="let row" class="mat-cell-right">
+                {{row.height | number:'1.0-0'}}m&emsp;({{row.height | metersToFeet | number:'1.0-0'}}ft)
+            </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>

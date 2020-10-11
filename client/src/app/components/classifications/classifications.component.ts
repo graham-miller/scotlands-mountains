@@ -19,7 +19,7 @@ export class ClassificationsComponent implements OnInit {
   all: Classification[];
   id: string;
   columns: string[] = ['name', 'height'];
-  mountains: MatTableDataSource<Mountain> = new MatTableDataSource<Mountain>([]);
+  mountains: MatTableDataSource<Mountain>;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,6 +57,7 @@ export class ClassificationsComponent implements OnInit {
   }
 
   onClassificationChange(event: MatSelectChange): void {
+    this.mountains = null;
     const command = [(this.route.snapshot.paramMap.get('id') ? '../' : '') + this.id];
     this.router.navigate(command, { relativeTo: this.route });
   }
