@@ -1,10 +1,7 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 
 import { Classification } from 'src/app/models/Classification';
 import { Mountain } from 'src/app/models/Mountain';
@@ -18,8 +15,7 @@ import { ClassificationsService } from 'src/app/services/classifications.service
 export class ClassificationsComponent implements OnInit {
   all: Classification[];
   id: string;
-  columns: string[] = ['name', 'height'];
-  mountains: MatTableDataSource<Mountain>;
+  mountains: Mountain[];
 
   constructor(
     private route: ActivatedRoute,
@@ -34,25 +30,15 @@ export class ClassificationsComponent implements OnInit {
     });
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  @ViewChild(MatSort) sort: MatSort;
-
   getClassifications(): void {
-    this.classificationService
-      .getClassifications()
-      .subscribe(c => this.all = c);
+    this.classificationService.getClassifications().subscribe(c => this.all = c);
   }
 
   getClassification() {
     if (this.id) {
       this.classificationService
         .getClassification(this.id)
-        .subscribe(c => {
-          this.mountains = new MatTableDataSource<Mountain>(c.mountains);
-          this.mountains.paginator = this.paginator;
-          this.mountains.sort = this.sort;
-        });
+        .subscribe(c => this.mountains = c.mountains);
     }
   }
 

@@ -21,6 +21,7 @@ import { ClassificationsComponent } from './components/classifications/classific
 import { MountainComponent } from './components/mountain/mountain.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MetersToFeetPipe } from './pipes/meters-to-feet.pipe';
+import { MountainTableComponent } from './components/mountain-table/mountain-table.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MetersToFeetPipe } from './pipes/meters-to-feet.pipe';
     MountainComponent,
     PageNotFoundComponent,
     ClassificationsComponent,
-    MetersToFeetPipe
+    MetersToFeetPipe,
+    MountainTableComponent
   ],
   imports: [
     HttpClientModule,
