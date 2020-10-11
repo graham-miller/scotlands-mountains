@@ -49,7 +49,7 @@ export class ClassificationsComponent implements OnInit {
       this.classificationService
         .getClassification(this.id)
         .subscribe(c => {
-          this.mountains = new MatTableDataSource<Mountain>(c.mountains)
+          this.mountains = new MatTableDataSource<Mountain>(c.mountains);
           this.mountains.paginator = this.paginator;
           this.mountains.sort = this.sort;
         });
