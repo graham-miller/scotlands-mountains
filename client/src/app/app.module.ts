@@ -16,7 +16,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppBarComponent } from './components/app-bar/app-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { ClassificationsComponent } from './components/classifications/classifications.component';
 import { MountainComponent } from './components/mountain/mountain.component';
@@ -51,8 +50,7 @@ import { MapComponent } from './components/map/map.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTabsModule,
-    LeafletModule
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
