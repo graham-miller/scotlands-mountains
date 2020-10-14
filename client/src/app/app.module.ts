@@ -52,7 +52,9 @@ import { MapComponent } from './components/map/map.component';
     MatSortModule,
     MatTabsModule
   ],
-  providers: [],
+  providers: [
+    MetersToFeetPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

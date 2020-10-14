@@ -23,8 +23,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mountain-marker {
     width: 10px;
     height: 10px;
-    border: 1px solid red;
-    background-color: salmon;
+    border: 1px solid white;
+    background-color: #7b1fa2;
     border-radius: 10px;
     margin: 0;
     padding: 0;
@@ -32,19 +32,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .clustered-mountain-marker {
-    width: 10px;
-    height: 10px;
-    border: 1px solid red;
-    background-color: salmon;
-    border-radius: 20px;
-    margin: -5px 0 0 -5px;
-    padding: 5px;
+    width: 15px;
+    height: 14px;
+    border: 1px solid white;
+    background-color: #7b1fa2;
+    border-radius: 14px;
+    margin: -4px 0 0 -4px;
+    padding: 4px 0 0 4px;
     box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
 }
 
 .clustered-mountain-marker div {
     font-size: 20px;
-    font-weight: bold;
+    /* font-weight: bold; */
     color: white;
     margin-top: -10px;
 }
