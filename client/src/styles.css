@@ -1,6 +1,7 @@
 @import '@angular/material/prebuilt-themes/purple-green.css';
 @import '~leaflet/dist/leaflet.css';
 @import '~leaflet.markercluster/dist/MarkerCluster.css';
+@import '~leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -43,7 +44,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .clustered-mountain-marker div {
     font-size: 20px;
-    /* font-weight: bold; */
     color: white;
     margin-top: -10px;
 }

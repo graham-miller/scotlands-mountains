@@ -2,11 +2,13 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 import { formatNumber } from '@angular/common';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
+import GestureHandling from 'leaflet-gesture-handling';
 
 import { Mountain } from 'src/app/models/Mountain';
 import { MetersToFeetPipe } from 'src/app/pipes/meters-to-feet.pipe';
 
 L.Marker.prototype.options.icon = L.divIcon({ className: 'mountain-marker' });
+L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
 @Component({
   selector: 'app-map',
@@ -70,8 +72,9 @@ export class MapComponent implements AfterViewInit {
 
     this.map = L.map('map', {
       center: [56.659406, -4.011214],
-      zoom: 7
-    });
+      zoom: 7,
+      gestureHandling: true
+    } as L.MapOptions);
 
     this.map.attributionControl.setPrefix('');
     tiles.addTo(this.map);
