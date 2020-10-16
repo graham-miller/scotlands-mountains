@@ -1,7 +1,6 @@
 @import '@angular/material/prebuilt-themes/purple-green.css';
 @import '~leaflet/dist/leaflet.css';
 @import '~leaflet.markercluster/dist/MarkerCluster.css';
-@import '~leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 /* You can add global styles to this file, and also import other style files */
 
