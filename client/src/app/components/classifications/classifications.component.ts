@@ -13,6 +13,7 @@ import { ClassificationsService } from 'src/app/services/classifications.service
   styleUrls: ['./classifications.component.css']
 })
 export class ClassificationsComponent implements OnInit {
+  loading: boolean = true;
   all: Classification[];
   id: string;
   mountains: Mountain[];
@@ -31,14 +32,23 @@ export class ClassificationsComponent implements OnInit {
   }
 
   getClassifications(): void {
-    this.classificationService.getClassifications().subscribe(c => this.all = c);
+    this.classificationService
+      .getClassifications()
+      .subscribe(c => {
+        this.all = c;
+        this.loading = false;
+      });
   }
 
   getClassification() {
     if (this.id) {
+      this.loading = true;
       this.classificationService
         .getClassification(this.id)
-        .subscribe(c => this.mountains = c.mountains);
+        .subscribe(c => {
+          this.mountains = c.mountains;
+          this.loading = false;
+        });
     }
   }
 

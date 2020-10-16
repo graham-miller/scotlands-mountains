@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppBarComponent } from './components/app-bar/app-bar.component';
@@ -50,7 +51,8 @@ import { MapComponent } from './components/map/map.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     MetersToFeetPipe

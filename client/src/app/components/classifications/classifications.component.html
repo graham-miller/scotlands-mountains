@@ -1,11 +1,14 @@
-<mat-form-field appearance="fill">
-    <mat-label>Classification</mat-label>
-    <mat-select [(value)]="id" (selectionChange)="onClassificationChange($event)">
-        <mat-option *ngFor="let c of all" [value]="c.id">
-            {{c.name}}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+<div style="display: flex;">
+    <mat-form-field appearance="fill">
+        <mat-label>Classification</mat-label>
+        <mat-select [(value)]="id" [(disabled)]="loading" (selectionChange)="onClassificationChange($event)">
+            <mat-option *ngFor="let c of all" [value]="c.id">
+                {{c.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-spinner diameter="50" *ngIf="loading"></mat-spinner>
+</div>
 
 <mat-tab-group *ngIf="id">
     <mat-tab label="Map">
