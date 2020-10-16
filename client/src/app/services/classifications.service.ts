@@ -4,13 +4,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Classification } from '../models/Classification';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClassificationsService {
 
-  private classificationsUrl = 'http://localhost:7071/api/classifications';
+  private classificationsUrl = `${environment.apiBaseUrl}/classifications`;
 
   constructor(private http: HttpClient) { }
 

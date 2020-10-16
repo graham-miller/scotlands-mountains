@@ -3,13 +3,14 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Mountain } from '../Models/Mountain';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MountainsService {
 
-  private mountainsUrl = 'http://localhost:7071/api/mountains';
+  private mountainsUrl = `${environment.apiBaseUrl}/mountains`;
 
   constructor(private http: HttpClient) { }
 
