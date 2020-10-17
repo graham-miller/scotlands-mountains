@@ -3,6 +3,8 @@ footer {
     padding: 1em;
     color: #303030;
     font-size: 0.8em;
+    line-height: 2em;
+    vertical-align: middle;
     text-align: center;
 }
 

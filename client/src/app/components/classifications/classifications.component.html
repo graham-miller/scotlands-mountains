@@ -14,11 +14,11 @@
     <mat-spinner diameter="50" *ngIf="loading"></mat-spinner>
 </div>
 
-<mat-tab-group *ngIf="id">
+<mat-tab-group>
     <mat-tab label="Map">
         <app-map [mountains]="mountains"></app-map>
     </mat-tab>
-    <mat-tab label="List">
+    <mat-tab label="List" [disabled]="!id">
         <app-mountain-table [mountains]="mountains"></app-mountain-table>
     </mat-tab>
 </mat-tab-group>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, ElementRef } from '@angular/core';
 import { formatNumber } from '@angular/common';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
@@ -12,26 +12,51 @@ L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html',
+  template: '<div id="map"></div>',
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements AfterViewInit {
   private map: L.Map;
   private clusteredMarkers = L.markerClusterGroup({
-    iconCreateFunction: cluster => {
+    iconCreateFunction: () => {
       return L.divIcon({ html: '<div class="clustered-mountain-marker"><div>+<div></div>' });
     }
   });
   private markers = L.layerGroup();
 
-  constructor(private metersToFeet: MetersToFeetPipe) { }
+  constructor(private metersToFeet: MetersToFeetPipe, private elementRef: ElementRef) { }
+
+  @Input() set mountains(mountains: Mountain[]) {
+    this.addMarkersToMap(mountains);
+  }
 
   ngAfterViewInit(): void {
     this.initMap();
   }
 
-  @Input()
-  set mountains(mountains: Mountain[]) {
+  ngOnDestroy() {
+    this.destroyMap();
+  }
+
+  private initMap(): void {
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    this.map = L.map('map', {
+      center: [56.659406, -4.011214],
+      zoom: 7,
+      gestureHandling: true
+    } as L.MapOptions);
+
+    this.map.attributionControl.setPrefix('');
+    tiles.addTo(this.map);
+    this.markers.addTo(this.map);
+    this.clusteredMarkers.addTo(this.map);
+  }
+
+  addMarkersToMap(mountains: Mountain[]) {
     this.markers.clearLayers();
     this.clusteredMarkers.clearLayers();
     if (mountains) {
@@ -64,24 +89,6 @@ export class MapComponent implements AfterViewInit {
     event.target.unbindPopup();
   }
 
-  private initMap(): void {
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    this.map = L.map('map', {
-      center: [56.659406, -4.011214],
-      zoom: 7,
-      gestureHandling: true
-    } as L.MapOptions);
-
-    this.map.attributionControl.setPrefix('');
-    tiles.addTo(this.map);
-    this.markers.addTo(this.map);
-    this.clusteredMarkers.addTo(this.map);
-  }
-
   private getPopupText(mountain: Mountain): string {
     const meters = formatNumber(mountain.height, 'en-GB', '1.0-0');
     const feet = formatNumber(this.metersToFeet.transform(mountain.height), 'en-GB', '1.0-0');
@@ -102,5 +109,11 @@ export class MapComponent implements AfterViewInit {
     })
 
     return [[minLat, minLng], [maxLat, maxLng]]
+  }
+
+  destroyMap() {
+    this.map.off();
+    this.map.remove();
+    this.map.getContainer().replaceWith(this.elementRef.nativeElement.innerHTML);
   }
 }
