@@ -26,6 +26,7 @@ import { MetersToFeetPipe } from './pipes/meters-to-feet.pipe';
 import { MountainTableComponent } from './components/mountain-table/mountain-table.component';
 import { MapComponent } from './components/map/map.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
     MetersToFeetPipe,
     MountainTableComponent,
     MapComponent,
-    SideNavComponent
+    SideNavComponent,
+    FooterComponent
   ],
   imports: [
     HttpClientModule,
