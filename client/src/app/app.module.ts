@@ -13,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppBarComponent } from './components/app-bar/app-bar.component';
@@ -24,6 +25,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { MetersToFeetPipe } from './pipes/meters-to-feet.pipe';
 import { MountainTableComponent } from './components/mountain-table/mountain-table.component';
 import { MapComponent } from './components/map/map.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { MapComponent } from './components/map/map.component';
     ClassificationsComponent,
     MetersToFeetPipe,
     MountainTableComponent,
-    MapComponent
+    MapComponent,
+    SideNavComponent
   ],
   imports: [
     HttpClientModule,
@@ -52,7 +55,8 @@ import { MapComponent } from './components/map/map.component';
     MatPaginatorModule,
     MatSortModule,
     MatTabsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatListModule
   ],
   providers: [
     MetersToFeetPipe

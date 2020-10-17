@@ -1,10 +1,14 @@
-<app-bar></app-bar>
+
+<app-bar (toggleSidenav)="sidenav.toggle()" role="heading" aria-label="App bar"></app-bar>
 <mat-sidenav-container>
-    <mat-sidenav>
-        Sidenav content
+    <mat-sidenav #sidenav>
+        <app-side-nav (closeSidenav)="sidenav.close()"></app-side-nav>
     </mat-sidenav>
 
-    <mat-sidenav-content class="content">
-        <router-outlet></router-outlet>
+    <mat-sidenav-content>
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
     </mat-sidenav-content>
+
 </mat-sidenav-container>
