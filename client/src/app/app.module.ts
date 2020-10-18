@@ -27,6 +27,7 @@ import { MountainTableComponent } from './components/mountain-table/mountain-tab
 import { MapComponent } from './components/map/map.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LegalComponent } from './components/legal/legal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { FooterComponent } from './components/footer/footer.component';
     MountainTableComponent,
     MapComponent,
     SideNavComponent,
-    FooterComponent
+    FooterComponent,
+    LegalComponent
   ],
   imports: [
     HttpClientModule,
