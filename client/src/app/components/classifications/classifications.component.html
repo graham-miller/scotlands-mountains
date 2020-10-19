@@ -1,7 +1,5 @@
 <h2>Classifications</h2>
 
-<p>Select mountain classification to view.</p>
-
 <div style="display: flex;">
     <mat-form-field appearance="fill">
         <mat-label>Classification</mat-label>
@@ -11,7 +9,10 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-spinner diameter="50" *ngIf="loading"></mat-spinner>
+    <mat-spinner diameter="35" *ngIf="loading"></mat-spinner>
+    <div id="classification-description" *ngIf="(!loading) && description">
+        <mat-icon>info</mat-icon>{{description}}
+    </div>
 </div>
 
 <mat-tab-group>

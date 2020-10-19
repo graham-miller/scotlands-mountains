@@ -16,6 +16,8 @@ export class ClassificationsComponent implements OnInit {
   loading: boolean = true;
   all: Classification[];
   id: string;
+  name: string;
+  description: string;
   mountains: Mountain[];
 
   constructor(
@@ -47,6 +49,8 @@ export class ClassificationsComponent implements OnInit {
         .getClassification(this.id)
         .subscribe(c => {
           this.mountains = c.mountains;
+          this.name = c.name;
+          this.description = c.description;
           this.loading = false;
         });
     }
