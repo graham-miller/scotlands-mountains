@@ -26,10 +26,13 @@ namespace ScotlandsMountains.Api
             ILogger log)
         {
             var result = _dao.Classifications
+                .Where(classification => classification.Enabled)
+                .OrderBy(classification => classification.Order)
                 .Select(classification => new
                 {
                     classification.Id,
-                    classification.Name
+                    classification.Name,
+                    classification.Description
                 });
 
             return new OkObjectResult(result);

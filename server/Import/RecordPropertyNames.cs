@@ -7,7 +7,7 @@ namespace ScotlandsMountains.Import
     {
         public static void Generate(string[] headerRecord)
         {
-            var classificationLookup = new ClassificationLookup();
+            var classificationLookup = new ClassificationNameLookup();
             var isClassification = false;
 
             foreach(var header in headerRecord)

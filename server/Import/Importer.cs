@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -73,17 +74,15 @@ namespace ScotlandsMountains.Import
 
         private void ParseClassifications()
         {
-            var classificationLookup = new ClassificationLookup();
+            var classificationFactory = new ClassificationFactory();
 
             _records
                 .SelectMany(record => record.Classification.Split(','))
                 .Select(key => key.Trim())
                 .Distinct()
-                .Select(key => new Classification
-                {
-                    DobihId = key,
-                    Name = classificationLookup[key]
-                })
+                .Select(key => classificationFactory.Build(key))
+                .Where(classification => classification != null)
+                .OrderBy(classification => classification.Order)
                 .ToList()
                 .ForEach(classification => _classifications.Add(classification));
         }
