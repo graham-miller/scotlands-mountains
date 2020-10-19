@@ -39,21 +39,42 @@ export class MapComponent implements AfterViewInit {
   }
 
   private initMap(): void {
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
+    const getUrl = moniker => `https://tile.thunderforest.com/${moniker}/{z}/{x}/{y}.png?apikey=231e70bf20b64d8ca94199922441d3f7`;
+    const tileLayerOptions: L.TileLayerOptions = {maxZoom: 18};
+    const outdoors = L.tileLayer(getUrl('outdoors'), tileLayerOptions);
+    const landscape = L.tileLayer(getUrl('landscape'), tileLayerOptions);
+    const transport = L.tileLayer(getUrl('transport'), tileLayerOptions);
+    const cycle = L.tileLayer(getUrl('cycle'), tileLayerOptions);
+
+    const maps = {
+      'Outdoors': outdoors,
+      'Landscape': landscape,
+      'Transport': transport,
+      'Cycle': cycle
+    };
+
+    const allMarkers = L.layerGroup()
+    this.markers.addTo(allMarkers);
+    this.clusteredMarkers.addTo(allMarkers);
 
     this.map = L.map('map', {
       center: [56.659406, -4.011214],
       zoom: 7,
+      layers: [outdoors, allMarkers],
       gestureHandling: true
     } as L.MapOptions);
 
+    L.control.layers(maps, {'Markers': allMarkers}).addTo(this.map);
+
     this.map.attributionControl.setPrefix('');
-    tiles.addTo(this.map);
-    this.markers.addTo(this.map);
-    this.clusteredMarkers.addTo(this.map);
+
+    L.control.scale({
+      maxWidth: 200,
+      metric: true,
+      imperial: true,
+      updateWhenIdle: false,
+      position: 'bottomright'
+    }).addTo(this.map);
   }
 
   addMarkersToMap(mountains: Mountain[]) {
