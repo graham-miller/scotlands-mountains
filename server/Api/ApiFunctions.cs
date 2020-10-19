@@ -66,6 +66,7 @@ namespace ScotlandsMountains.Api
             {
                 classification.Name,
                 classification.Id,
+                classification.Description,
                 mountains.Count,
                 Mountains = mountains
             });
