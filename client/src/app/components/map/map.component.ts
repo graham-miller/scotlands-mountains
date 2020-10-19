@@ -27,7 +27,7 @@ export class MapComponent implements AfterViewInit {
   constructor(private metersToFeet: MetersToFeetPipe, private elementRef: ElementRef) { }
 
   @Input() set mountains(mountains: Mountain[]) {
-    this.addMarkersToMap(mountains);
+    this.addMountainsToMap(mountains);
   }
 
   ngAfterViewInit(): void {
@@ -39,33 +39,44 @@ export class MapComponent implements AfterViewInit {
   }
 
   private initMap(): void {
-    const getUrl = moniker => `https://tile.thunderforest.com/${moniker}/{z}/{x}/{y}.png?apikey=231e70bf20b64d8ca94199922441d3f7`;
-    const tileLayerOptions: L.TileLayerOptions = {maxZoom: 18};
-    const outdoors = L.tileLayer(getUrl('outdoors'), tileLayerOptions);
-    const landscape = L.tileLayer(getUrl('landscape'), tileLayerOptions);
-    const transport = L.tileLayer(getUrl('transport'), tileLayerOptions);
-    const cycle = L.tileLayer(getUrl('cycle'), tileLayerOptions);
+    this.map = L.map('map', {
+      center: [56.659406, -4.011214],
+      zoom: 7,
+      gestureHandling: true
+    } as L.MapOptions);
 
-    const maps = {
+    this.addBaseLayers();
+    this.addMapControls();
+  }
+
+  private addBaseLayers() {
+    const outdoors = this.createThunderforestTileLayer('outdoors');
+    const landscape = this.createThunderforestTileLayer('landscape');
+    const transport = this.createThunderforestTileLayer('transport');
+    const cycle = this.createThunderforestTileLayer('cycle');
+
+    const baseLayers = {
       'Outdoors': outdoors,
       'Landscape': landscape,
       'Transport': transport,
       'Cycle': cycle
     };
 
-    const allMarkers = L.layerGroup()
-    this.markers.addTo(allMarkers);
-    this.clusteredMarkers.addTo(allMarkers);
+    const markers = L.layerGroup([this.markers, this.clusteredMarkers]);
 
-    this.map = L.map('map', {
-      center: [56.659406, -4.011214],
-      zoom: 7,
-      layers: [outdoors, allMarkers],
-      gestureHandling: true
-    } as L.MapOptions);
+    L.control.layers(baseLayers, { 'Markers': markers }).addTo(this.map);
 
-    L.control.layers(maps, {'Markers': allMarkers}).addTo(this.map);
+    outdoors.addTo(this.map);
+    markers.addTo(this.map);
+  }
 
+  private createThunderforestTileLayer(moniker: string): L.TileLayer {
+    return L.tileLayer(
+      `https://tile.thunderforest.com/${moniker}/{z}/{x}/{y}.png?apikey=231e70bf20b64d8ca94199922441d3f7`,
+      { maxZoom: 18 });
+  }
+
+  private addMapControls() {
     this.map.attributionControl.setPrefix('');
 
     L.control.scale({
@@ -77,20 +88,27 @@ export class MapComponent implements AfterViewInit {
     }).addTo(this.map);
   }
 
-  addMarkersToMap(mountains: Mountain[]) {
-    this.markers.clearLayers();
-    this.clusteredMarkers.clearLayers();
+  private addMountainsToMap(mountains: Mountain[]) {
+    this.removeMountainsFromMap();
     if (mountains) {
       const group: L.LayerGroup = mountains.length > 300 ? this.clusteredMarkers : this.markers;
-      mountains.forEach((m, i) => {
-        let marker = L.marker([m.latitude, m.longitude], { zIndexOffset: -i });
-        marker.on('mouseover', e => this.showPopup(e, m));
-        marker.on('mouseout', e => this.hidePopup(e));
-        marker.on('click', e => this.togglePopup(e, m));
-        group.addLayer(marker)
-      });
+      mountains.forEach((m, i) => group.addLayer(this.getMarker(m, -i)));
       this.map.flyToBounds(this.getBounds(mountains));
     }
+  }
+
+  private removeMountainsFromMap() {
+    this.markers.clearLayers();
+    this.clusteredMarkers.clearLayers();
+  }
+
+  private getMarker(mountain: Mountain, zIndex: number): L.Marker {
+    let marker = L.marker([mountain.latitude, mountain.longitude], { zIndexOffset: zIndex });
+    marker.on('mouseover', e => this.showPopup(e, mountain));
+    marker.on('mouseout', e => this.hidePopup(e));
+    marker.on('click', e => this.togglePopup(e, mountain));
+
+    return marker;
   }
 
   private togglePopup(event: L.LeafletEvent, mountain: Mountain) {
@@ -132,7 +150,7 @@ export class MapComponent implements AfterViewInit {
     return [[minLat, minLng], [maxLat, maxLng]]
   }
 
-  destroyMap() {
+  private destroyMap() {
     this.map.off();
     this.map.remove();
     this.map.getContainer().replaceWith(this.elementRef.nativeElement.innerHTML);

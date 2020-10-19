@@ -33,6 +33,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin: -4px 0 0 -4px;
     padding-top: 4px;
     box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+    text-align: center;
 }
 
 .clustered-mountain-marker div {

@@ -14,11 +14,8 @@ import { ClassificationsService } from 'src/app/services/classifications.service
 })
 export class ClassificationsComponent implements OnInit {
   loading: boolean = true;
-  all: Classification[];
-  id: string;
-  name: string;
-  description: string;
-  mountains: Mountain[];
+  classifications: Classification[];
+  selected = new Classification();
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +25,7 @@ export class ClassificationsComponent implements OnInit {
   ngOnInit() {
     this.getClassifications();
     this.route.params.subscribe(route => {
-      this.id = route.id
+      this.selected.id = route.id
       this.getClassification()
     });
   }
@@ -37,28 +34,26 @@ export class ClassificationsComponent implements OnInit {
     this.classificationService
       .getClassifications()
       .subscribe(c => {
-        this.all = c;
+        this.classifications = c;
         this.loading = false;
       });
   }
 
   getClassification() {
-    if (this.id) {
+    if (this.selected.id) {
       this.loading = true;
       this.classificationService
-        .getClassification(this.id)
+        .getClassification(this.selected.id)
         .subscribe(c => {
-          this.name = c.name;
-          this.description = c.description;
-          this.mountains = c.mountains;
+          this.selected = c;
           this.loading = false;
         });
     }
   }
 
   onClassificationChange(event: MatSelectChange): void {
-    this.mountains = null;
-    const command = [(this.route.snapshot.paramMap.get('id') ? '../' : '') + this.id];
+    this.selected = { id: this.selected.id } as Classification;
+    const command = [(this.route.snapshot.paramMap.get('id') ? '../' : '') + this.selected.id];
     this.router.navigate(command, { relativeTo: this.route });
   }
 }
