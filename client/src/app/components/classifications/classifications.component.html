@@ -10,9 +10,11 @@
         </mat-select>
     </mat-form-field>
     <mat-spinner diameter="35" *ngIf="loading"></mat-spinner>
-    <div id="classification-description" *ngIf="(!loading) && description">
-        <mat-icon>info</mat-icon>{{description}}
-    </div>
+</div>
+
+<div *ngIf="(!loading) && description">
+    <h3>{{name}}s</h3>
+    <p>{{description}}</p>
 </div>
 
 <mat-tab-group>

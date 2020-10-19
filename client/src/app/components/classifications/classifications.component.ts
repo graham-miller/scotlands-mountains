@@ -48,9 +48,9 @@ export class ClassificationsComponent implements OnInit {
       this.classificationService
         .getClassification(this.id)
         .subscribe(c => {
-          this.mountains = c.mountains;
           this.name = c.name;
           this.description = c.description;
+          this.mountains = c.mountains;
           this.loading = false;
         });
     }

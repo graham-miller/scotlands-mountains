@@ -9,27 +9,27 @@ namespace ScotlandsMountains.Import
             switch (key)
             {
                 case "M":
-                    return new Classification("M", "Munro", true, 1, "Mountains in Scotland over 3,000 feet (914.4m).");
+                    return new Classification("M", "Munro", true, 1, "Mountains in Scotland over 3,000ft (914.4m).");
                 case "C":
-                    return new Classification("C", "Corbett", true, 2, "Mountains in Scotland between 2,500 and 3,000 feet (762m and 914.4 m) in height with a prominence of at least 500ft (152.4m).");
+                    return new Classification("C", "Corbett", true, 2, "Mountains in Scotland between 2,500ft and 3,000ft (762m and 914.4m) in height with a prominence of at least 500ft (152.4m).");
                 case "G":
-                    return new Classification("G", "Graham", true, 3, "Mountains in Scotland between 2,000 and 2,499 feet (610 and 762 metres) in height with a prominence of at least 150m (490ft).");
+                    return new Classification("G", "Graham", true, 3, "Mountains in Scotland between 2,000ft and 2,499ft (610m and 762m) in height with a prominence of at least 150m (490ft).");
                 case "Ma":
                     return new Classification("Ma", "Marilyn", true, 4, "Mountains of the British Isles with a prominence of at least 150m (490ft).");
                 case "MT":
-                    return new Classification("MT", "Munro Top", true, 5, "Lesser mountains in Scotland over 3,000 feet (914.4m).");
+                    return new Classification("MT", "Munro Top", true, 5, "Lesser mountains in Scotland over 3,000ft (914.4m).");
                 case "D":
                     return new Classification("D", "Donald", true, 6, "Mountains in the Scottish Lowlands over 2,000ft (610m).");
                 case "DT":
                     return new Classification("DT", "Donald Top", true, 7, "Lesser mountains in the Scottish Lowlands over 2,000ft (610m).");
                 case "DDew":
-                    return new Classification("DDew", "Donald Dewey", true, 8, "Mountains in the Scottish lowlands between 500m and 2,000ft (609.6m) in height with a prominence of at least 30m (98 feet).");
+                    return new Classification("DDew", "Donald Dewey", true, 8, "Mountains in the Scottish lowlands between 500m and 2,000ft (609.6m) in height with a prominence of at least 30m (98ft).");
                 case "Sim":
-                    return new Classification("Sim", "Simm", true, 9, "Mountains of the British Isles over 600 m (1,969ft) in height with a prominence of at least 30m (98ft).");
+                    return new Classification("Sim", "Simm", true, 9, "Mountains of the British Isles over 600m (1,969ft) in height with a prominence of at least 30m (98ft).");
                 case "5":
                     return new Classification("5", "Dodd", true, 10, "Mountains of the British Isles between 500m and 600m in height with a prominence of at least 30m (98ft).");
                 case "HF":
-                    return new Classification("HF", "Highland Five", true, 11, "Mountains in the Scottish highlands between 500m and 2,000ft (609.6m) in height with a prominence of at least 30m (98 feet).");
+                    return new Classification("HF", "Highland Five", true, 11, "Mountains in the Scottish highlands between 500m and 2,000ft (609.6m) in height with a prominence of at least 30m (98ft).");
                 case "CoU":
                     return new Classification("CoU", "County Top", true, 12, "Highest mountains in a current county or unitary authority area.");
                 case "Hu":

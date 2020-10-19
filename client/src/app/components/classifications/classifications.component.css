@@ -6,6 +6,20 @@ table {
     margin: 12.5px 0 0 30px;
 }
 
+#classification-info {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    height: 59.5px;
+    background-color: #f0f0f0;
+    border-radius: 4px 4px 0 0;
+    border-bottom: solid 1px #6e6e6e;
+}
+
+#classification-info .mat-icon {
+    margin: 0.5em;
+}
+
 #classification-description {
     display: flex;
     align-items: center;
