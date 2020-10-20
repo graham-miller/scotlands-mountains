@@ -3,7 +3,7 @@
 <div style="display: flex;">
     <mat-form-field appearance="fill">
         <mat-label>Classification</mat-label>
-        <mat-select [(value)]="selected.id" [(disabled)]="loading" (selectionChange)="onClassificationChange($event)">
+        <mat-select [(value)]="selected.id" [(disabled)]="loading" (selectionChange)="displayClassification()">
             <mat-option *ngFor="let c of classifications" [value]="c.id">
                 {{c.name}}
             </mat-option>
