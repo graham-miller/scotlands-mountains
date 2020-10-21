@@ -5,9 +5,10 @@ import { ClassificationsComponent } from './components/classifications/classific
 import { MountainComponent } from './components/mountain/mountain.component';
 import { LegalComponent } from './components/legal/legal.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/classifications', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
   { path: 'classifications/:id', component: ClassificationsComponent },
   { path: 'classifications', component: ClassificationsComponent },
   { path: 'mountain/:id', component: MountainComponent },

@@ -14,6 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppBarComponent } from './components/app-bar/app-bar.component';
@@ -28,6 +29,7 @@ import { MapComponent } from './components/map/map.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LegalComponent } from './components/legal/legal.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { LegalComponent } from './components/legal/legal.component';
     MapComponent,
     SideNavComponent,
     FooterComponent,
-    LegalComponent
+    LegalComponent,
+    HomeComponent
   ],
   imports: [
     HttpClientModule,
@@ -60,7 +63,8 @@ import { LegalComponent } from './components/legal/legal.component';
     MatSortModule,
     MatTabsModule,
     MatProgressSpinnerModule,
-    MatListModule
+    MatListModule,
+    MatCardModule
   ],
   providers: [
     MetersToFeetPipe
