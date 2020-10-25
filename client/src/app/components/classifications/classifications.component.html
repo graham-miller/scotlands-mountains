@@ -1,43 +1,29 @@
-<mat-card>
-    <mat-card-title>
-        Classifications
-    </mat-card-title>
-    <mat-card-content>
-        <div style="display: flex;">
-            <mat-form-field appearance="fill">
-                <mat-label>Classification</mat-label>
-                <mat-select [(value)]="selected.id" [(disabled)]="loading" (selectionChange)="displayClassification()">
-                    <mat-option *ngFor="let c of classifications" [value]="c.id">
-                        {{c.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-spinner diameter="35" *ngIf="loading"></mat-spinner>
-        </div>
-    </mat-card-content>
-</mat-card>
+<h2>Classifications</h2>
 
-<br/>
+<div style="display: flex;">
+    <mat-form-field appearance="fill">
+        <mat-label>Classification</mat-label>
+        <mat-select [(value)]="selected.id" [(disabled)]="loading" (selectionChange)="displayClassification()">
+            <mat-option *ngFor="let c of classifications" [value]="c.id">
+                {{c.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-spinner diameter="35" *ngIf="loading"></mat-spinner>
+</div>
 
-<mat-card>
-    <mat-card-title>
-        <div *ngIf="(!loading) && selected.description">
-            {{selected.name}}s
-        </div>
-    </mat-card-title>    
-    <mat-card-content>
-        <div *ngIf="(!loading) && selected.description">
-            <p>{{selected.description}}</p>
-            <p>{{selected.count | number:'1.0-0'}} mountains found.</p>
-        </div>
-        <mat-tab-group>
-            <mat-tab label="Map">
-                <app-map [mountains]="selected.mountains"></app-map>
-            </mat-tab>
-            <mat-tab label="List" [disabled]="!selected.id">
-                <app-mountain-table [mountains]="selected.mountains"></app-mountain-table>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-card-content>
-</mat-card>
+<h3 *ngIf="(!loading) && selected.description">{{selected.name}}s</h3>
 
+<div *ngIf="(!loading) && selected.description">
+    <p>{{selected.description}}</p>
+    <p>{{selected.count | number:'1.0-0'}} mountains found.</p>
+</div>
+
+<mat-tab-group>
+    <mat-tab label="Map">
+        <app-map [mountains]="selected.mountains"></app-map>
+    </mat-tab>
+    <mat-tab label="List" [disabled]="!selected.id">
+        <app-mountain-table [mountains]="selected.mountains"></app-mountain-table>
+    </mat-tab>
+</mat-tab-group>
