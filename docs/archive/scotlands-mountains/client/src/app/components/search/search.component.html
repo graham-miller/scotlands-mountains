@@ -1,0 +1,13 @@
+<h2>Search</h2>
+
+<p>Search by mountain name.</p>
+
+<div id="search-box" style="display: flex;">
+    <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput id="term" type="text" [value]="term" (keyup)="onTermChange($event.target.value)" />
+            <mat-button [hidden]="!term" (click)="term=''" matSuffix aria-label="Clear search" style="cursor: pointer;">
+                <mat-icon>clear</mat-icon>
+            </mat-button>
+    </mat-form-field>
+</div>

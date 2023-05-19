@@ -1,0 +1,47 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~leaflet/dist/leaflet.css';
+@import '~leaflet.markercluster/dist/MarkerCluster.css';
+@import '~leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body, .app-root { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-cell-right {
+    display:flex !important;
+    justify-content:flex-end!important;
+}
+
+.mountain-marker {
+    width: 10px;
+    height: 10px;
+    border: 1px solid white;
+    background-color: #673ab7;
+    border-radius: 10px;
+    margin: 0;
+    padding: 0;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.clustered-mountain-marker {
+    width: 18px;
+    height: 14px;
+    border: 1px solid white;
+    background-color: #673ab7;
+    border-radius: 14px;
+    margin: -4px 0 0 -4px;
+    padding-top: 4px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+    text-align: center;
+}
+
+.clustered-mountain-marker div {
+    font-size: 20px;
+    color: white;
+    margin-top: -10px;
+}
+
+.centered {
+    text-align: center;
+}

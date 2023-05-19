@@ -1,0 +1,29 @@
+<div>
+    <mat-table [dataSource]="dataSource" matSort matSortActive="position" matSortDirection="asc">
+
+        <ng-container matColumnDef="position">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Position</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.position}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="height">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-cell-right">Height</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="mat-cell-right">
+                {{row.height.metres | formatHeight}}
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row
+            *matRowDef="let row; columns: columns;"
+            [routerLink]="['/mountains/', row.id]">
+        </mat-row>
+
+    </mat-table>
+    <mat-paginator hidePageSize="true" pageSize="10" showFirstLastButtons></mat-paginator>
+</div>

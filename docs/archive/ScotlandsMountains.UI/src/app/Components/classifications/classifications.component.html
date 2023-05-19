@@ -1,0 +1,32 @@
+<div *ngIf="!selectedClassificationId">
+    <app-loading></app-loading>
+</div>
+
+<div *ngIf="selectedClassificationId">
+
+    <h2>Classifications</h2>
+
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Classification</mat-label>
+            <mat-select [(value)]="selectedClassificationId" (selectionChange)="navigateToClassification()">
+                <mat-option *ngFor="let c of classifications" [value]="c.id">
+                    {{c.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div>
+        {{description}}
+    </div>
+
+    <mat-tab-group>
+        <mat-tab label="Map">
+            <app-map [mountains]="mountains"></app-map>
+        </mat-tab>
+        <mat-tab label="List">
+            <app-table [mountains]="mountains"></app-table>
+        </mat-tab>
+    </mat-tab-group>
+</div>

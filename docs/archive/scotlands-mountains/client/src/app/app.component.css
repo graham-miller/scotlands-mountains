@@ -1,0 +1,26 @@
+app-bar {
+    height: 64px;
+    position: fixed;
+    z-index: 100;
+    width: 100%  !important;
+}
+
+.mat-sidenav-container {
+    min-height: 100%;
+}
+
+.mat-sidenav-content {
+    width: 100%;
+    min-height: 100%;
+}
+
+.mat-sidenav {
+    margin-top: 64px;
+    width: 20em;
+}
+
+div.content {
+    max-width: 62em;
+    margin: 64px auto 0 auto;
+    padding: 1em;
+}

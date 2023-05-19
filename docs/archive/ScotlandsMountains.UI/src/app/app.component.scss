@@ -1,0 +1,18 @@
+app-header {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%  !important;
+}
+
+div.content-wrapper {
+    background-color: whitesmoke;
+    padding-bottom: 5rem;
+    z-index: 1;
+}
+
+div.content {
+    max-width: 62em;
+    margin: 64px auto 0 auto;
+    padding: 1rem;
+}

@@ -1,0 +1,16 @@
+dl {
+    margin-top: 3rem;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+dt {
+    flex-basis: 20%;
+    margin-bottom: 1rem;
+}
+
+dd {
+    flex-basis: 70%;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+}

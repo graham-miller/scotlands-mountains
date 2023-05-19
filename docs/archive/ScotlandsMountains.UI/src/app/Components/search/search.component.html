@@ -1,0 +1,51 @@
+<h2>Search</h2>
+
+<div class="search-container">
+    <mat-form-field class="fill">
+        <input matInput #search [(ngModel)]="searchTerm" placeholder="Start typing the name of a mountain" appAutofocus>
+        <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
+
+<div *ngIf="searchResult">
+    <mat-table [dataSource]="searchResult.results">
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span class="result-name" [innerHTML]="row.name | highlight : searchResult.term"></span>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef>
+                <span *ngIf="searchResult.results.length === 0">No results</span>
+                <span *ngIf="searchResult.results.length > 0">
+                    <span>{{searchResult.results.length | number : '1.0-0'}} results found</span>
+                    <span *ngIf="searchResult.continuationToken">
+                        <button mat-stroked-button color="primary" style="margin-left:1em;" (click)="loadMore()">Load
+                            more</button>
+                    </span>
+                    <span *ngIf="!searchResult.continuationToken">, no more results.</span>
+                </span>
+
+            </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="height">
+            <mat-header-cell *matHeaderCellDef class="mat-cell-right">Height</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="mat-cell-right">
+                {{row.height.metres | formatHeight}}
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="searchResultColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: searchResultColumns;" [routerLink]="['/mountains/', row.id]">
+        </mat-row>
+        <mat-footer-row *matFooterRowDef="searchResultColumns; sticky: true"></mat-footer-row>
+
+    </mat-table>
+
+</div>
+
+<div *ngIf="!searchResult" class="spacer"></div>

@@ -1,0 +1,21 @@
+<div>
+    <mat-table [dataSource]="rows" matSort matSortActive="height" matSortDirection="desc" matSortDisableClear>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="height">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-cell-right">Height</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="mat-cell-right">
+                {{row.height | number:'1.0-0'}}m&emsp;({{row.height | metersToFeet | number:'1.0-0'}}ft)
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+
+    </mat-table>
+    <mat-paginator hidePageSize="true" pageSize="10" showFirstLastButtons></mat-paginator>
+</div>

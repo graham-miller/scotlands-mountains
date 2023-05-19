@@ -1,0 +1,60 @@
+<div *ngIf="!mountain">
+    <app-loading></app-loading>
+</div>
+
+
+<div *ngIf="mountain">
+    <h2>{{mountain.name}}</h2>
+
+    <app-map [mountains]="[mountain]"></app-map>
+
+    <dl>
+        <dt>Height</dt>
+        <dd>{{mountain.height.metres | formatHeight}}</dd>
+
+        <dt>Other names</dt>
+        <dd><span *ngFor="let alias of mountain.aliases">{{alias}}<br/></span></dd>
+
+        <dt>Prominence</dt>
+        <dd>
+            {{mountain.prominence?.metres || 0 | formatHeight}}
+            from {{mountain.prominence?.measuredFrom}} at
+            {{mountain.prominence?.measuredFromHeight?.metres || 0 | formatHeight}}
+        </dd>
+
+        <dt>Grid ref.</dt>
+        <dd>{{mountain.gridRef}}</dd>
+
+        <dt>Latitude, longitude</dt>
+        <dd>{{mountain.location.coordinates[1]}}, {{mountain.location.coordinates[0]}}</dd>
+
+        <dt>Region</dt>
+        <dd>{{mountain.region?.name}}</dd>
+
+        <dt>County</dt>
+        <dd>{{mountain.county?.name}}</dd>
+
+        <dt>Parent</dt>
+        <dd>{{mountain.parent?.name}}</dd>
+
+        <dt>Maps</dt>
+        <dd><span *ngFor="let map of mountain.maps">{{map.code}} (1:{{1/map.scale | number:'1.0-0'}})<br/></span></dd>
+
+        <dt>Classifications</dt>
+        <dd>
+            <span *ngFor="let classification of mountain.classifications">
+                <a [routerLink]="['/classifications', classification.id]">
+                    {{classification.name}}
+                </a><br/>
+            </span>
+        </dd>
+
+        <dt>Summit features</dt>
+        <dd>{{mountain.features}}</dd>
+
+        <dt>Summit observations</dt>
+        <dd>{{mountain.observations}}</dd>
+
+    </dl>
+
+</div>

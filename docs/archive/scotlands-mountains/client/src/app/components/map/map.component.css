@@ -1,0 +1,7 @@
+#map {
+    height: 603px;
+}
+
+.leaflet-gesture-handling-scroll-warning, .leaflet-gesture-handling-touch-warning {
+    text-align: center;
+}

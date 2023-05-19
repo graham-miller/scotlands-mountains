@@ -1,0 +1,13 @@
+h2 {
+    margin: 5rem auto 2.5rem auto;
+    text-align: center;
+    color: white;
+}
+
+mat-spinner {
+    margin: 2.5rem auto 5rem auto;
+}
+
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {   
+    stroke: white;
+}

@@ -1,0 +1,42 @@
+footer {
+    background-color: #595959;
+    padding: 1em;
+    color: #999999;
+    font-size: 0.8em;
+    line-height: 2em;
+    vertical-align: middle;
+    text-align: center;
+}
+
+h2, div {
+    margin: 1.5em 0 1.5em 0;
+}
+
+h2 img {
+    height: 1em;
+    margin-bottom: -2px;
+}
+
+a:link {
+    color: #999999;
+    text-decoration: none;
+    border-bottom: dotted 1px;
+}
+
+a:visited {
+    color: #999999;
+    text-decoration: none;
+    border-bottom: dotted 1px;
+}
+
+a:hover {
+    color: #999999;
+    text-decoration: none;
+    border-bottom: solid 1px;
+}
+
+a:active {
+    color: #999999;
+    text-decoration: none;
+    border-bottom: solid 1px;
+}
