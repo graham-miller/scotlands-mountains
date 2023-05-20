@@ -3,7 +3,7 @@
 // ReSharper disable IdentifierTypo
 #pragma warning disable CS8618
 
-namespace ScotlandsMountains.Import.ConsoleApp.Dobih;
+namespace ScotlandsMountains.Import.ConsoleApp.Models;
 
 public record Record
 {

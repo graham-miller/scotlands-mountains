@@ -1,10 +1,13 @@
-﻿using ScotlandsMountains.Import.ConsoleApp.Extensions;
-
-Console.OutputEncoding = Encoding.UTF8;
+﻿Console.OutputEncoding = Encoding.UTF8;
 Console.InputEncoding = Encoding.UTF8;
 
 const string hillCsvPath = @"C:\Repos\scotlands-mountains\data\hillcsv.zip";
-var hillCsv = new FileInfo(hillCsvPath);
+
+var steps = new List<Step>
+{
+    new ReadHillCsvZipStep(),
+    new CreateMountainsStep()
+};
 
 AnsiConsole.Write(
     new FigletText("Scotland's Mountains")
@@ -14,21 +17,19 @@ AnsiConsole.Write(
 AnsiConsole.Status()
     .Spinner(Spinner.Known.Dots2)
     .SpinnerStyle(Style.Parse("yellow"))
-    .Start("Initializing...", ctx =>
+    .Start("Initializing...", statusContext =>
     {
-        ctx.Status($"Loading {hillCsv.Name}...");
-        var records = Parser.Parse(hillCsvPath);
-        AnsiConsole.Console.Success($"Loaded {records.Count:#,##0} records from {hillCsv.Name}");
+        var context = new Context(hillCsvPath, new IdGenerator(), new StatusReporter(statusContext, AnsiConsole.Console));
 
-        ctx.Status("Creating mountains...");
-        AnsiConsole.Console.Success("21,296 mountains created");
+        foreach (var step in steps)
+        {
+            step.Execute(context);
+        }
 
-        ctx.Status("Creating countries...");
-        AnsiConsole.Console.Success("5 countries created");
-
-        AnsiConsole.Console.Success("Import completed successfully");
+        AnsiConsole.MarkupLine(StatusReporter.GreenCheck + " Import completed successfully");
     });
 
 AnsiConsole.MarkupLine(string.Empty);
 AnsiConsole.MarkupLine("Press any key to exit");
 AnsiConsole.Console.Input.ReadKey(false);
+
