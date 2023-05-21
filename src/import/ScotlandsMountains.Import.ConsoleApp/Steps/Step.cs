@@ -2,5 +2,16 @@
 
 internal abstract class Step
 {
-    public abstract void Execute(Context context);
+    public void Execute(Context context)
+    {
+        SetStatus(context);
+        Implementation(context);
+        LogSuccess(context);
+    }
+
+    protected abstract void SetStatus(Context context);
+
+    protected abstract void Implementation(Context context);
+
+    protected abstract void LogSuccess(Context context);
 }

@@ -2,19 +2,24 @@
 
 internal class ReadHillCsvZipStep : Step
 {
-    public override void Execute(Context context)
+    protected override void SetStatus(Context context)
     {
-        var fileInfo = new FileInfo(context.HillCsvPath);
+        context.StatusReporter.SetStatus($"Loading {context.HillCsv.Name}...");
+    }
 
-        context.StatusReporter.SetStatus($"Loading {fileInfo.Name}...");
-
-        using var file = new FileStream(fileInfo.FullName, FileMode.Open);
+    protected override void Implementation(Context context)
+    {
+        using var file = new FileStream(context.HillCsv.FullName, FileMode.Open);
         using var zip = new ZipArchive(file);
         using var entry = zip.Entries.Single().Open();
         using var reader = new StreamReader(entry);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-        context.DobihRecords = csv.GetRecords<Record>().ToList();
-        context.StatusReporter.LogSuccess($"Loaded {context.DobihRecords.Count:#,##0} records from {fileInfo.Name}");
+        context.DobihRecords = csv.GetRecords<DobihRecord>().ToList();
+    }
+
+    protected override void LogSuccess(Context context)
+    {
+        context.StatusReporter.LogSuccess($"Loaded {context.DobihRecords.Count:#,##0} records from {context.HillCsv.Name}");
     }
 }

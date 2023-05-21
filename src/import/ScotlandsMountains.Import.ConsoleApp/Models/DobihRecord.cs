@@ -5,7 +5,7 @@
 
 namespace ScotlandsMountains.Import.ConsoleApp.Models;
 
-public record Record
+public record DobihRecord
 {
     /// <summary>
     /// A unique hill identifier to assist with revision and help users raise queries with the authors. The hill number will not be changed during the lifetime of the database unless it is unavoidable; such rare events will be well publicised. To upgrade non-Access versions, sort the old and new releases by hill number and copy and paste your personal ascent records from one to the other. The total number of British hills generally increases between releases, so paste your British and Irish records separately.
@@ -239,7 +239,9 @@ public record Record
     /// A numeric version of Section given in the Excel and csv versions.
     /// </summary>
     [Name("_Section")]
+#pragma warning disable IDE1006
     public decimal _Section { get; set; }
+#pragma warning restore IDE1006
 
     /// <summary>
     /// <para>The hill number of the parent Marilyn of lower prominence hills. In the Excel and csv versions the hill's own number is given for hills that are parents (there are no parents of parents) and '0' indicates a non-Marilyn with no parent. Thus a filter or sort on this column will return a parent (usually first) and all its children. An equivalent facility is provided in Access within the "Parent (Ma)" query, accessible from the Queries menu.</para>

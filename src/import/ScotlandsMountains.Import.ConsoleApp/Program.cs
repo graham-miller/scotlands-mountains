@@ -1,7 +1,7 @@
 ﻿Console.OutputEncoding = Encoding.UTF8;
 Console.InputEncoding = Encoding.UTF8;
 
-const string hillCsvPath = @"C:\Repos\scotlands-mountains\data\hillcsv.zip";
+var hillCsv = new FileInfo(@"C:\Repos\scotlands-mountains\data\hillcsv.zip");
 
 var steps = new List<Step>
 {
@@ -19,7 +19,7 @@ AnsiConsole.Status()
     .SpinnerStyle(Style.Parse("yellow"))
     .Start("Initializing...", statusContext =>
     {
-        var context = new Context(hillCsvPath, new IdGenerator(), new StatusReporter(statusContext, AnsiConsole.Console));
+        var context = new Context(hillCsv, new IdGenerator(), new StatusReporter(statusContext, AnsiConsole.Console));
 
         foreach (var step in steps)
         {

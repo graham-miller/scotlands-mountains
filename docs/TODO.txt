@@ -1,0 +1,6 @@
+Regions
+Classifications
+Maps
+Parents
+Aliases
+Grid Ref formatting

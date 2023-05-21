@@ -2,34 +2,40 @@
 
 internal class CreateMountainsStep : Step
 {
-    public override void Execute(Context context)
+    protected override void SetStatus(Context context)
     {
         context.StatusReporter.SetStatus("Creating mountains...");
+    }
 
+    protected override void Implementation(Context context)
+    {
         context.Mountains = context.DobihRecords
             .ToDictionary(
                 x => x.Number,
                 x => CreateMountain(x, context.IdGenerator.Next));
+    }
 
+    protected override void LogSuccess(Context context)
+    {
         context.StatusReporter.LogSuccess($"Created {context.Mountains.Count:#,##0} mountains");
     }
 
-    private static Mountain CreateMountain(Record record, string id)
+    private static Mountain CreateMountain(DobihRecord dobihRecord, string id)
     {
         return new Mountain
         {
             Id = id,
-            Name = record.Name,
-            Latitude = record.Latitude,
-            Longitude = record.Longitude,
-            GridRef = record.GridRefXY,
-            Height = record.Metres,
-            Feature = record.Feature,
-            Observations = record.Observations,
-            Drop = record.Drop,
-            Col = record.ColGridRef,
-            ColHeight = record.ColHeight,
-            DobihId = record.Number
+            Name = dobihRecord.Name,
+            Latitude = dobihRecord.Latitude,
+            Longitude = dobihRecord.Longitude,
+            GridRef = dobihRecord.GridRefXY,
+            Height = dobihRecord.Metres,
+            Feature = dobihRecord.Feature,
+            Observations = dobihRecord.Observations,
+            Drop = dobihRecord.Drop,
+            Col = dobihRecord.ColGridRef,
+            ColHeight = dobihRecord.ColHeight,
+            DobihId = dobihRecord.Number
         };
     }
 }
