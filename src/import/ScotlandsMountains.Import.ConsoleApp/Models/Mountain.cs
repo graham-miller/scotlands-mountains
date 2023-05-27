@@ -1,9 +1,7 @@
 ﻿namespace ScotlandsMountains.Import.ConsoleApp.Models;
 
-internal class Mountain
+internal class Mountain : Entity
 {
-    public string Id { get; set; } = null!;
-    public string Name { get; set; } = null!;
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
     public string GridRef { get; set; } = null!;
