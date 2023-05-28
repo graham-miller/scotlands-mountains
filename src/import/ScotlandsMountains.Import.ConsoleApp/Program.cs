@@ -6,7 +6,10 @@ var hillCsv = new FileInfo(@"C:\Repos\scotlands-mountains\data\hillcsv.zip");
 var steps = new List<Step>
 {
     new ReadHillCsvZipStep(),
-    new CreateMountainsStep()
+    new CreateMountainsStep(),
+    new AssignParentMountainStep(),
+    new CreateClassificationsStep(),
+    new AssignClassificationsStep(),
 };
 
 AnsiConsole.Write(
@@ -19,7 +22,11 @@ AnsiConsole.Status()
     .SpinnerStyle(Style.Parse("yellow"))
     .Start("Initializing...", statusContext =>
     {
-        var context = new Context(hillCsv, new IdGenerator(), new StatusReporter(statusContext, AnsiConsole.Console));
+        var context = new Context(
+            hillCsv,
+            new IdGenerator(),
+            new StatusReporter(statusContext, AnsiConsole.Console),
+            new ClassificationData());
 
         foreach (var step in steps)
         {

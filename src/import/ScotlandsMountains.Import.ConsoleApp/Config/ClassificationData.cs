@@ -1,7 +1,7 @@
 ﻿// ReSharper disable StringLiteralTypo
 namespace ScotlandsMountains.Import.ConsoleApp.Config;
 
-internal class ClassificationsInfo : IEnumerable<ClassificationsInfo.ClassificationInfo>
+internal class ClassificationData : IEnumerable<ClassificationInfo>
 {
     private static readonly IEnumerable<ClassificationInfo> Items = new List<ClassificationInfo>
     {
@@ -78,21 +78,5 @@ internal class ClassificationsInfo : IEnumerable<ClassificationsInfo.Classificat
     IEnumerator IEnumerable.GetEnumerator()
     {
         return ((IEnumerable)Items).GetEnumerator();
-    }
-
-    public class ClassificationInfo
-    {
-        public string Name { get; }
-        public string NameSingular { get; }
-        public string Description { get; }
-        public Func<DobihRecord, bool> IsMemberFunc { get; }
-
-        public ClassificationInfo(string name, string nameSingular, Func<DobihRecord, bool> isMemberFunc, string description)
-        {
-            Name = name;
-            NameSingular = nameSingular;
-            Description = description;
-            IsMemberFunc = isMemberFunc;
-        }
     }
 }

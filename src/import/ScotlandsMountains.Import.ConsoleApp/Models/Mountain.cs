@@ -13,6 +13,10 @@ internal class Mountain : Entity
     public decimal Drop { get; set; }
     public string Col { get; set; } = null!;
     public decimal ColHeight { get; set; }
-        
+
+    public MountainSummary Parent { get; set; } = null!;
+
+    public IList<Entity> Classifications { get; set; } = new List<Entity>();
+
     public int DobihId { get; set; }
 }
