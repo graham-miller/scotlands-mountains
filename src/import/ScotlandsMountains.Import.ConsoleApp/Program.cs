@@ -10,6 +10,7 @@ var steps = new List<Step>
     new AssignParentMountainStep(),
     new CreateClassificationsStep(),
     new AssignClassificationsStep(),
+    new ExtractAliasesStep()
 };
 
 AnsiConsole.Write(

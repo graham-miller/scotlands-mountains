@@ -15,6 +15,7 @@ internal class Mountain : Entity
     public decimal ColHeight { get; set; }
 
     public MountainSummary Parent { get; set; } = null!;
+    public IList<string> Aliases { get; set; } = null!;
 
     public IList<Entity> Classifications { get; set; } = new List<Entity>();
 
