@@ -2,7 +2,7 @@
 {
     internal class MountainRecordWrapper
     {
-        public MountainRecordWrapper(DobihRecord record, string id)
+        public MountainRecordWrapper(DobihRecord record, string id, Context context)
         {
             Record = record;
 
@@ -19,6 +19,7 @@
                 Drop = record.Drop,
                 Col = record.ColGridRef,
                 ColHeight = record.ColHeight,
+                Countries = record.Country.Select(x => context.CountriesByInitial[x].ToSummary()).ToList(),
                 DobihId = record.Number
             };
         }

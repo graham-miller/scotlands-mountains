@@ -9,7 +9,7 @@ internal class AssignClassificationsStep : Step
 
     protected override void Implementation(Context context)
     {
-        foreach (var classification in context.Classifications)
+        foreach (var classification in context.WrappedClassifications)
         {
             foreach (var mountain in context.MountainsByDobihId.Values.Where(mountain => classification.Info.IsMember(mountain.Record)))
             {

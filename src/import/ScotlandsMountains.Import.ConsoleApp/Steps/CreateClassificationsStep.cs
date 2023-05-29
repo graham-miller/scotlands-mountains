@@ -9,13 +9,13 @@ internal class CreateClassificationsStep : Step
 
     protected override void Implementation(Context context)
     {
-        context.Classifications = context.ClassificationData
+        context.WrappedClassifications = context.ClassificationData
             .Select(x => new ClassificationWrapper(x, context.IdGenerator.Next))
             .ToList();
     }
 
     protected override void LogSuccess(Context context)
     {
-        context.StatusReporter.LogSuccess($"Created {context.Classifications.Count:#,##0} classifications");
+        context.StatusReporter.LogSuccess($"Created {context.WrappedClassifications.Count:#,##0} classifications");
     }
 }

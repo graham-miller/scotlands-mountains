@@ -18,6 +18,7 @@ internal class Mountain : Entity
     public IList<string> Aliases { get; set; } = null!;
 
     public IList<Entity> Classifications { get; set; } = new List<Entity>();
+    public IList<Entity> Countries { get; set; } = new List<Entity>();
 
     public int DobihId { get; set; }
 }
