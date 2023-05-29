@@ -19,6 +19,7 @@ internal class Mountain : Entity
 
     public IList<Entity> Classifications { get; set; } = new List<Entity>();
     public IList<Entity> Countries { get; set; } = new List<Entity>();
+    public Region Region { get; set; } = null!;
 
     public int DobihId { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace ScotlandsMountains.Import.ConsoleApp;
+﻿using Region = ScotlandsMountains.Import.ConsoleApp.Models.Region;
+
+namespace ScotlandsMountains.Import.ConsoleApp;
 
 internal class Context
 {
@@ -17,7 +19,7 @@ internal class Context
     }
 
     public virtual FileInfo HillCsv { get; }
-    public FileInfo OutputJson { get; }
+    public virtual FileInfo OutputJson { get; }
     public virtual IdGenerator IdGenerator { get; }
     public virtual StatusReporter StatusReporter { get; }
     public virtual ClassificationData ClassificationData { get; }
@@ -27,6 +29,7 @@ internal class Context
     public virtual IDictionary<int, MountainRecordWrapper> MountainsByDobihId { get; set; } = null!;
     public virtual IList<ClassificationWrapper> WrappedClassifications { get; set; } = null!;
     public virtual IDictionary<char, Entity> CountriesByInitial { get; set; } = null!;
+    public virtual IList<Region> Regions { get; set; } = null!;
 
-    public Data DataForUpload { get; set; } = null!;
+    public virtual Data DataForUpload { get; set; } = null!;
 }

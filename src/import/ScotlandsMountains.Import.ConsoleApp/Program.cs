@@ -13,6 +13,7 @@ var steps = new List<Step>
     new CreateClassificationsStep(),
     new AssignClassificationsStep(),
     new ExtractAliasesStep(),
+    new CreateAndAssignRegionsStep(),
     new PrepareDataForUploadStep(),
     new UploadDataStep()
 };
