@@ -14,8 +14,9 @@ var steps = new List<Step>
     new AssignClassificationsStep(),
     new ExtractAliasesStep(),
     new CreateAndAssignRegionsStep(),
+    new CreateAndAssignMapsStep(),
     new PrepareDataForUploadStep(),
-    new UploadDataStep()
+    new WritingDataToFileStep(),
 };
 
 AnsiConsole.Write(

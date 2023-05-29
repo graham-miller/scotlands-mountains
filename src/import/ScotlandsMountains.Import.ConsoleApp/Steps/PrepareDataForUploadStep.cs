@@ -21,7 +21,7 @@ internal class PrepareDataForUploadStep : Step
             Countries = context.CountriesByInitial.Values
                 .ToList(),
             Regions = context.Regions,
-            Maps = new List<Entity>()
+            Maps = context.Maps
         };
     }
 

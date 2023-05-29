@@ -22,4 +22,15 @@ internal static class EntityExtensions
             Name = entity.Name
         };
     }
+
+    public static MapSummary ToSummary(this Map map)
+    {
+        return new MapSummary()
+        {
+            Id = map.Id,
+            Name = map.Name,
+            Code = map.Code,
+            Scale = map.Scale
+        };
+    }
 }

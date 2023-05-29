@@ -30,6 +30,7 @@ internal class Context
     public virtual IList<ClassificationWrapper> WrappedClassifications { get; set; } = null!;
     public virtual IDictionary<char, Entity> CountriesByInitial { get; set; } = null!;
     public virtual IList<Region> Regions { get; set; } = null!;
+    public virtual IList<Map> Maps { get; set; } = null!;
 
     public virtual Data DataForUpload { get; set; } = null!;
 }
