@@ -2,10 +2,7 @@
 
 internal class WritingDataToFileStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Writing data to file...");
-    }
+    protected override string GetStatusMessage(Context context) => "Writing data to file...";
 
     protected override void Implementation(Context context)
     {
@@ -21,8 +18,5 @@ internal class WritingDataToFileStep : Step
         File.AppendAllText(context.OutputJson.FullName, contents);
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess("Data written to file");
-    }
+    protected override string GetSuccessMessage(Context context) => "Data written to file";
 }

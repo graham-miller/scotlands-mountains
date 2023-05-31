@@ -2,10 +2,7 @@
 
 internal class CreateMountainsStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Creating mountains...");
-    }
+    protected override string GetStatusMessage(Context context) => "Creating mountains...";
 
     protected override void Implementation(Context context)
     {
@@ -15,8 +12,5 @@ internal class CreateMountainsStep : Step
                 x => new MountainRecordWrapper(x, context.IdGenerator.Next, context));
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess($"Created {context.MountainsByDobihId.Count:#,##0} mountains");
-    }
+    protected override string GetSuccessMessage(Context context) => $"Created {context.MountainsByDobihId.Count:#,##0} mountains";
 }

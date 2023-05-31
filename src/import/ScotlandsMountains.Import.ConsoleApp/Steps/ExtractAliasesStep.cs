@@ -2,10 +2,7 @@
 
 internal class ExtractAliasesStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Extracting aliases...");
-    }
+    protected override string GetStatusMessage(Context context) => "Extracting aliases...";
 
     protected override void Implementation(Context context)
     {
@@ -18,10 +15,7 @@ internal class ExtractAliasesStep : Step
         }
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess("Aliases extracted");
-    }
+    protected override string GetSuccessMessage(Context context) => "Aliases extracted";
 
     private static (string, IList<string>) ExtractNameAndAliases(string originalName)
     {
@@ -60,6 +54,6 @@ internal class ExtractAliasesStep : Step
             }
         }
 
-        return (name.Trim(), aliases.Select(x => x.Trim()).ToList());
+        return (name.Trim().Replace("  ", ""), aliases.Select(x => x.Trim()).ToList());
     }
 }

@@ -1,14 +1,15 @@
 ﻿namespace ScotlandsMountains.Import.ConsoleApp.Steps;
 
-internal class AssignClassificationsStep : Step
+internal class CreateAndAssignClassificationsStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Assigning classifications...");
-    }
+    protected override string GetStatusMessage(Context context) => "Creating classifications...";
 
     protected override void Implementation(Context context)
     {
+        context.WrappedClassifications = context.ClassificationData
+            .Select(x => new ClassificationWrapper(x, context.IdGenerator.Next))
+            .ToList();
+
         foreach (var classification in context.WrappedClassifications)
         {
             foreach (var mountain in context.MountainsByDobihId.Values.Where(mountain => classification.Info.IsMember(mountain.Record)))
@@ -19,8 +20,5 @@ internal class AssignClassificationsStep : Step
         }
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess("Classifications assigned");
-    }
+    protected override string GetSuccessMessage(Context context) => $"Created {context.WrappedClassifications.Count:#,##0} classifications";
 }

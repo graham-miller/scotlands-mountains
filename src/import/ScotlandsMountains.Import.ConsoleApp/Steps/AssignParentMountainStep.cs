@@ -2,10 +2,7 @@
 
 internal class AssignParentMountainStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Assigning parent mountains...");
-    }
+    protected override string GetStatusMessage(Context context) => "Assigning parent mountains...";
 
     protected override void Implementation(Context context)
     {
@@ -19,8 +16,5 @@ internal class AssignParentMountainStep : Step
 
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess("Parent mountains assigned");
-    }
+    protected override string GetSuccessMessage(Context context) => "Parent mountains assigned";
 }

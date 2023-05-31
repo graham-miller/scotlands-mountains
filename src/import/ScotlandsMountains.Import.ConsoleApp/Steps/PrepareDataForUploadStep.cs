@@ -2,10 +2,7 @@
 
 internal class PrepareDataForUploadStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Preparing data for upload...");
-    }
+    protected override string GetStatusMessage(Context context) => "Preparing data for upload...";
 
     protected override void Implementation(Context context)
     {
@@ -25,8 +22,5 @@ internal class PrepareDataForUploadStep : Step
         };
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess("Data ready for upload");
-    }
+    protected override string GetSuccessMessage(Context context) => "Data ready for upload";
 }

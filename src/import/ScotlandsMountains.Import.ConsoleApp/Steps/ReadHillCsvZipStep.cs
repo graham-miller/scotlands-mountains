@@ -2,10 +2,7 @@
 
 internal class ReadHillCsvZipStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus($"Loading {context.HillCsv.Name}...");
-    }
+    protected override string GetStatusMessage(Context context) => $"Loading {context.HillCsv.Name}...";
 
     protected override void Implementation(Context context)
     {
@@ -18,8 +15,5 @@ internal class ReadHillCsvZipStep : Step
         context.DobihRecords = csv.GetRecords<DobihRecord>().ToList();
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess($"Loaded {context.DobihRecords.Count:#,##0} records from {context.HillCsv.Name}");
-    }
+    protected override string GetSuccessMessage(Context context) => $"Loaded {context.DobihRecords.Count:#,##0} records from {context.HillCsv.Name}";
 }

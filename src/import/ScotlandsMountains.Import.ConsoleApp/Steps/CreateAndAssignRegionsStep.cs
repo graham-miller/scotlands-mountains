@@ -4,10 +4,7 @@ namespace ScotlandsMountains.Import.ConsoleApp.Steps;
 
 internal class CreateAndAssignRegionsStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Create and assign regions...");
-    }
+    protected override string GetStatusMessage(Context context) => "Create and assign regions...";
 
     protected override void Implementation(Context context)
     {
@@ -45,8 +42,5 @@ internal class CreateAndAssignRegionsStep : Step
         }
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess($"Created and assigned {context.Regions.Count:#,##0} regions");
-    }
+    protected override string GetSuccessMessage(Context context) => $"Created and assigned {context.Regions.Count:#,##0} regions";
 }

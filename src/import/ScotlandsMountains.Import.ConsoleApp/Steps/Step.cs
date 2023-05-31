@@ -4,14 +4,16 @@ internal abstract class Step
 {
     public void Execute(Context context)
     {
-        SetStatus(context);
+        context.StatusReporter.SetStatus(GetStatusMessage(context));
+
         Implementation(context);
-        LogSuccess(context);
+
+        context.StatusReporter.LogSuccess(GetSuccessMessage(context));
     }
 
-    protected abstract void SetStatus(Context context);
+    protected abstract string GetStatusMessage(Context context);
 
     protected abstract void Implementation(Context context);
 
-    protected abstract void LogSuccess(Context context);
+    protected abstract string GetSuccessMessage(Context context);
 }

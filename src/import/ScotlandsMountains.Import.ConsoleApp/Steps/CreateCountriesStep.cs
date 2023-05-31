@@ -2,10 +2,7 @@
 
 internal class CreateCountriesStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Creating countries...");
-    }
+    protected override string GetStatusMessage(Context context) => "Creating countries...";
 
     protected override void Implementation(Context context)
     {
@@ -20,8 +17,5 @@ internal class CreateCountriesStep : Step
         };
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess($"Created {context.CountriesByInitial.Count:#,##0} countries");
-    }
+    protected override string GetSuccessMessage(Context context) => $"Created {context.CountriesByInitial.Count:#,##0} countries";
 }

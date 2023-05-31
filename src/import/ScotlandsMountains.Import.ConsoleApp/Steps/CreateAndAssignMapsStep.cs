@@ -2,10 +2,7 @@
 
 internal class CreateAndAssignMapsStep : Step
 {
-    protected override void SetStatus(Context context)
-    {
-        context.StatusReporter.SetStatus("Create and assign maps...");
-    }
+    protected override string GetStatusMessage(Context context) => "Create and assign maps...";
 
     protected override void Implementation(Context context)
     {
@@ -29,10 +26,7 @@ internal class CreateAndAssignMapsStep : Step
         }
     }
 
-    protected override void LogSuccess(Context context)
-    {
-        context.StatusReporter.LogSuccess($"Created and assigned {context.Maps.Count:#,##0} maps");
-    }
+    protected override string GetSuccessMessage(Context context) => $"Created and assigned {context.Maps.Count:#,##0} maps";
 
     private static IDictionary<string, MapWrapper> GetMaps(Func<DobihRecord, string?> mapsFunc, decimal scale, Context context)
     {
