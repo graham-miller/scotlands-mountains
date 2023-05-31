@@ -20,6 +20,6 @@ internal class StatusReporter
 
     public virtual void LogSuccess(string message)
     {
-        _ansiConsole.MarkupLine(GreenCheck + " " + message);
+        _ansiConsole.MarkupLine(GreenCheck + " " + Markup.Escape(message));
     }
 }

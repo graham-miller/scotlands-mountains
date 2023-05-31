@@ -28,6 +28,9 @@ AnsiConsole.Status()
     .SpinnerStyle(Style.Parse("yellow"))
     .Start("Initializing...", statusContext =>
     {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         var context = new Context(
             hillCsv,
             outputJson,
@@ -40,7 +43,9 @@ AnsiConsole.Status()
             step.Execute(context);
         }
 
-        AnsiConsole.MarkupLine(StatusReporter.GreenCheck + " Import completed successfully");
+        stopwatch.Stop();
+
+        context.StatusReporter.LogSuccess($"Import completed successfully [{stopwatch.Elapsed.Humanize()}]");
     });
 
 AnsiConsole.MarkupLine(string.Empty);

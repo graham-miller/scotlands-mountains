@@ -2,13 +2,23 @@
 
 internal abstract class Step
 {
+    private readonly bool _logTime;
+
+    protected Step(bool logTime = false)
+    {
+        _logTime = logTime;
+    }
+
     public void Execute(Context context)
     {
         context.StatusReporter.SetStatus(GetStatusMessage(context));
 
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
         Implementation(context);
+        stopwatch.Stop();
 
-        context.StatusReporter.LogSuccess(GetSuccessMessage(context));
+        context.StatusReporter.LogSuccess($"{GetSuccessMessage(context)}" + (_logTime ? " [{stopwatch.Elapsed.Humanize()}]" : ""));
     }
 
     protected abstract string GetStatusMessage(Context context);
