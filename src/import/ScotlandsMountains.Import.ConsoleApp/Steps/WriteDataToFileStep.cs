@@ -1,6 +1,6 @@
 ﻿namespace ScotlandsMountains.Import.ConsoleApp.Steps;
 
-internal class WritingDataToFileStep : Step
+internal class WriteDataToFileStep : Step
 {
     protected override string GetStatusMessage(Context context) => "Writing data to file...";
 
@@ -14,7 +14,7 @@ internal class WritingDataToFileStep : Step
             WriteIndented = true
         };
 
-        var contents = JsonSerializer.Serialize(context.DataForUpload, options);
+        var contents = JsonSerializer.Serialize(context.Data, options);
         File.AppendAllText(context.OutputJson.FullName, contents);
     }
 

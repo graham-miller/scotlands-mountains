@@ -32,5 +32,5 @@ internal class Context
     public virtual IList<Region> Regions { get; set; } = null!;
     public virtual IList<Map> Maps { get; set; } = null!;
 
-    public virtual Data DataForUpload { get; set; } = null!;
+    public virtual Data Data { get; set; } = null!;
 }

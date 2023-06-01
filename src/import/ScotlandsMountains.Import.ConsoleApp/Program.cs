@@ -13,8 +13,8 @@ var steps = new List<Step>
     new CreateAndAssignClassificationsStep(),
     new CreateAndAssignRegionsStep(),
     new CreateAndAssignMapsStep(),
-    new PrepareDataForUploadStep(),
-    new WritingDataToFileStep(),
+    new PrepareData(),
+    new WriteDataToFileStep()
 };
 
 AnsiConsole.Write(
@@ -44,7 +44,7 @@ AnsiConsole.Status()
 
         stopwatch.Stop();
 
-        var data = context.DataForUpload;
+        var data = context.Data;
         context.StatusReporter.LogSuccess($"Import completed successfully [{stopwatch.Elapsed.Humanize()}]");
     });
 

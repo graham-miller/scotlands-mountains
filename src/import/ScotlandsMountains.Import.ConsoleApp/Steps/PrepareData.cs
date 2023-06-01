@@ -1,12 +1,12 @@
 ﻿namespace ScotlandsMountains.Import.ConsoleApp.Steps;
 
-internal class PrepareDataForUploadStep : Step
+internal class PrepareData : Step
 {
-    protected override string GetStatusMessage(Context context) => "Preparing data for upload...";
+    protected override string GetStatusMessage(Context context) => "Preparing data...";
 
     protected override void Implementation(Context context)
     {
-        context.DataForUpload = new Data
+        context.Data = new Data
         {
             Mountains = context.MountainsByDobihId.Values
                 .OrderByDescending(x => x.Mountain.Height)
@@ -22,5 +22,5 @@ internal class PrepareDataForUploadStep : Step
         };
     }
 
-    protected override string GetSuccessMessage(Context context) => "Data ready for upload";
+    protected override string GetSuccessMessage(Context context) => "Data ready";
 }
