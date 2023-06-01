@@ -44,8 +44,7 @@ AnsiConsole.Status()
 
         stopwatch.Stop();
 
-        var data = context.Data;
-        context.StatusReporter.LogSuccess($"Import completed successfully [{stopwatch.Elapsed.Humanize()}]");
+        context.StatusReporter.LogSuccess($"Data preparation completed successfully [{stopwatch.Elapsed.Humanize()}]");
     });
 
 AnsiConsole.MarkupLine(string.Empty);
