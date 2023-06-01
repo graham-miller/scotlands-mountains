@@ -13,16 +13,14 @@
                 NameSingular = info.NameSingular,
                 Description = info.Description,
             };
+
+            Summary = Classification.ToSummary();
         }
 
         public ClassificationInfo Info { get; }
 
         public Classification Classification { get; }
 
-        private Entity? _summary;
-        public Entity Summary
-        {
-            get { return _summary ??= Classification.ToSummary(); }
-        }
+        public Entity Summary { get; }
     }
 }

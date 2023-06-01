@@ -7,7 +7,7 @@ internal class CreateAndAssignClassificationsStep : Step
     protected override void Implementation(Context context)
     {
         context.WrappedClassifications = context.ClassificationData
-            .Select(x => new ClassificationWrapper(x, context.IdGenerator.Next))
+            .Select(x => new ClassificationWrapper(x, context.IdGenerator.Next()))
             .ToList();
 
         foreach (var classification in context.WrappedClassifications)

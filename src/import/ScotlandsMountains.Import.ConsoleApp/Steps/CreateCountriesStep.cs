@@ -8,12 +8,12 @@ internal class CreateCountriesStep : Step
     {
         context.CountriesByInitial = new Dictionary<char, Entity>
         {
-            { 'S', new() { Id = context.IdGenerator.Next, Name = "Scotland" } },
-            { 'E', new() { Id = context.IdGenerator.Next, Name = "England" } },
-            { 'W', new() { Id = context.IdGenerator.Next, Name = "Wales" } },
-            { 'I', new() { Id = context.IdGenerator.Next, Name = "Ireland" } },
-            { 'C', new() { Id = context.IdGenerator.Next, Name = "Channel Islands" } },
-            { 'M', new() { Id = context.IdGenerator.Next, Name = "Isle of Man" } }
+            { 'S', new() { Id = context.IdGenerator.Next(), Name = "Scotland" } },
+            { 'E', new() { Id = context.IdGenerator.Next(), Name = "England" } },
+            { 'W', new() { Id = context.IdGenerator.Next(), Name = "Wales" } },
+            { 'I', new() { Id = context.IdGenerator.Next(), Name = "Ireland" } },
+            { 'C', new() { Id = context.IdGenerator.Next(), Name = "Channel Islands" } },
+            { 'M', new() { Id = context.IdGenerator.Next(), Name = "Isle of Man" } }
         };
     }
 

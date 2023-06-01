@@ -1,4 +1,5 @@
-﻿using Region = ScotlandsMountains.Import.ConsoleApp.Models.Region;
+﻿using ScotlandsMountains.Import.ConsoleApp.Models;
+using Region = ScotlandsMountains.Import.ConsoleApp.Models.Region;
 
 namespace ScotlandsMountains.Import.ConsoleApp.Steps;
 
@@ -11,34 +12,16 @@ internal class CreateAndAssignRegionsStep : Step
         var lookup = context.DobihRecords
             .Select(x => x.Region)
             .Distinct()
-            .Select(raw =>
-            {
-                var split = raw.Split(':');
-                var code = split[0].Trim();
-                var name = split[1].Trim();
+            .Select(raw => new RegionWrapper(raw, context.IdGenerator.Next()))
+            .ToDictionary(k => k.Code);
 
-                // ReSharper disable once ConvertIfStatementToSwitchStatement
-                // ReSharper disable StringLiteralTypo
-                if (code == "08A") name = "Cairngorms (west)";
-                if (code == "08B") name = "Cairngorms (east)";
-                // ReSharper restore StringLiteralTypo
-
-                return new { Code = code, Name = name };
-            }).ToDictionary(
-                k => k.Code,
-                v => new Region
-                {
-                    Id = context.IdGenerator.Next,
-                    Name = v.Name,
-                    Code = v.Code
-                });
-
-        context.Regions = lookup.Values.ToList();
+        context.Regions = lookup.Values.Select(x => x.Region).ToList();
 
         foreach (var item in context.MountainsByDobihId.Values)
         {
             var code = item.Record.Region.Split(':')[0].Trim();
-            item.Mountain.Region = lookup[code];
+            item.Mountain.Region = lookup[code].Summary;
+            lookup[code].Region.Mountains.Add(item.Summary);
         }
     }
 

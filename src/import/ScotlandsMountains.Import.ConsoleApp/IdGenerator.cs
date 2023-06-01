@@ -2,9 +2,10 @@
 
 internal class IdGenerator
 {
-    private const string CharacterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string CharacterSet = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789";
 
     private readonly GenerationOptions _options;
+    private readonly HashSet<string> _previousIds = new();
 
     public IdGenerator()
     {
@@ -12,5 +13,12 @@ internal class IdGenerator
         _options = new GenerationOptions(false, false, 10);
     }
 
-    public virtual string Next => ShortId.Generate(_options);
+    public virtual string Next()
+    {
+        var id = ShortId.Generate(_options);
+
+        if (!_previousIds.Add(id)) throw new Exception("ID collision");
+
+        return id;
+    }
 }

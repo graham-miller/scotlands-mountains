@@ -9,7 +9,6 @@ var steps = new List<Step>
     new ReadHillCsvZipStep(),
     new CreateCountriesStep(),
     new CreateMountainsStep(),
-    new ExtractAliasesStep(),
     new AssignParentMountainStep(),
     new CreateAndAssignClassificationsStep(),
     new CreateAndAssignRegionsStep(),
@@ -45,6 +44,7 @@ AnsiConsole.Status()
 
         stopwatch.Stop();
 
+        var data = context.DataForUpload;
         context.StatusReporter.LogSuccess($"Import completed successfully [{stopwatch.Elapsed.Humanize()}]");
     });
 
