@@ -1,6 +1,4 @@
-﻿using Region = ScotlandsMountains.Import.ConsoleApp.Models.Region;
-
-namespace ScotlandsMountains.Import.ConsoleApp;
+﻿namespace ScotlandsMountains.Import.ConsoleApp;
 
 internal class Context
 {

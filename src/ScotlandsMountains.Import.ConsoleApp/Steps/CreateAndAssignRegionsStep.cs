@@ -1,7 +1,4 @@
-﻿using ScotlandsMountains.Import.ConsoleApp.Models;
-using Region = ScotlandsMountains.Import.ConsoleApp.Models.Region;
-
-namespace ScotlandsMountains.Import.ConsoleApp.Steps;
+﻿namespace ScotlandsMountains.Import.ConsoleApp.Steps;
 
 internal class CreateAndAssignRegionsStep : Step
 {

@@ -1,6 +1,8 @@
 ﻿// ReSharper disable InconsistentNaming
 // ReSharper disable StringLiteralTypo
 // ReSharper disable IdentifierTypo
+// ReSharper disable CommentTypo
+// ReSharper disable UnusedMember.Global
 #pragma warning disable CS8618
 
 namespace ScotlandsMountains.Import.ConsoleApp.Models;

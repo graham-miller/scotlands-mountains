@@ -18,3 +18,4 @@ global using ScotlandsMountains.Import.ConsoleApp.Steps;
 global using shortid;
 global using shortid.Configuration;
 global using Spectre.Console;
+global using Region = ScotlandsMountains.Import.ConsoleApp.Models.Region;

@@ -1,6 +1,4 @@
-﻿using Region = ScotlandsMountains.Import.ConsoleApp.Models.Region;
-
-namespace ScotlandsMountains.Import.ConsoleApp.Extensions;
+﻿namespace ScotlandsMountains.Import.ConsoleApp.Extensions;
 
 internal static class EntityExtensions
 {
