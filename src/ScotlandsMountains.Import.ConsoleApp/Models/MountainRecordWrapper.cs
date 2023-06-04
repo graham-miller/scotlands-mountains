@@ -91,6 +91,7 @@
 
             if (numbers.Length % 2 != 0) return raw;
 
+            // ReSharper disable once ReplaceSubstringWithRangeIndexer
             var easting = numbers.Substring(0, numbers.Length / 2);
             var northing = numbers.Substring(numbers.Length / 2, numbers.Length / 2);
 
