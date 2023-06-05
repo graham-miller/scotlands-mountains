@@ -7,5 +7,5 @@ public class Classification : Entity
     public string Description { get; set; } = null!;
 
     [JsonIgnore]
-    public IList<Mountain> Mountains { get; set; } = new List<Mountain>();
+    public List<Mountain> Mountains { get; set; } = new();
 }

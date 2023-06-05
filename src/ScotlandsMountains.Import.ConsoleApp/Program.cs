@@ -3,6 +3,7 @@ Console.InputEncoding = Encoding.UTF8;
 
 var hillCsv = new FileInfo(@"C:\Repos\scotlands-mountains\data\hillcsv.zip");
 var outputJson = new FileInfo(@"C:\Users\Graham\Desktop\scotlands-mountains.json");
+var outputDb = new FileInfo(@"C:\Users\Graham\Desktop\scotlands-mountains.db");
 
 var steps = new List<Step>
 {

@@ -7,5 +7,5 @@ public class Map : Entity
     public decimal Scale { get; set; }
     
     [JsonIgnore]
-    public IList<Mountain> Mountains { get; set; } = new List<Mountain>();
+    public List<Mountain> Mountains { get; set; } = new();
 }

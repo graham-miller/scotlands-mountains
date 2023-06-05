@@ -24,19 +24,19 @@ public class Mountain : Entity
     public Mountain Parent { get; set; } = null!;
     
     [JsonIgnore]
-    public IList<string> Aliases { get; set; } = null!;
+    public List<string> Aliases { get; set; } = null!;
 
     [JsonIgnore]
-    public IList<Classification> Classifications { get; set; } = new List<Classification>();
+    public List<Classification> Classifications { get; set; } = new();
     
     [JsonIgnore]
-    public IList<Country> Countries { get; set; } = new List<Country>();
+    public List<Country> Countries { get; set; } = new();
     
     [JsonIgnore]
     public Region Region { get; set; } = null!;
     
     [JsonIgnore]
-    public IList<Map> Maps { get; set; } = new List<Map>();
+    public List<Map> Maps { get; set; } = new();
 
     public int DobihId { get; set; }
 }

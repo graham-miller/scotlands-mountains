@@ -31,7 +31,7 @@
 
         public Mountain Value { get; }
 
-        private static (string, IList<string>) ExtractNameAndAliases(string raw)
+        private static (string, List<string>) ExtractNameAndAliases(string raw)
         {
             var name = string.Empty;
             var aliases = new List<string>();
