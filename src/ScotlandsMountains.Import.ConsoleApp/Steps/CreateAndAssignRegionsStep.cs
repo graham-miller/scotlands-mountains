@@ -12,13 +12,13 @@ internal class CreateAndAssignRegionsStep : Step
             .Select(raw => new RegionWrapper(raw, context.IdGenerator.Next()))
             .ToDictionary(k => k.Code);
 
-        context.Regions = lookup.Values.Select(x => x.Region).ToList();
+        context.Regions = lookup.Values.Select(x => x.Value).ToList();
 
         foreach (var item in context.MountainsByDobihId.Values)
         {
-            var code = item.Record.Region.Split(':')[0].Trim();
-            item.Mountain.Region = lookup[code].Summary;
-            lookup[code].Region.Mountains.Add(item.Summary);
+            var code = item.Dobih.Region.Split(':')[0].Trim();
+            item.Value.Region = lookup[code].Value;
+            lookup[code].Value.Mountains.Add(item.Value);
         }
     }
 

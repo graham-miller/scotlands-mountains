@@ -1,14 +1,14 @@
 ﻿namespace ScotlandsMountains.Import.ConsoleApp.Models
 {
-    internal class MountainRecordWrapper
+    internal class MountainWrapper
     {
-        public MountainRecordWrapper(DobihRecord record, string id, Context context)
+        public MountainWrapper(DobihRecord record, string id, Context context)
         {
-            Record = record;
+            Dobih = record;
 
             var (name, aliases) = ExtractNameAndAliases(record.Name);
 
-            Mountain = new Mountain
+            Value = new Mountain
             {
                 Id = id,
                 Name = name,
@@ -22,21 +22,14 @@
                 Drop = record.Drop,
                 Col = FormatGridRef(record.ColGridRef),
                 ColHeight = record.ColHeight,
-                Countries = record.Country.Select(x => context.CountriesByInitial[x].ToSummary()).ToList(),
+                Countries = record.Country.Select(x => context.CountriesByInitial[x]).ToList(),
                 DobihId = record.Number
             };
         }
 
-        public DobihRecord Record { get; }
+        public DobihRecord Dobih { get; }
 
-        public Mountain Mountain { get; }
-
-        private MountainSummary? _summary;
-
-        public MountainSummary Summary
-        {
-            get { return _summary ??= Mountain.ToSummary(); }
-        }
+        public Mountain Value { get; }
 
         private static (string, IList<string>) ExtractNameAndAliases(string raw)
         {

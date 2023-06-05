@@ -6,21 +6,17 @@
         {
             Info = info;
 
-            Classification = new Classification
+            Value = new Classification
             {
                 Id = id,
                 Name = info.Name,
                 NameSingular = info.NameSingular,
                 Description = info.Description,
             };
-
-            Summary = Classification.ToSummary();
         }
 
         public ClassificationInfo Info { get; }
 
-        public Classification Classification { get; }
-
-        public Entity Summary { get; }
+        public Classification Value { get; }
     }
 }

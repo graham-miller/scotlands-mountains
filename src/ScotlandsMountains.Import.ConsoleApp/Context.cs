@@ -24,11 +24,11 @@ internal class Context
     
     public virtual IReadOnlyList<DobihRecord> DobihRecords { get; set; } = null!;
     
-    public virtual IDictionary<int, MountainRecordWrapper> MountainsByDobihId { get; set; } = null!;
+    public virtual IDictionary<int, MountainWrapper> MountainsByDobihId { get; set; } = null!;
     public virtual IList<ClassificationWrapper> WrappedClassifications { get; set; } = null!;
-    public virtual IDictionary<char, Entity> CountriesByInitial { get; set; } = null!;
+    public virtual IDictionary<char, Country> CountriesByInitial { get; set; } = null!;
     public virtual IList<Region> Regions { get; set; } = null!;
     public virtual IList<Map> Maps { get; set; } = null!;
 
-    public virtual Data Data { get; set; } = null!;
+    public virtual Domain Domain { get; set; } = null!;
 }

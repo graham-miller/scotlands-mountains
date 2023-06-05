@@ -6,14 +6,14 @@ internal class PrepareData : Step
 
     protected override void Implementation(Context context)
     {
-        context.Data = new Data
+        context.Domain = new Domain
         {
             Mountains = context.MountainsByDobihId.Values
-                .OrderByDescending(x => x.Mountain.Height)
-                .Select(x => x.Mountain)
+                .OrderByDescending(x => x.Value.Height)
+                .Select(x => x.Value)
                 .ToList(),
             Classifications = context.WrappedClassifications
-                .Select(x => x.Classification)
+                .Select(x => x.Value)
                 .ToList(),
             Countries = context.CountriesByInitial.Values
                 .ToList(),

@@ -14,20 +14,16 @@
             if (Code == "08B") name = "Cairngorms (east)";
             // ReSharper restore StringLiteralTypo
 
-            Region = new Region
+            Value = new Region
             {
                 Id = id,
                 Name = name,
                 Code = Code
             };
-
-            Summary = Region.ToSummary();
         }
 
         public string Code { get; }
 
-        public Region Region { get; }
-
-        public RegionSummary Summary { get; }
+        public Region Value { get; }
     }
 }

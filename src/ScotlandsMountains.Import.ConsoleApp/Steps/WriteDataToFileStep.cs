@@ -14,7 +14,7 @@ internal class WriteDataToFileStep : Step
             WriteIndented = true
         };
 
-        var contents = JsonSerializer.Serialize(context.Data, options);
+        var contents = JsonSerializer.Serialize(context.Domain, options);
         File.AppendAllText(context.OutputJson.FullName, contents);
     }
 

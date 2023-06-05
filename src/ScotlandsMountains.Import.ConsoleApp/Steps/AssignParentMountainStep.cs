@@ -8,10 +8,10 @@ internal class AssignParentMountainStep : Step
     {
         foreach (var item in context.MountainsByDobihId.Values)
         {
-            var parentId = item.Record.ParentMa;
+            var parentId = item.Dobih.ParentMa;
 
-            if (parentId != 0 && parentId != item.Record.Number)
-                item.Mountain.Parent = context.MountainsByDobihId[parentId].Summary;
+            if (parentId != 0 && parentId != item.Dobih.Number)
+                item.Value.Parent = context.MountainsByDobihId[parentId].Value;
         }
 
     }
