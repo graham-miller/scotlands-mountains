@@ -6,7 +6,7 @@ internal class WriteDataToFileStep : Step
 
     protected override void Implementation(Context context)
     {
-        if (context.OutputJson.Exists) context.OutputJson.Delete();
+        if (context.FileManager.OutputJson.Exists) context.FileManager.OutputJson.Delete();
 
         var options = new JsonSerializerOptions
         {
@@ -15,7 +15,7 @@ internal class WriteDataToFileStep : Step
         };
 
         var contents = JsonSerializer.Serialize(context.Domain, options);
-        File.AppendAllText(context.OutputJson.FullName, contents);
+        File.AppendAllText(context.FileManager.OutputJson.FullName, contents);
     }
 
     protected override string GetSuccessMessage(Context context) => "Data written to file";
