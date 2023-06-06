@@ -399,4 +399,4 @@ FodyWeavers.xsd
 
 # Project specific
 data/scotlands-mountains.json
-data/scotlands-mountains.db
+data/scotlands-mountains.db*

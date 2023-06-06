@@ -21,7 +21,7 @@ public class Mountain : Entity
     public decimal ColHeight { get; set; }
 
     [JsonIgnore]
-    public Mountain Parent { get; set; } = null!;
+    public Mountain? Parent { get; set; } = null!;
     
     [JsonIgnore]
     public List<string> Aliases { get; set; } = null!;

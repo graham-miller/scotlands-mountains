@@ -1,7 +1,14 @@
 ﻿namespace ScotlandsMountains.Data;
 
-internal class ScotlandsMountainsContext : DbContext
+public class ScotlandsMountainsDbContext : DbContext
 {
+    private readonly FileInfo _dbFile;
+
+    public ScotlandsMountainsDbContext(FileInfo dbFile)
+    {
+        _dbFile = dbFile;
+    }
+
     public DbSet<Classification> Classifications { get; set; } = null!;
         
     public DbSet<Country> Countries { get; set; } = null!;
@@ -14,13 +21,13 @@ internal class ScotlandsMountainsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlite($"Data Source={new FileManager().OutputDb}");
+        options.UseSqlite($"Data Source={_dbFile.FullName}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ScotlandsMountainsContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ScotlandsMountainsDbContext).Assembly);
     }
 }
