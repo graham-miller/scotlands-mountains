@@ -6,6 +6,8 @@ public class ClassificationLite
     {
         Id = classification.Id;
         Name = classification.Name;
+        DisplayOrder = classification.DisplayOrder;
+        IsActive = classification.IsActive;
         NameSingular = classification.NameSingular;
         Description = classification.Description;
         Mountains = classification.Mountains.Select(x => x.ToString()).ToList();
@@ -14,6 +16,10 @@ public class ClassificationLite
     public string Id { get; }
 
     public string Name { get; }
+
+    public int? DisplayOrder { get; set; }
+
+    public bool IsActive { get; set; }
 
     public string NameSingular { get; }
 

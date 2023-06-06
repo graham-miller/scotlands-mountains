@@ -10,6 +10,8 @@ internal class ClassificationWrapper
         {
             Id = id,
             Name = info.Name,
+            DisplayOrder = info.DisplayOrder,
+            IsActive = info.IsActive,
             NameSingular = info.NameSingular,
             Description = info.Description,
         };
