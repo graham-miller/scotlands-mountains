@@ -9,7 +9,7 @@ internal class CreateMountainsStep : Step
         context.MountainsByDobihId = context.DobihRecords
             .ToDictionary(
                 x => x.Number,
-                x => new MountainRecordWrapper(x, context.IdGenerator.Next(), context));
+                x => new MountainWrapper(x, context.IdGenerator.Next(), context));
     }
 
     protected override string GetSuccessMessage(Context context) => $"Created {context.MountainsByDobihId.Count:#,##0} mountains";

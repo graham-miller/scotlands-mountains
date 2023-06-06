@@ -2,6 +2,8 @@
 
 internal abstract class Step
 {
+    protected const bool LogTime = true;
+
     private readonly bool _logTime;
 
     protected Step(bool logTime = false)
@@ -18,7 +20,7 @@ internal abstract class Step
         Implementation(context);
         stopwatch.Stop();
 
-        context.StatusReporter.LogSuccess($"{GetSuccessMessage(context)}" + (_logTime ? " [{stopwatch.Elapsed.Humanize()}]" : ""));
+        context.StatusReporter.LogSuccess(GetSuccessMessage(context) + (_logTime ? $" [{stopwatch.Elapsed.Humanize()}]" : ""));
     }
 
     protected abstract string GetStatusMessage(Context context);

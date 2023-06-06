@@ -13,15 +13,15 @@ internal class CreateAndAssignMapsStep : Step
 
         foreach (var item in context.MountainsByDobihId.Values)
         {
-            var maps1To50K = item.Record.Map1To50K?.Split(' ').Select(x => lookup1To50K[x.Trim()]) ?? Enumerable.Empty<MapWrapper>();
-            var maps1To25K = item.Record.Map1To25K?.Split(' ').Select(x => lookup1To25K[x.Trim()]) ?? Enumerable.Empty<MapWrapper>();
+            var maps1To50K = item.Dobih.Map1To50K?.Split(' ').Select(x => lookup1To50K[x.Trim()]) ?? Enumerable.Empty<MapWrapper>();
+            var maps1To25K = item.Dobih.Map1To25K?.Split(' ').Select(x => lookup1To25K[x.Trim()]) ?? Enumerable.Empty<MapWrapper>();
             var maps = maps1To50K.Concat(maps1To25K).ToList();
 
-            item.Mountain.Maps = maps.Select(x => x.Summary).ToList();
+            item.Value.Maps = maps.Select(x => x.Map).ToList();
 
             foreach (var map in maps)
             {
-                map.Map.Mountains.Add(item.Summary);
+                map.Map.Mountains.Add(item.Value);
             }
         }
     }
@@ -50,10 +50,8 @@ internal class CreateAndAssignMapsStep : Step
         public MapWrapper(Map map)
         {
             Map = map;
-            Summary = map.ToSummary();
         }
 
         public Map Map { get; }
-        public MapSummary Summary { get; }
     }
 }

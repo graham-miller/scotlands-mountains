@@ -12,10 +12,10 @@ internal class CreateAndAssignClassificationsStep : Step
 
         foreach (var classification in context.WrappedClassifications)
         {
-            foreach (var mountain in context.MountainsByDobihId.Values.Where(mountain => classification.Info.IsMember(mountain.Record)))
+            foreach (var mountain in context.MountainsByDobihId.Values.Where(mountain => classification.Info.IsMember(mountain.Dobih)))
             {
-                mountain.Mountain.Classifications.Add(classification.Summary);
-                classification.Classification.Mountains.Add(mountain.Summary);
+                mountain.Value.Classifications.Add(classification.Value);
+                classification.Value.Mountains.Add(mountain.Value);
             }
         }
     }

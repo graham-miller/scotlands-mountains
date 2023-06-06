@@ -14,4 +14,8 @@
     <PackageReference Include="Spectre.Console" Version="0.47.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScotlandsMountains.Data\ScotlandsMountains.Data.csproj" />
+  </ItemGroup>
+
 </Project>

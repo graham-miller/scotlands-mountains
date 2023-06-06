@@ -6,7 +6,7 @@ internal class CreateCountriesStep : Step
 
     protected override void Implementation(Context context)
     {
-        context.CountriesByInitial = new Dictionary<char, Entity>
+        context.CountriesByInitial = new Dictionary<char, Country>
         {
             { 'S', new() { Id = context.IdGenerator.Next(), Name = "Scotland" } },
             { 'E', new() { Id = context.IdGenerator.Next(), Name = "England" } },

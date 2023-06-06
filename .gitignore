@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Project specific
+data/scotlands-mountains.json
+data/scotlands-mountains.db*

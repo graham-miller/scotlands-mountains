@@ -1,9 +1,6 @@
 ﻿Console.OutputEncoding = Encoding.UTF8;
 Console.InputEncoding = Encoding.UTF8;
 
-var hillCsv = new FileInfo(@"C:\Repos\scotlands-mountains\data\hillcsv.zip");
-var outputJson = new FileInfo(@"C:\Users\Graham\Desktop\scotlands-mountains.json");
-
 var steps = new List<Step>
 {
     new ReadHillCsvZipStep(),
@@ -14,7 +11,8 @@ var steps = new List<Step>
     new CreateAndAssignRegionsStep(),
     new CreateAndAssignMapsStep(),
     new PrepareData(),
-    new WriteDataToFileStep()
+    new WriteDataToFileStep(),
+    new CreateAndPopulateDatabaseStep()
 };
 
 AnsiConsole.Write(
@@ -31,8 +29,7 @@ AnsiConsole.Status()
         stopwatch.Start();
 
         var context = new Context(
-            hillCsv,
-            outputJson,
+            new FileManager(),
             new IdGenerator(),
             new StatusReporter(statusContext, AnsiConsole.Console),
             new ClassificationData());
@@ -50,4 +47,3 @@ AnsiConsole.Status()
 AnsiConsole.MarkupLine(string.Empty);
 AnsiConsole.MarkupLine("Press any key to exit");
 AnsiConsole.Console.Input.ReadKey(false);
-
