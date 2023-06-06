@@ -1,6 +1,4 @@
-﻿using ScotlandsMountains.Data;
-
-namespace ScotlandsMountains.Import.ConsoleApp.Steps;
+﻿namespace ScotlandsMountains.Import.ConsoleApp.Steps;
 
 internal class CreateAndPopulateDatabaseStep : Step
 {

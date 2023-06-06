@@ -1,108 +1,107 @@
-﻿namespace ScotlandsMountains.Import.ConsoleApp.Models
+﻿namespace ScotlandsMountains.Import.ConsoleApp.Models;
+
+internal class MountainWrapper
 {
-    internal class MountainWrapper
+    public MountainWrapper(DobihRecord record, string id, Context context)
     {
-        public MountainWrapper(DobihRecord record, string id, Context context)
+        Dobih = record;
+
+        var (name, aliases) = ExtractNameAndAliases(record.Name);
+
+        Value = new Mountain
         {
-            Dobih = record;
+            Id = id,
+            Name = name,
+            Aliases = aliases,
+            Latitude = record.Latitude,
+            Longitude = record.Longitude,
+            GridRef = FormatGridRef(record.GridRefXY),
+            Height = record.Metres,
+            Feature = FormatAsSentence(record.Feature),
+            Observations = FormatAsSentence(record.Observations),
+            Drop = record.Drop,
+            Col = FormatGridRef(record.ColGridRef),
+            ColHeight = record.ColHeight,
+            Countries = record.Country.Select(x => context.CountriesByInitial[x]).ToList(),
+            DobihId = record.Number
+        };
+    }
 
-            var (name, aliases) = ExtractNameAndAliases(record.Name);
+    public DobihRecord Dobih { get; }
 
-            Value = new Mountain
-            {
-                Id = id,
-                Name = name,
-                Aliases = aliases,
-                Latitude = record.Latitude,
-                Longitude = record.Longitude,
-                GridRef = FormatGridRef(record.GridRefXY),
-                Height = record.Metres,
-                Feature = FormatAsSentence(record.Feature),
-                Observations = FormatAsSentence(record.Observations),
-                Drop = record.Drop,
-                Col = FormatGridRef(record.ColGridRef),
-                ColHeight = record.ColHeight,
-                Countries = record.Country.Select(x => context.CountriesByInitial[x]).ToList(),
-                DobihId = record.Number
-            };
-        }
+    public Mountain Value { get; }
 
-        public DobihRecord Dobih { get; }
+    private static (string, List<string>) ExtractNameAndAliases(string raw)
+    {
+        var name = string.Empty;
+        var aliases = new List<string>();
 
-        public Mountain Value { get; }
+        var inAlias = false;
+        var alias = string.Empty;
 
-        private static (string, List<string>) ExtractNameAndAliases(string raw)
+        foreach (var letter in raw)
         {
-            var name = string.Empty;
-            var aliases = new List<string>();
-
-            var inAlias = false;
-            var alias = string.Empty;
-
-            foreach (var letter in raw)
+            if (inAlias)
             {
-                if (inAlias)
+                if (letter == ']')
                 {
-                    if (letter == ']')
-                    {
-                        aliases.Add(alias);
-                        inAlias = false;
-                    }
-                    else
-                    {
-                        alias += letter;
-                    }
+                    aliases.Add(alias);
+                    inAlias = false;
                 }
                 else
                 {
-
-                    if (letter == '[')
-                    {
-                        alias = string.Empty;
-                        inAlias = true;
-                    }
-                    else
-                    {
-                        name += letter;
-                    }
+                    alias += letter;
                 }
             }
+            else
+            {
 
-            return (name.Trim().Replace("  ", ""), aliases.Select(x => x.Trim()).ToList());
+                if (letter == '[')
+                {
+                    alias = string.Empty;
+                    inAlias = true;
+                }
+                else
+                {
+                    name += letter;
+                }
+            }
         }
 
-        private static readonly Regex RawGridRefRegex = new("^[A-Z]{1,2}[0-9 ]{6,12}$");
+        return (name.Trim().Replace("  ", ""), aliases.Select(x => x.Trim()).ToList());
+    }
 
-        private static string FormatGridRef(string raw)
-        {
+    private static readonly Regex RawGridRefRegex = new("^[A-Z]{1,2}[0-9 ]{6,12}$");
 
-            if (string.IsNullOrEmpty(raw) || !RawGridRefRegex.IsMatch(raw)) return raw;
+    private static string FormatGridRef(string raw)
+    {
 
-            var withoutSpaces = string.Concat(raw.Where(x => x != ' '));
-            var letters = string.Concat(withoutSpaces.Where(char.IsLetter));
-            var numbers = string.Concat(withoutSpaces.Where(char.IsNumber));
+        if (string.IsNullOrEmpty(raw) || !RawGridRefRegex.IsMatch(raw)) return raw;
 
-            if (numbers.Length % 2 != 0) return raw;
+        var withoutSpaces = string.Concat(raw.Where(x => x != ' '));
+        var letters = string.Concat(withoutSpaces.Where(char.IsLetter));
+        var numbers = string.Concat(withoutSpaces.Where(char.IsNumber));
 
-            // ReSharper disable once ReplaceSubstringWithRangeIndexer
-            var easting = numbers.Substring(0, numbers.Length / 2);
-            var northing = numbers.Substring(numbers.Length / 2, numbers.Length / 2);
+        if (numbers.Length % 2 != 0) return raw;
 
-            easting = easting.PadRight(5, '0');
-            northing = northing.PadRight(5, '0');
+        // ReSharper disable once ReplaceSubstringWithRangeIndexer
+        var easting = numbers.Substring(0, numbers.Length / 2);
+        var northing = numbers.Substring(numbers.Length / 2, numbers.Length / 2);
 
-            return $"{letters} {easting} {northing}";
-        }
+        easting = easting.PadRight(5, '0');
+        northing = northing.PadRight(5, '0');
 
-        private static string? FormatAsSentence(string? raw)
-        {
-            if (string.IsNullOrWhiteSpace(raw)) return null;
+        return $"{letters} {easting} {northing}";
+    }
 
-            var formatted = char.ToUpper(raw.First()) + string.Concat(raw.Skip(1));
+    private static string? FormatAsSentence(string? raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw)) return null;
 
-            if (formatted.Last() == '.') return formatted;
+        var formatted = char.ToUpper(raw.First()) + string.Concat(raw.Skip(1));
 
-            return formatted + '.';
-        }
+        if (formatted.Last() == '.') return formatted;
+
+        return formatted + '.';
     }
 }

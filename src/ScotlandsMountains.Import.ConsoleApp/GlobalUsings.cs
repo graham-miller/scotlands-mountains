@@ -10,6 +10,7 @@ global using System.Text.RegularExpressions;
 global using CsvHelper;
 global using CsvHelper.Configuration.Attributes;
 global using Humanizer;
+global using ScotlandsMountains.Data;
 global using ScotlandsMountains.Import.ConsoleApp;
 global using ScotlandsMountains.Import.ConsoleApp.Config;
 global using ScotlandsMountains.Import.ConsoleApp.Models;

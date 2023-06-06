@@ -47,4 +47,3 @@ AnsiConsole.Status()
 AnsiConsole.MarkupLine(string.Empty);
 AnsiConsole.MarkupLine("Press any key to exit");
 AnsiConsole.Console.Input.ReadKey(false);
-

@@ -20,22 +20,16 @@ public class Mountain : Entity
     
     public decimal ColHeight { get; set; }
 
-    [JsonIgnore]
     public Mountain? Parent { get; set; } = null!;
     
-    [JsonIgnore]
     public List<string> Aliases { get; set; } = null!;
 
-    [JsonIgnore]
     public List<Classification> Classifications { get; set; } = new();
     
-    [JsonIgnore]
     public List<Country> Countries { get; set; } = new();
     
-    [JsonIgnore]
     public Region Region { get; set; } = null!;
     
-    [JsonIgnore]
     public List<Map> Maps { get; set; } = new();
 
     public int DobihId { get; set; }

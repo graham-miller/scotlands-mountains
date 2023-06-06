@@ -14,7 +14,16 @@ internal class WriteDataToFileStep : Step
             WriteIndented = true
         };
 
-        var contents = JsonSerializer.Serialize(context.Domain, options);
+        var domain = new
+        {
+            Mountains = context.Domain.Mountains.Select(x => new MountainLite(x)).ToList(),
+            Classifications = context.Domain.Classifications.Select(x => new ClassificationLite(x)).ToList(),
+            Countries = context.Domain.Countries.Select(x => new CountryLite(x)).ToList(),
+            Regions = context.Domain.Regions.Select(x => new RegionLite(x)).ToList(),
+            Maps = context.Domain.Maps.Select(x => new MapLite(x)).ToList(),
+        };
+
+        var contents = JsonSerializer.Serialize(domain, options);
         File.AppendAllText(context.FileManager.OutputJson.FullName, contents);
     }
 

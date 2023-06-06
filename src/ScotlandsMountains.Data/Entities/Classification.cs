@@ -6,6 +6,5 @@ public class Classification : Entity
     
     public string Description { get; set; } = null!;
 
-    [JsonIgnore]
     public List<Mountain> Mountains { get; set; } = new();
 }
