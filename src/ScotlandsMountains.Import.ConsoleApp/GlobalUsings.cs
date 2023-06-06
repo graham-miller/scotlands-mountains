@@ -18,4 +18,5 @@ global using shortid;
 global using shortid.Configuration;
 global using Spectre.Console;
 global using Region = ScotlandsMountains.Data.Entities.Region;
+global using ScotlandsMountains.Data;
 global using ScotlandsMountains.Data.Entities;

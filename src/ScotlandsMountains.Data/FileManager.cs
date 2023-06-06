@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScotlandsMountains.Import.ConsoleApp
+﻿namespace ScotlandsMountains.Data
 {
-    internal class FileManager
+    public class FileManager
     {
         public virtual FileInfo HillCsv => new FileInfo(Path.Join(GetDataFolderPath(), "hillcsv.zip"));
 
