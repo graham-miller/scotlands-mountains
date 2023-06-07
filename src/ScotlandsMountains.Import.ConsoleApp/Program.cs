@@ -12,7 +12,8 @@ var steps = new List<Step>
     new CreateAndAssignMapsStep(),
     new PrepareData(),
     new WriteDataToFileStep(),
-    new CreateAndPopulateDatabaseStep()
+    new CreateAndPopulateDatabaseStep(),
+    new CopyDatabaseToAppResourcesStep()
 };
 
 AnsiConsole.Write(

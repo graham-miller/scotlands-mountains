@@ -13,7 +13,6 @@ internal class AssignParentMountainStep : Step
             if (parentId != 0 && parentId != item.Dobih.Number)
                 item.Value.Parent = context.MountainsByDobihId[parentId].Value;
         }
-
     }
 
     protected override string GetSuccessMessage(Context context) => "Parent mountains assigned";
