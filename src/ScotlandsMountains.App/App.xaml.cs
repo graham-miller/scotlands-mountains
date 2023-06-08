@@ -1,12 +1,11 @@
-﻿namespace ScotlandsMountains.App
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+﻿namespace ScotlandsMountains.App;
 
-            MainPage = new AppShell();
-        }
+public partial class App : Application
+{
+    public App(AppShell page)
+    {
+        InitializeComponent();
+
+        MainPage = page;
     }
 }
