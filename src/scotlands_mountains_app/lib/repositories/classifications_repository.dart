@@ -5,9 +5,10 @@ class ClassificationsRepository {
   Future<Classification> getDefault() async {
     final db = await Data().getDatabase();
 
-    final List<Map<String, dynamic>> maps = await db.query('Classifications');
+    final List<Map<String, dynamic>> maps = await db.query('Classifications',
+        where: 'DisplayOrder IS NOT NULL', orderBy: 'DisplayOrder', limit: 1);
 
-    final classifications = List.generate(maps.length, (i) {
+    return List.generate(maps.length, (i) {
       return Classification(
         id: maps[i]['Id'],
         displayOrder: maps[i]['DisplayOrder'],
@@ -16,8 +17,6 @@ class ClassificationsRepository {
         description: maps[i]['Description'],
         name: maps[i]['Name'],
       );
-    });
-
-    return classifications[0];
+    })[0];
   }
 }
