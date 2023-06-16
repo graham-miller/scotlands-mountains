@@ -1,15 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import '../config.dart';
+import '../repositories/data.dart';
 import '../widgets/sm_app_bar.dart';
 
 class Loading extends StatelessWidget {
-  Loading({super.key}) {
+  Loading({Key? key, required this.initializationCompleteCallback})
+      : super(key: key) {
     copyDbToAppData();
   }
+
+  final Function initializationCompleteCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +31,8 @@ class Loading extends StatelessWidget {
   }
 
   void copyDbToAppData() async {
-    var directory = await getApplicationDocumentsDirectory();
-    var file = File('${directory.path}/${Config.dbFileName}');
+    await Data().initialize();
 
-    if (await file.exists()) {
-      await file.delete();
-    }
-
-    final bytes = await rootBundle.load("assets/${Config.dbFileName}");
-    final buffer = bytes.buffer;
-    await file.writeAsBytes(
-        buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
-
-    print(file.path);
+    initializationCompleteCallback();
   }
 }

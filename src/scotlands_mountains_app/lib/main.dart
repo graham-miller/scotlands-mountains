@@ -19,9 +19,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/loading',
       routes: {
-        '/loading': (c) => Loading(),
-        '/classifications': (c) => const Classifications(),
+        '/loading': (context) => Loading(
+            initializationCompleteCallback: () =>
+                Navigator.popAndPushNamed(context, '/classifications')),
+        '/classifications': (context) => const Classifications(),
       },
     );
   }
+
+  onInitializationComplete() {}
 }
