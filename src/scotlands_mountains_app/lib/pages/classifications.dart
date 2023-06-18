@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:scotlands_mountains_app/repositories/classifications_repository.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
+import '../models/mountain.dart';
 import '../widgets/sm_app_bar.dart';
 
 class Classifications extends StatefulWidget {
@@ -11,7 +13,7 @@ class Classifications extends StatefulWidget {
 }
 
 class _ClassificationsState extends State<Classifications> {
-  List<String> _mountains = List.empty();
+  List<Mountain> _mountains = List.empty();
 
   _ClassificationsState() {
     _loadMountains();
@@ -23,7 +25,7 @@ class _ClassificationsState extends State<Classifications> {
         await MountainsRepository().getByClassificationId(classification.id);
 
     setState(() {
-      _mountains = [mountains[0].name];
+      _mountains = mountains;
     });
   }
 
@@ -35,23 +37,23 @@ class _ClassificationsState extends State<Classifications> {
 
   @override
   Widget build(BuildContext context) {
+    final heightFormat = NumberFormat("#,###", "en_GB");
+
     return Scaffold(
       appBar: const SmAppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(_mountains.any((s) => true)
-                ? _mountains[0]
-                : 'Classifications'),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.replay_circle_filled),
-      ),
+      body: ListView(
+          children: _mountains
+              .asMap()
+              .entries
+              .map((i) => ListTile(
+                    leading:
+                        CircleAvatar(child: Text(((i.key) + 1).toString())),
+                    title: Text(i.value.name),
+                    subtitle: Text(
+                        '${heightFormat.format(i.value.height)}m (${heightFormat.format(i.value.height * 3.28084)}ft)'),
+                    trailing: const Icon(Icons.more_vert),
+                  ))
+              .toList()),
     );
   }
 }
