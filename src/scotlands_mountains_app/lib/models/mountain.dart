@@ -4,14 +4,14 @@ class Mountain {
   final double longitude;
   final String gridRef;
   final double height;
-  final String feature;
-  final String observations;
+  final String? feature;
+  final String? observations;
   final double drop;
   final String col;
   final double colHeight;
-  final String parentId;
+  final String? parentId;
   final String aliases;
-  final String regionId;
+  final String? regionId;
   final int dobihId;
   final String name;
 
