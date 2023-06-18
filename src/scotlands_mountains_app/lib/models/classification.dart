@@ -1,5 +1,5 @@
 class Classification {
-  final String id;
+  final int id;
   final int? displayOrder;
   final int isActive;
   final String nameSingular;

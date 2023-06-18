@@ -1,5 +1,5 @@
 class Mountain {
-  final String id;
+  final int id;
   final double latitude;
   final double longitude;
   final String gridRef;
