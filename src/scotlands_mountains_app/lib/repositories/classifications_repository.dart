@@ -21,15 +21,6 @@ class ClassificationsRepository {
   }
 
   List<Classification> _toEntities(List<Map<String, dynamic>> maps) {
-    return List.generate(maps.length, (i) {
-      return Classification(
-        id: maps[i]['id'],
-        displayOrder: maps[i]['displayOrder'],
-        isActive: maps[i]['isActive'],
-        nameSingular: maps[i]['nameSingular'],
-        description: maps[i]['description'],
-        name: maps[i]['name'],
-      );
-    });
+    return maps.map((map) => Classification(map)).toList();
   }
 }
