@@ -3,24 +3,16 @@ import 'data.dart';
 
 class ClassificationsRepository {
   Future<Classification> getDefault() async {
+    const sql = '''
+      SELECT *
+      FROM Classifications
+      WHERE displayOrder IS NOT NULL
+      ORDER BY displayOrder ASC
+      LIMIT 1
+    ''';
+
     final db = await Data().getDatabase();
 
-    return _toEntities(await db.query('Classifications',
-            where: 'DisplayOrder IS NOT NULL',
-            orderBy: 'DisplayOrder',
-            limit: 1))
-        .single;
-  }
-
-  Future<Classification> get(String id) async {
-    final db = await Data().getDatabase();
-
-    return _toEntities(await db.query('Classifications',
-            where: 'Id = ?', whereArgs: [id], limit: 1))
-        .single;
-  }
-
-  List<Classification> _toEntities(List<Map<String, dynamic>> maps) {
-    return maps.map((map) => Classification(map)).toList();
+    return Classification((await db.rawQuery(sql)).single);
   }
 }

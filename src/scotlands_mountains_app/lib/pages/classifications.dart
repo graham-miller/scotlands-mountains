@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/repositories/classifications_repository.dart';
+import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
 import '../widgets/sm_app_bar.dart';
 
 class Classifications extends StatefulWidget {
@@ -18,9 +19,11 @@ class _ClassificationsState extends State<Classifications> {
 
   void _loadMountains() async {
     final classification = await ClassificationsRepository().getDefault();
+    final mountains =
+        await MountainsRepository().getByClassificationId(classification.id);
 
     setState(() {
-      _mountains = [classification.name];
+      _mountains = [mountains[0].name];
     });
   }
 
