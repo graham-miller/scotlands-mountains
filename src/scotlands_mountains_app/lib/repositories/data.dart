@@ -23,7 +23,7 @@ class Data {
     var file = File(_path!);
 
     if (await file.exists()) {
-      await file.delete();
+      await deleteDatabase(_path!);
     }
 
     final bytes = await rootBundle.load("assets/$_dbFileName");
