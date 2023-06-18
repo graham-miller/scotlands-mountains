@@ -4,7 +4,6 @@ public class MountainLite
 {
     public MountainLite(Mountain mountain)
     {
-        Id = mountain.Id;
         Name = mountain.Name;
         Latitude = mountain.Latitude;
         Longitude = mountain.Longitude;
@@ -16,15 +15,13 @@ public class MountainLite
         Col = mountain.Col;
         ColHeight = mountain.ColHeight;
         Parent = mountain.Parent?.ToString();
-        Aliases = mountain.Aliases;
+        Aliases = mountain.Aliases.Select(x => x.Name).ToList();
         Classifications = mountain.Classifications.Select(x => x.ToString()).ToList();
         Countries = mountain.Countries.Select(x => x.ToString()).ToList();
         Region = mountain.Region.ToString();
         Maps = mountain.Maps.Select(x => x.ToString()).ToList();
         DobihId = mountain.DobihId;
     }
-
-    public string Id { get; }
 
     public string Name { get; }
 

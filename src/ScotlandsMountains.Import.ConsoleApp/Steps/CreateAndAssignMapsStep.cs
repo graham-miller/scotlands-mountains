@@ -36,7 +36,6 @@ internal class CreateAndAssignMapsStep : Step
             .Distinct()
             .Select(code => new Map
             {
-                Id = context.IdGenerator.Next(),
                 Name = string.Empty,
                 Code = code,
                 Scale = scale

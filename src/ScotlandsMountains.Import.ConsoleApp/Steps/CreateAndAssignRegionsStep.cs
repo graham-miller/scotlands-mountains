@@ -9,7 +9,7 @@ internal class CreateAndAssignRegionsStep : Step
         var lookup = context.DobihRecords
             .Select(x => x.Region)
             .Distinct()
-            .Select(raw => new RegionWrapper(raw, context.IdGenerator.Next()))
+            .Select(raw => new RegionWrapper(raw))
             .ToDictionary(k => k.Code);
 
         context.Regions = lookup.Values.Select(x => x.Value).ToList();

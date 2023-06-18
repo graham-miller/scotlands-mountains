@@ -1,22 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿namespace ScotlandsMountains.Import.ConsoleApp.EntityConfiguration;
 
-namespace ScotlandsMountains.Import.ConsoleApp.EntityConfiguration;
-
-public class MountainEntityConfiguration : IEntityTypeConfiguration<Mountain>
+public class MountainEntityConfiguration : BaseEntityConfiguration<Mountain>
 {
-    public void Configure(EntityTypeBuilder<Mountain> builder)
+    public override void Configure(EntityTypeBuilder<Mountain> builder)
     {
-        var aliasesComparer = new ValueComparer<List<string>>(
-            (c1, c2) => c1!.SequenceEqual(c2!),
-            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-            c => c.ToList());
-        
+        base.Configure(builder);
         builder
-            .Property(x => x.Aliases)
-            .HasConversion(
-                x => string.Join('|', x),
-                x => x.Split('|', StringSplitOptions.RemoveEmptyEntries).ToList())
-            .Metadata
-            .SetValueComparer(aliasesComparer);
+            .HasMany(x => x.Classifications)
+            .WithMany(x => x.Mountains)
+            .UsingEntity(x => x.ToTable($"{nameof(Mountain)}{nameof(Classification)}".Pluralize()));
+        builder
+            .HasMany(x => x.Countries)
+            .WithMany(x => x.Mountains)
+            .UsingEntity(x => x.ToTable($"{nameof(Mountain)}{nameof(Country)}".Pluralize()));
+        builder
+            .HasMany(x => x.Maps)
+            .WithMany(x => x.Mountains)
+            .UsingEntity(x => x.ToTable($"{nameof(Mountain)}{nameof(Map)}".Pluralize()));
     }
 }

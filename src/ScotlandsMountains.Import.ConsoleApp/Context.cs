@@ -4,19 +4,15 @@ internal class Context
 {
     public Context(
         FileManager fileManager,
-        IdGenerator idGenerator,
         StatusReporter statusReporter,
         ClassificationData classificationData)
     {
         FileManager = fileManager;
-        IdGenerator = idGenerator;
         StatusReporter = statusReporter;
         ClassificationData = classificationData;
     }
 
     public virtual FileManager FileManager { get; }
-    
-    public virtual IdGenerator IdGenerator { get; }
     
     public virtual StatusReporter StatusReporter { get; }
     

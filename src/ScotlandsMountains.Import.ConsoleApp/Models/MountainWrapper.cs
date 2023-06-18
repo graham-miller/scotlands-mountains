@@ -2,7 +2,7 @@
 
 internal class MountainWrapper
 {
-    public MountainWrapper(DobihRecord record, string id, Context context)
+    public MountainWrapper(DobihRecord record, Context context)
     {
         Dobih = record;
 
@@ -10,7 +10,6 @@ internal class MountainWrapper
 
         Value = new Mountain
         {
-            Id = id,
             Name = name,
             Aliases = aliases,
             Latitude = record.Latitude,
@@ -31,10 +30,10 @@ internal class MountainWrapper
 
     public Mountain Value { get; }
 
-    private static (string, List<string>) ExtractNameAndAliases(string raw)
+    private static (string, List<Alias>) ExtractNameAndAliases(string raw)
     {
         var name = string.Empty;
-        var aliases = new List<string>();
+        var aliases = new List<Alias>();
 
         var inAlias = false;
         var alias = string.Empty;
@@ -45,7 +44,7 @@ internal class MountainWrapper
             {
                 if (letter == ']')
                 {
-                    aliases.Add(alias);
+                    aliases.Add(new Alias { Name = alias.Trim() });
                     inAlias = false;
                 }
                 else
@@ -68,7 +67,7 @@ internal class MountainWrapper
             }
         }
 
-        return (name.Trim().Replace("  ", ""), aliases.Select(x => x.Trim()).ToList());
+        return (name.Trim().Replace("  ", ""), aliases);
     }
 
     private static readonly Regex RawGridRefRegex = new("^[A-Z]{1,2}[0-9 ]{6,12}$");

@@ -2,7 +2,7 @@
 
 internal class RegionWrapper
 {
-    public RegionWrapper(string raw, string id)
+    public RegionWrapper(string raw)
     {
         var split = raw.Split(':');
         Code = split[0].Trim();
@@ -16,7 +16,6 @@ internal class RegionWrapper
 
         Value = new Region
         {
-            Id = id,
             Name = name,
             Code = Code
         };

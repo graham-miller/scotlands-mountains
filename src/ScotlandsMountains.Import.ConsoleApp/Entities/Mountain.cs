@@ -22,7 +22,7 @@ public class Mountain : Entity
 
     public Mountain? Parent { get; set; } = null!;
     
-    public List<string> Aliases { get; set; } = null!;
+    public List<Alias> Aliases { get; set; } = null!;
 
     public List<Classification> Classifications { get; set; } = new();
     

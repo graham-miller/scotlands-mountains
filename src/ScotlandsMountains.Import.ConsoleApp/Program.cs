@@ -31,7 +31,6 @@ AnsiConsole.Status()
 
         var context = new Context(
             new FileManager(),
-            new IdGenerator(),
             new StatusReporter(statusContext, AnsiConsole.Console),
             new ClassificationData());
 

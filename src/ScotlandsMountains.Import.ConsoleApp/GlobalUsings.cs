@@ -17,7 +17,5 @@ global using ScotlandsMountains.Import.ConsoleApp.Config;
 global using ScotlandsMountains.Import.ConsoleApp.Entities;
 global using ScotlandsMountains.Import.ConsoleApp.Models;
 global using ScotlandsMountains.Import.ConsoleApp.Steps;
-global using shortid;
-global using shortid.Configuration;
 global using Spectre.Console;
 global using Region = ScotlandsMountains.Import.ConsoleApp.Entities.Region;

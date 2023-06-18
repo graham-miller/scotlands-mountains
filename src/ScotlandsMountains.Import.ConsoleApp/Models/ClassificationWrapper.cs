@@ -2,13 +2,12 @@
 
 internal class ClassificationWrapper
 {
-    public ClassificationWrapper(ClassificationInfo info, string id)
+    public ClassificationWrapper(ClassificationInfo info)
     {
         Info = info;
 
         Value = new Classification
         {
-            Id = id,
             Name = info.Name,
             DisplayOrder = info.DisplayOrder,
             IsActive = info.IsActive,
