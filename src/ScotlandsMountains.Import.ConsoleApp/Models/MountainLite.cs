@@ -28,23 +28,23 @@ public class MountainLite
 
     public string Name { get; }
 
-    public decimal Latitude { get; set; }
+    public double Latitude { get; set; }
 
-    public decimal Longitude { get; set; }
+    public double Longitude { get; set; }
 
     public string GridRef { get; }
 
-    public decimal Height { get; set; }
+    public double Height { get; set; }
 
     public string? Feature { get; set; }
 
     public string? Observations { get; set; }
 
-    public decimal Drop { get; set; }
+    public double Drop { get; set; }
 
     public string Col { get; }
 
-    public decimal ColHeight { get; set; }
+    public double ColHeight { get; set; }
 
     public string? Parent { get; }
 

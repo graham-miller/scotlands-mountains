@@ -17,7 +17,7 @@ public class MapLite
 
     public string Code { get; }
 
-    public decimal Scale { get; }
+    public double Scale { get; }
 
     public List<string> Mountains { get; }
 }

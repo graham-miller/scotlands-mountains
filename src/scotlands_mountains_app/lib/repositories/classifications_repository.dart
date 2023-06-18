@@ -23,12 +23,12 @@ class ClassificationsRepository {
   List<Classification> _toEntities(List<Map<String, dynamic>> maps) {
     return List.generate(maps.length, (i) {
       return Classification(
-        id: maps[i]['Id'],
-        displayOrder: maps[i]['DisplayOrder'],
-        isActive: maps[i]['IsActive'],
-        nameSingular: maps[i]['NameSingular'],
-        description: maps[i]['Description'],
-        name: maps[i]['Name'],
+        id: maps[i]['id'],
+        displayOrder: maps[i]['displayOrder'],
+        isActive: maps[i]['isActive'],
+        nameSingular: maps[i]['nameSingular'],
+        description: maps[i]['description'],
+        name: maps[i]['name'],
       );
     });
   }

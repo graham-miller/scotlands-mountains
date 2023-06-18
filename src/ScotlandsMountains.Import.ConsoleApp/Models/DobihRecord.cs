@@ -105,7 +105,7 @@ public record DobihRecord
     public string? Map1To25K { get; set; }
 
     [Name("Metres")]
-    public decimal Metres { get; set; }
+    public double Metres { get; set; }
 
     [Name("Feet")]
     public int Feet { get; set; }
@@ -127,7 +127,7 @@ public record DobihRecord
     /// Drops given to 0.1m are from surveys or LIDAR.
     /// </summary>
     [Name("Drop")]
-    public decimal Drop { get; set; }
+    public double Drop { get; set; }
 
     /// <summary>
     /// Cols are usually much less well defined than summits. Some 6-figure col grid references are subject to considerable uncertainty; even when spot heights are available, they are not always located at the col. Within much of Ireland there is no data beyond contouring for col position and height. There is, therefore, much greater use of contour interpolation and consequently lower accuracy.
@@ -140,7 +140,7 @@ public record DobihRecord
     /// Col heights given to 0.1m are from surveys or LIDAR.
     /// </summary>
     [Name("Col height")]
-    public decimal ColHeight { get; set; }
+    public double ColHeight { get; set; }
 
     /// <summary>
     /// <para>The feature on or around the summit to which the 10 figure grid reference refers. The summit area may be adorned with several objects (trig pillar, cairn, wind-shelter, fence etc.) and the resolution of the GPS is usually sufficient to be able to distinguish the positions of these features. Note that a cairn or trig pillar is not always at the highest point of the hill, which may itself be featureless. Consequently, the Feature field may contain the entry 'no feature' even though a cairn, trig or other feature is in the vicinity. This is particularly likely for hills that have been surveyed. In such cases the Observations field may contain a ten figure grid reference for the cairn or trig.</para>
@@ -222,13 +222,13 @@ public record DobihRecord
     /// WGS84 coordinates calculated from the xcoord, ycoord values. The accuracy will depend on the source of the measurement. Use of latitude/longitude gives compatibility across Britain, Ireland and the Channel Islands. Not available in Hill Bagging except by showing the map and moving the cursor to the triangle marker.
     /// </summary>
     [Name("Latitude")]
-    public decimal Latitude { get; set; }
+    public double Latitude { get; set; }
 
     /// <summary>
     /// WGS84 coordinates calculated from the xcoord, ycoord values. The accuracy will depend on the source of the measurement. Use of latitude/longitude gives compatibility across Britain, Ireland and the Channel Islands. Not available in Hill Bagging except by showing the map and moving the cursor to the triangle marker.
     /// </summary>
     [Name("Longitude")]
-    public decimal Longitude { get; set; }
+    public double Longitude { get; set; }
 
     /// <summary>
     /// <para>True 10-figure grid reference, for use with maps. Exactly equivalent to xcoord, ycoord.</para>
@@ -242,7 +242,7 @@ public record DobihRecord
     /// </summary>
     [Name("_Section")]
 #pragma warning disable IDE1006
-    public decimal _Section { get; set; }
+    public double _Section { get; set; }
 #pragma warning restore IDE1006
 
     /// <summary>

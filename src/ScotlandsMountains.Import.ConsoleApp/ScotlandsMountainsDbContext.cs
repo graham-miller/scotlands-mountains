@@ -21,13 +21,21 @@ public class ScotlandsMountainsDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlite($"Data Source={_dbFile.FullName}");
+        options
+            .UseSqlite($"Data Source={_dbFile.FullName}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ScotlandsMountainsDbContext).Assembly);
+
+        foreach (var entity in modelBuilder.Model.GetEntityTypes())
+        {
+            foreach (var property in entity.GetProperties())
+            {
+                property.SetColumnName(property.GetColumnName().Camelize());
+            }
+        }
     }
 }

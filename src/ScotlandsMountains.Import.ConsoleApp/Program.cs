@@ -13,7 +13,7 @@ var steps = new List<Step>
     new PrepareData(),
     new WriteDataToFileStep(),
     new CreateAndPopulateDatabaseStep(),
-    //new CopyDatabaseToAppResourcesStep()
+    new CopyDatabaseToAppAssetsStep()
 };
 
 AnsiConsole.Write(

@@ -18,7 +18,6 @@ class Data {
   String? _path;
 
   Future initialize() async {
-    print("Data.initialize()");
     _path = join(await getDatabasesPath(), _dbFileName);
 
     var file = File(_path!);
@@ -34,7 +33,6 @@ class Data {
   }
 
   Future<Database> getDatabase() async {
-    print("Data.getDatabase()");
     if (_path == null) {
       await initialize();
     }

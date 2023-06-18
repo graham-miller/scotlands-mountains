@@ -6,8 +6,8 @@ internal class CreateAndAssignMapsStep : Step
 
     protected override void Implementation(Context context)
     {
-        var lookup1To50K = GetMaps(x => x.Map1To50K, decimal.Divide(1, 50_000), context);
-        var lookup1To25K = GetMaps(x => x.Map1To25K, decimal.Divide(1, 25_000), context);
+        var lookup1To50K = GetMaps(x => x.Map1To50K, 1.0/50_000, context);
+        var lookup1To25K = GetMaps(x => x.Map1To25K, 1.0/25_000, context);
 
         context.Maps = lookup1To50K.Values.Select(x => x.Map).Concat(lookup1To25K.Values.Select(x => x.Map)).ToList();
 
@@ -28,7 +28,7 @@ internal class CreateAndAssignMapsStep : Step
 
     protected override string GetSuccessMessage(Context context) => $"Created and assigned {context.Maps.Count:#,##0} maps";
 
-    private static IDictionary<string, MapWrapper> GetMaps(Func<DobihRecord, string?> mapsFunc, decimal scale, Context context)
+    private static IDictionary<string, MapWrapper> GetMaps(Func<DobihRecord, string?> mapsFunc, double scale, Context context)
     {
         return context.DobihRecords
             .Select(mapsFunc)
