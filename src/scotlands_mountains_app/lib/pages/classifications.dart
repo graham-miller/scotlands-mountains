@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:scotlands_mountains_app/repositories/classifications_repository.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
+import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
 import '../models/mountain.dart';
 import '../widgets/sm_app_bar.dart';
 
@@ -41,19 +42,25 @@ class _ClassificationsState extends State<Classifications> {
 
     return Scaffold(
       appBar: const SmAppBar(),
-      body: ListView(
-          children: _mountains
-              .asMap()
-              .entries
-              .map((i) => ListTile(
-                    leading:
-                        CircleAvatar(child: Text(((i.key) + 1).toString())),
-                    title: Text(i.value.name),
-                    subtitle: Text(
-                        '${heightFormat.format(i.value.height)}m (${heightFormat.format(i.value.height * 3.28084)}ft)'),
-                    trailing: const Icon(Icons.more_vert),
-                  ))
-              .toList()),
+      body: Column(
+        children: [
+          const ClassificationSelector(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _mountains.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(child: Text(((index) + 1).toString())),
+                  title: Text(_mountains[index].name),
+                  subtitle: Text(
+                      '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
+                  trailing: const Icon(Icons.more_vert),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
