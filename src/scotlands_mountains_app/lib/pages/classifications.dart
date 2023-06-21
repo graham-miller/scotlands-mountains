@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:scotlands_mountains_app/repositories/classifications_repository.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
 import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
@@ -49,19 +51,23 @@ class _ClassificationsState extends State<Classifications> {
           ClassificationSelector(
               onClassificationSelected: (c) => _loadMountains(c)),
           Expanded(
-            child: ListView.builder(
-              itemCount: _mountains.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(child: Text(((index) + 1).toString())),
-                  title: Text(_mountains[index].name),
-                  subtitle: Text(
-                      '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
-                  trailing: const Icon(Icons.more_vert),
-                );
-              },
-            ),
-          ),
+              child: MapWidget(
+                  resourceOptions: ResourceOptions(
+                      accessToken:
+                          dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN'] ?? ''))
+              // child: ListView.builder(
+              //   itemCount: _mountains.length,
+              //   itemBuilder: (context, index) {
+              //     return ListTile(
+              //       leading: CircleAvatar(child: Text(((index) + 1).toString())),
+              //       title: Text(_mountains[index].name),
+              //       subtitle: Text(
+              //           '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
+              //       trailing: const Icon(Icons.more_vert),
+              //     );
+              //   },
+              // ),
+              ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
