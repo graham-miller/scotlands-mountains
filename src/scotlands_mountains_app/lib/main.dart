@@ -4,7 +4,7 @@ import './pages/loading.dart';
 import './pages/classifications.dart';
 
 Future main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".local");
   runApp(const MyApp());
 }
 
