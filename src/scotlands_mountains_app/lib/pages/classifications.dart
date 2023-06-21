@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:scotlands_mountains_app/repositories/classifications_repository.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
 import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
+import '../models/classification.dart';
 import '../models/mountain.dart';
 import '../widgets/sm_app_bar.dart';
 
@@ -17,11 +18,11 @@ class _ClassificationsState extends State<Classifications> {
   List<Mountain> _mountains = List.empty();
 
   _ClassificationsState() {
-    _loadMountains();
+    _loadMountains(null);
   }
 
-  void _loadMountains() async {
-    final classification = await ClassificationsRepository().getDefault();
+  void _loadMountains(Classification? classification) async {
+    classification ??= await ClassificationsRepository().getDefault();
     final mountains =
         await MountainsRepository().getByClassificationId(classification.id);
 
@@ -33,7 +34,7 @@ class _ClassificationsState extends State<Classifications> {
   @override
   void initState() {
     super.initState();
-    _loadMountains();
+    _loadMountains(null);
   }
 
   @override
@@ -44,7 +45,8 @@ class _ClassificationsState extends State<Classifications> {
       appBar: const SmAppBar(),
       body: Column(
         children: [
-          const ClassificationSelector(),
+          ClassificationSelector(
+              onClassificationSelected: (c) => _loadMountains(c)),
           Expanded(
             child: ListView.builder(
               itemCount: _mountains.length,

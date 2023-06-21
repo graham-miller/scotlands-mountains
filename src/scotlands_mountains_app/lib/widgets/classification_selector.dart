@@ -4,7 +4,10 @@ import '../models/classification.dart';
 import '../repositories/classifications_repository.dart';
 
 class ClassificationSelector extends StatefulWidget {
-  const ClassificationSelector({super.key});
+  final Function onClassificationSelected;
+
+  const ClassificationSelector(
+      {super.key, required this.onClassificationSelected});
 
   @override
   State<ClassificationSelector> createState() => _ClassificationSelectorState();
@@ -45,6 +48,7 @@ class _ClassificationSelectorState extends State<ClassificationSelector> {
                   value: c, child: Text(c.name)))
               .toList(),
           onChanged: (value) => setState(() {
+            widget.onClassificationSelected(value);
             _selected = value;
           }),
         ));
