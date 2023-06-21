@@ -16,6 +16,7 @@ class Classifications extends StatefulWidget {
 
 class _ClassificationsState extends State<Classifications> {
   List<Mountain> _mountains = List.empty();
+  int tabIndex = 0;
 
   _ClassificationsState() {
     _loadMountains(null);
@@ -63,6 +64,21 @@ class _ClassificationsState extends State<Classifications> {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'List',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              label: 'Map',
+            ),
+          ],
+          currentIndex: tabIndex,
+          onTap: (i) => setState(() {
+                tabIndex = i;
+              })),
     );
   }
 }
