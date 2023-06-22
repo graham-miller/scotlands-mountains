@@ -40,6 +40,18 @@ class _ClassificationsState extends State<Classifications> {
     _loadMountains(null);
   }
 
+  void _onMapCreated(MapboxMap mapboxMap) {
+    print('map created');
+    mapboxMap.setBounds(CameraBoundsOptions(
+        bounds: CoordinateBounds(
+            southwest: Point(coordinates: Position(-9, 54)).toJson(),
+            northeast: Point(coordinates: Position(0, 61)).toJson(),
+            infiniteBounds: false)));
+    mapboxMap.setCamera(CameraOptions(
+        zoom: 6,
+        center: Point(coordinates: Position(-4.18265, 56.816922)).toJson()));
+  }
+
   @override
   Widget build(BuildContext context) {
     final heightFormat = NumberFormat("#,###", "en_GB");
@@ -51,23 +63,24 @@ class _ClassificationsState extends State<Classifications> {
           ClassificationSelector(
               onClassificationSelected: (c) => _loadMountains(c)),
           Expanded(
-              child: MapWidget(
-                  resourceOptions: ResourceOptions(
-                      accessToken:
-                          dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN'] ?? ''))
-              // child: ListView.builder(
-              //   itemCount: _mountains.length,
-              //   itemBuilder: (context, index) {
-              //     return ListTile(
-              //       leading: CircleAvatar(child: Text(((index) + 1).toString())),
-              //       title: Text(_mountains[index].name),
-              //       subtitle: Text(
-              //           '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
-              //       trailing: const Icon(Icons.more_vert),
-              //     );
-              //   },
-              // ),
-              ),
+            child: MapWidget(
+              resourceOptions: ResourceOptions(
+                  accessToken: dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN'] ?? ''),
+              onMapCreated: _onMapCreated,
+            ),
+            // child: ListView.builder(
+            //   itemCount: _mountains.length,
+            //   itemBuilder: (context, index) {
+            //     return ListTile(
+            //       leading: CircleAvatar(child: Text(((index) + 1).toString())),
+            //       title: Text(_mountains[index].name),
+            //       subtitle: Text(
+            //           '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
+            //       trailing: const Icon(Icons.more_vert),
+            //     );
+            //   },
+            // ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
