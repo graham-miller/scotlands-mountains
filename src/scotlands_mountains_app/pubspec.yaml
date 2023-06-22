@@ -33,8 +33,9 @@ dependencies:
   sqflite:
   path:
   intl:
-  mapbox_maps_flutter:
   flutter_dotenv:
+  flutter_map:
+  latlong2:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

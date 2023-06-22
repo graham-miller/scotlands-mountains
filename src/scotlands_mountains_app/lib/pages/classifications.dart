@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
-import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:scotlands_mountains_app/repositories/classifications_repository.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
 import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
 import '../models/classification.dart';
 import '../models/mountain.dart';
+import '../repositories/classifications_repository.dart';
 import '../widgets/sm_app_bar.dart';
 
 class Classifications extends StatefulWidget {
@@ -40,16 +41,41 @@ class _ClassificationsState extends State<Classifications> {
     _loadMountains(null);
   }
 
-  void _onMapCreated(MapboxMap mapboxMap) {
-    print('map created');
-    mapboxMap.setBounds(CameraBoundsOptions(
-        bounds: CoordinateBounds(
-            southwest: Point(coordinates: Position(-9, 54)).toJson(),
-            northeast: Point(coordinates: Position(0, 61)).toJson(),
-            infiniteBounds: false)));
-    mapboxMap.setCamera(CameraOptions(
-        zoom: 6,
-        center: Point(coordinates: Position(-4.18265, 56.816922)).toJson()));
+  Widget getMap() {
+    var mapController = MapController();
+    var mapOptions = MapOptions(
+      maxBounds: LatLngBounds(const LatLng(54, -9), const LatLng(61, 0)),
+      center: const LatLng(56.816922, -4.18265),
+      zoom: 7,
+    );
+
+    final accessToken = dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN'] ?? '';
+    // https://docs.mapbox.com/api/maps/static-tiles/
+    //mapbox://styles/mapbox/outdoors-v12
+    final url =
+        'https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/512/{z}/{x}/{y}@2x?access_token=' +
+            accessToken;
+
+    return FlutterMap(
+      mapController: mapController,
+      options: mapOptions,
+      children: [
+        TileLayer(
+          urlTemplate: url,
+        ),
+        MarkerLayer(
+            markers: _mountains
+                .map((m) => Marker(
+                    point: LatLng(m.latitude, m.longitude),
+                    height: m.height,
+                    builder: (x) => const Icon(
+                          Icons.place,
+                          size: 30,
+                          color: Colors.purple,
+                        )))
+                .toList())
+      ],
+    );
   }
 
   @override
@@ -63,24 +89,21 @@ class _ClassificationsState extends State<Classifications> {
           ClassificationSelector(
               onClassificationSelected: (c) => _loadMountains(c)),
           Expanded(
-            child: MapWidget(
-              resourceOptions: ResourceOptions(
-                  accessToken: dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN'] ?? ''),
-              onMapCreated: _onMapCreated,
-            ),
-            // child: ListView.builder(
-            //   itemCount: _mountains.length,
-            //   itemBuilder: (context, index) {
-            //     return ListTile(
-            //       leading: CircleAvatar(child: Text(((index) + 1).toString())),
-            //       title: Text(_mountains[index].name),
-            //       subtitle: Text(
-            //           '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
-            //       trailing: const Icon(Icons.more_vert),
-            //     );
-            //   },
-            // ),
+            child: getMap(),
           ),
+          // child: ListView.builder(
+          //   itemCount: _mountains.length,
+          //   itemBuilder: (context, index) {
+          //     return ListTile(
+          //       leading: CircleAvatar(child: Text(((index) + 1).toString())),
+          //       title: Text(_mountains[index].name),
+          //       subtitle: Text(
+          //           '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
+          //       trailing: const Icon(Icons.more_vert),
+          //     );
+          //   },
+          //   ),
+          // ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
