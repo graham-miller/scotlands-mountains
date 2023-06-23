@@ -17,7 +17,7 @@ class Classifications extends StatefulWidget {
 
 class _ClassificationsState extends State<Classifications> {
   List<Mountain> _mountains = List.empty();
-  bool showMap = false;
+  bool _showMap = false;
 
   _ClassificationsState() {
     _loadMountains(null);
@@ -48,7 +48,7 @@ class _ClassificationsState extends State<Classifications> {
           ClassificationSelector(
               onClassificationSelected: (c) => _loadMountains(c)),
           Expanded(
-              child: showMap
+              child: _showMap
                   ? MountainsMap(mountains: _mountains)
                   : MountainsList(mountains: _mountains)),
         ],
@@ -64,9 +64,9 @@ class _ClassificationsState extends State<Classifications> {
               label: 'Map',
             ),
           ],
-          currentIndex: showMap ? 1 : 0,
+          currentIndex: _showMap ? 1 : 0,
           onTap: (i) => setState(() {
-                showMap = i == 1;
+                _showMap = i == 1;
               })),
     );
   }
