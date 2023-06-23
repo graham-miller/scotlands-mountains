@@ -14,34 +14,30 @@ class MountainsMap extends StatelessWidget {
   //mapbox://styles/mapbox/outdoors-v12
   final url =
       'https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/512/{z}/{x}/{y}@2x?access_token=';
-  final mapBounds = LatLngBounds(LatLng(54, -9), LatLng(61, 0));
-  final mapCenter = LatLng(56.816922, -4.18265);
-  final mapZoom = 7.0;
+  final mapController = MapController();
+  final mapOptions = MapOptions(
+    maxBounds: LatLngBounds(LatLng(54, -9), LatLng(61, 0)),
+    center: LatLng(56.816922, -4.18265),
+    zoom: 7,
+  );
 
   MountainsMap({super.key, required this.mountains});
 
   @override
   Widget build(BuildContext context) {
-    final mapController = MapController();
-    final mapOptions = MapOptions(
-      maxBounds: mapBounds,
-      center: mapCenter,
-      zoom: mapZoom,
-    );
-
     return FlutterMap(
       mapController: mapController,
       options: mapOptions,
       children: [
         TileLayer(urlTemplate: url + accessToken),
-        MarkerClusterLayerWidget(
-            options: getMarkerClusterLayerOptions(context)),
+        getMarkerClusterLayer(context),
       ],
     );
   }
 
-  MarkerClusterLayerOptions getMarkerClusterLayerOptions(BuildContext context) {
-    return MarkerClusterLayerOptions(
+  MarkerClusterLayerWidget getMarkerClusterLayer(BuildContext context) {
+    return MarkerClusterLayerWidget(
+        options: MarkerClusterLayerOptions(
       maxClusterRadius: 45,
       size: const Size(30, 30),
       anchor: AnchorPos.align(AnchorAlign.center),
@@ -53,16 +49,17 @@ class MountainsMap extends StatelessWidget {
       builder: (context, markers) {
         return Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15), color: Colors.purple),
+              borderRadius: BorderRadius.circular(15),
+              color: Theme.of(context).primaryColor),
           child: Center(
             child: Text(
               markers.length.toString(),
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Theme.of(context).indicatorColor),
             ),
           ),
         );
       },
-    );
+    ));
   }
 
   Marker getMarker(Mountain mountain, BuildContext context) {
@@ -70,10 +67,10 @@ class MountainsMap extends StatelessWidget {
         point: LatLng(mountain.latitude, mountain.longitude),
         height: mountain.height,
         builder: (x) => GestureDetector(
-              child: const Icon(
+              child: Icon(
                 Icons.place,
                 size: 30,
-                color: Colors.purple,
+                color: Theme.of(context).primaryColor,
               ),
               onTap: () => showDialog<String>(
                 context: context,
