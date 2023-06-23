@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
       title: 'Scotland\'s Mountains',
       theme: ThemeData(
         brightness: Brightness.light,
-        colorScheme: ColorScheme.light(), //.fromSeed(seedColor: Colors.grey),
+        colorScheme:
+            const ColorScheme.light(), //.fromSeed(seedColor: Colors.grey),
         useMaterial3: true,
       ),
       initialRoute: '/loading',
