@@ -26,8 +26,6 @@ class _MountainsMapState extends State<MountainsMap> {
 
   final _mapController = MapController();
 
-  double _rotation = 0;
-
   @override
   Widget build(BuildContext context) {
     final mapOptions = MapOptions(
@@ -37,9 +35,7 @@ class _MountainsMapState extends State<MountainsMap> {
       onMapReady: () {
         _mapController.mapEventStream.listen((event) {
           if (event is MapEventRotate) {
-            setState(() {
-              _rotation = _mapController.rotation;
-            });
+            setState(() {});
           }
         });
       },
@@ -48,6 +44,15 @@ class _MountainsMapState extends State<MountainsMap> {
     return FlutterMap(
       mapController: _mapController,
       options: mapOptions,
+      nonRotatedChildren: [
+        RichAttributionWidget(
+          showFlutterMapAttribution: false,
+          openButton: (context, open) =>
+              IconButton(icon: Icon(Icons.map), onPressed: () => open()),
+          alignment: AttributionAlignment.bottomLeft,
+          attributions: [TextSourceAttribution('Hello world')],
+        ),
+      ],
       children: [
         TileLayer(urlTemplate: _url + _accessToken),
         getMarkerClusterLayer(context),
@@ -55,33 +60,33 @@ class _MountainsMapState extends State<MountainsMap> {
     );
   }
 
-  MarkerClusterLayerWidget getMarkerClusterLayer(BuildContext context) {
+  Widget getMarkerClusterLayer(BuildContext context) {
     return MarkerClusterLayerWidget(
         options: MarkerClusterLayerOptions(
-      maxClusterRadius: 45,
-      size: const Size(30, 30),
-      anchor: AnchorPos.align(AnchorAlign.center),
-      fitBoundsOptions: const FitBoundsOptions(
-        padding: EdgeInsets.all(50),
-        maxZoom: 15,
-      ),
-      markers: widget.mountains.map((m) => getMarker(m, context)).toList(),
-      builder: (context, markers) {
-        return rotateWithMap(
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Theme.of(context).primaryColor),
-            child: Center(
-              child: Text(
-                markers.length.toString(),
-                style: TextStyle(color: Theme.of(context).indicatorColor),
-              ),
+            maxClusterRadius: 45,
+            size: const Size(30, 30),
+            anchor: AnchorPos.align(AnchorAlign.center),
+            fitBoundsOptions: const FitBoundsOptions(
+              padding: EdgeInsets.all(50),
+              maxZoom: 15,
             ),
-          ),
-        );
-      },
-    ));
+            markers:
+                widget.mountains.map((m) => getMarker(m, context)).toList(),
+            builder: (context, markers) {
+              return rotateWithMap(
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Theme.of(context).primaryColor),
+                  child: Center(
+                    child: Text(
+                      markers.length.toString(),
+                      style: TextStyle(color: Theme.of(context).indicatorColor),
+                    ),
+                  ),
+                ),
+              );
+            }));
   }
 
   Marker getMarker(Mountain mountain, BuildContext context) {
@@ -115,6 +120,7 @@ class _MountainsMapState extends State<MountainsMap> {
   }
 
   Widget rotateWithMap({required Widget child}) {
-    return Transform.rotate(angle: -_rotation * math.pi / 180, child: child);
+    return Transform.rotate(
+        angle: -_mapController.rotation * math.pi / 180, child: child);
   }
 }
