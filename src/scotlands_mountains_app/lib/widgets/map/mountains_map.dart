@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:scotlands_mountains_app/widgets/map/map_controls.dart';
 import 'mapbox_attribution.dart';
+import 'mapbox_tile_layer.dart';
 import 'mountain_layer.dart';
 
 import '../../models/mountain.dart';
@@ -17,21 +17,27 @@ class MountainsMap extends StatefulWidget {
   State<MountainsMap> createState() => _MountainsMapState();
 }
 
+enum Layer { outdoors, streets, satellite, satelliteStreets }
+
 class _MountainsMapState extends State<MountainsMap> {
-  final _accessToken = dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN'] ?? '';
+  final Map<Layer, TileLayer> _layers = {
+    Layer.outdoors: MapboxTileLayer(styleId: 'outdoors-v12'),
+    Layer.streets: MapboxTileLayer(styleId: 'streets-v12'),
+    Layer.satellite: MapboxTileLayer(styleId: 'satellite-v9'),
+    Layer.satelliteStreets: MapboxTileLayer(styleId: 'satellite-streets-v12'),
+  };
 
-  // https://docs.mapbox.com/api/maps/static-tiles/
-  final _url =
-      'https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/512/{z}/{x}/{y}@2x?access_token=';
-
+  final _defaultCenter = LatLng(56.816922, -4.18265);
+  final _defaultZoom = 7.0;
+  final _defaultRotation = 0.0;
   final _mapController = MapController();
 
   @override
   Widget build(BuildContext context) {
     final mapOptions = MapOptions(
       maxBounds: LatLngBounds(LatLng(54, -9), LatLng(61, 0)),
-      center: LatLng(56.816922, -4.18265),
-      zoom: 7,
+      center: _defaultCenter,
+      zoom: _defaultZoom,
       onMapReady: () {
         _mapController.mapEventStream.listen((event) {
           if (event is MapEventRotate) {
@@ -48,12 +54,13 @@ class _MountainsMapState extends State<MountainsMap> {
         const MapboxAttribution(),
         MapControls(
           onReset: () {
-            _mapController.move(LatLng(56.816922, -4.18265), 7);
+            _mapController.move(_defaultCenter, _defaultZoom);
+            _mapController.rotate(_defaultRotation);
           },
         )
       ],
       children: [
-        TileLayer(urlTemplate: _url + _accessToken),
+        _layers[Layer.outdoors]!,
         MountainLayer(
           mapController: _mapController,
           mountains: widget.mountains,
