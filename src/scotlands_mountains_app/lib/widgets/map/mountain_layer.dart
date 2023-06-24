@@ -36,7 +36,8 @@ class MountainLayer extends StatelessWidget {
                   child: Center(
                     child: Text(
                       markers.length.toString(),
-                      style: TextStyle(color: Theme.of(context).indicatorColor),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                   ),
                 ),
