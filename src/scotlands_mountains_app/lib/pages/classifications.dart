@@ -4,7 +4,7 @@ import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
 import '../models/classification.dart';
 import '../models/mountain.dart';
 import '../repositories/classifications_repository.dart';
-import '../widgets/mountains_map.dart';
+import '../widgets/map/mountains_map.dart';
 import '../widgets/sm_app_bar.dart';
 import '../widgets/mountains_list.dart';
 

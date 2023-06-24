@@ -1,13 +1,13 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:scotlands_mountains_app/widgets/mountain_height.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'mapbox_attribution.dart';
+import 'rotate_with_map.dart';
+import '../mountain_height.dart';
 
-import '../models/mountain.dart';
+import '../../models/mountain.dart';
 
 class MountainsMap extends StatefulWidget {
   final List<Mountain> mountains;
@@ -45,47 +45,8 @@ class _MountainsMapState extends State<MountainsMap> {
     return FlutterMap(
       mapController: _mapController,
       options: mapOptions,
-      nonRotatedChildren: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GestureDetector(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child:
-                        Image.asset('assets/mapbox-logo-white.png', height: 25),
-                  ),
-                  Icon(Icons.info_outline, color: Colors.white)
-                ],
-              ),
-              onTap: () => showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title:
-                      Image.asset('assets/mapbox-logo-black.png', height: 25),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text('© Mapbox'),
-                      const Text('© OpenStreetMap'),
-                      const Text('Improve this map'),
-                    ],
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('Close'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        )
+      nonRotatedChildren: const [
+        MapboxAttribution(),
       ],
       children: [
         TileLayer(urlTemplate: _url + _accessToken),
@@ -107,7 +68,8 @@ class _MountainsMapState extends State<MountainsMap> {
             markers:
                 widget.mountains.map((m) => getMarker(m, context)).toList(),
             builder: (context, markers) {
-              return rotateWithMap(
+              return RotateWithMap(
+                mapController: _mapController,
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -127,7 +89,8 @@ class _MountainsMapState extends State<MountainsMap> {
     return Marker(
         point: LatLng(mountain.latitude, mountain.longitude),
         height: mountain.height,
-        builder: (x) => rotateWithMap(
+        builder: (x) => RotateWithMap(
+              mapController: _mapController,
               child: GestureDetector(
                 child: Icon(
                   Icons.place,
@@ -151,10 +114,5 @@ class _MountainsMapState extends State<MountainsMap> {
                 ),
               ),
             ));
-  }
-
-  Widget rotateWithMap({required Widget child}) {
-    return Transform.rotate(
-        angle: -_mapController.rotation * math.pi / 180, child: child);
   }
 }
