@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:scotlands_mountains_app/widgets/map/map_controls.dart';
 import 'mapbox_attribution.dart';
 import 'mountain_layer.dart';
 
@@ -43,8 +44,13 @@ class _MountainsMapState extends State<MountainsMap> {
     return FlutterMap(
       mapController: _mapController,
       options: mapOptions,
-      nonRotatedChildren: const [
-        MapboxAttribution(),
+      nonRotatedChildren: [
+        const MapboxAttribution(),
+        MapControls(
+          onReset: () {
+            _mapController.move(LatLng(56.816922, -4.18265), 7);
+          },
+        )
       ],
       children: [
         TileLayer(urlTemplate: _url + _accessToken),
