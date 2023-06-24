@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:scotlands_mountains_app/widgets/mountain_height.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/mountain.dart';
 
@@ -45,13 +46,46 @@ class _MountainsMapState extends State<MountainsMap> {
       mapController: _mapController,
       options: mapOptions,
       nonRotatedChildren: [
-        RichAttributionWidget(
-          showFlutterMapAttribution: false,
-          openButton: (context, open) =>
-              IconButton(icon: Icon(Icons.map), onPressed: () => open()),
-          alignment: AttributionAlignment.bottomLeft,
-          attributions: [TextSourceAttribution('Hello world')],
-        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            GestureDetector(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+                        Image.asset('assets/mapbox-logo-white.png', height: 25),
+                  ),
+                  Icon(Icons.info_outline, color: Colors.white)
+                ],
+              ),
+              onTap: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title:
+                      Image.asset('assets/mapbox-logo-black.png', height: 25),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('© Mapbox'),
+                      const Text('© OpenStreetMap'),
+                      const Text('Improve this map'),
+                    ],
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Close'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        )
       ],
       children: [
         TileLayer(urlTemplate: _url + _accessToken),
