@@ -7,6 +7,7 @@ import 'mapbox_tile_layer.dart';
 import 'mountain_layer.dart';
 
 import '../../models/mountain.dart';
+import 'scalebar.dart';
 
 class MountainsMap extends StatefulWidget {
   final List<Mountain> mountains;
@@ -55,6 +56,13 @@ class _MountainsMapState extends State<MountainsMap> {
       mapController: _mapController,
       options: mapOptions,
       nonRotatedChildren: [
+        Scalebar(
+            options: ScalebarOptions(
+          lineColor: Colors.white,
+          lineWidth: 2,
+          textStyle: const TextStyle(color: Colors.white, fontSize: 12),
+          padding: const EdgeInsets.all(8),
+        )),
         const MapboxAttribution(),
         MapControls(
           onReset: () {

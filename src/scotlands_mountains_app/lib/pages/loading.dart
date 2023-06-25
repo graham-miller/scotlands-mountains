@@ -12,22 +12,16 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SmAppBar(),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Loading'),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.replay_circle_filled),
-      ),
-    );
+    return const Scaffold(
+        appBar: SmAppBar(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Loading'),
+            ],
+          ),
+        ));
   }
 
   void copyDbToAppData() async {
