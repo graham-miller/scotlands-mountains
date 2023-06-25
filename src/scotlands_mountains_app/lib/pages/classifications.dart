@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:scotlands_mountains_app/repositories/classifications_repository.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
 import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
 import '../models/classification.dart';
 import '../models/mountain.dart';
+import '../repositories/classifications_repository.dart';
+import '../widgets/map/mountains_map.dart';
 import '../widgets/sm_app_bar.dart';
+import '../widgets/mountains_list.dart';
 
 class Classifications extends StatefulWidget {
   const Classifications({super.key});
@@ -16,7 +17,7 @@ class Classifications extends StatefulWidget {
 
 class _ClassificationsState extends State<Classifications> {
   List<Mountain> _mountains = List.empty();
-  int tabIndex = 0;
+  bool _showMap = false;
 
   _ClassificationsState() {
     _loadMountains(null);
@@ -40,8 +41,6 @@ class _ClassificationsState extends State<Classifications> {
 
   @override
   Widget build(BuildContext context) {
-    final heightFormat = NumberFormat("#,###", "en_GB");
-
     return Scaffold(
       appBar: const SmAppBar(),
       body: Column(
@@ -49,19 +48,9 @@ class _ClassificationsState extends State<Classifications> {
           ClassificationSelector(
               onClassificationSelected: (c) => _loadMountains(c)),
           Expanded(
-            child: ListView.builder(
-              itemCount: _mountains.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(child: Text(((index) + 1).toString())),
-                  title: Text(_mountains[index].name),
-                  subtitle: Text(
-                      '${heightFormat.format(_mountains[index].height)}m (${heightFormat.format(_mountains[index].height * 3.28084)}ft)'),
-                  trailing: const Icon(Icons.more_vert),
-                );
-              },
-            ),
-          ),
+              child: _showMap
+                  ? MountainsMap(mountains: _mountains)
+                  : MountainsList(mountains: _mountains)),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -75,9 +64,9 @@ class _ClassificationsState extends State<Classifications> {
               label: 'Map',
             ),
           ],
-          currentIndex: tabIndex,
+          currentIndex: _showMap ? 1 : 0,
           onTap: (i) => setState(() {
-                tabIndex = i;
+                _showMap = i == 1;
               })),
     );
   }

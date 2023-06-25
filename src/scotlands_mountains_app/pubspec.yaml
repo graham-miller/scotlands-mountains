@@ -33,6 +33,11 @@ dependencies:
   sqflite:
   path:
   intl:
+  flutter_dotenv:
+  flutter_map:
+  latlong2:
+  flutter_map_marker_cluster:
+  url_launcher:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -62,6 +67,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - .local
+    - assets/mapbox-logo-black.svg
+    - assets/mapbox-logo-black.png
+    - assets/mapbox-logo-white.svg
+    - assets/mapbox-logo-white.png
     - assets/scotlands_mountains.db
 
   # An image asset can refer to one or more resolution-specific "variants", see
