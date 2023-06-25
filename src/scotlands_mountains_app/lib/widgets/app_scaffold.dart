@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'menu.dart';
+import 'title_logo.dart';
 
 class AppScaffold extends StatelessWidget {
   final Widget body;
@@ -13,25 +13,13 @@ class AppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scotland\'s Mountains'),
-        //     style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
-        // backgroundColor: Theme.of(context).colorScheme.primary,
-        leading: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: CircleAvatar(
-              child: Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: SvgPicture.asset(
-              'assets/logo.svg',
-              colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
-            ),
-          )),
+        title: TitleLogo(
+          color: Theme.of(context).colorScheme.onSecondary,
         ),
         actions: [
           Builder(
               builder: (context) => IconButton(
-                    icon: const Icon(Icons.menu),
+                    icon: const Icon(Icons.account_circle),
                     onPressed: () => Scaffold.of(context).openDrawer(),
                   )),
         ],

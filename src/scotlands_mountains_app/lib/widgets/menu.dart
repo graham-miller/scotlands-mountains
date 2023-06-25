@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'title_logo.dart';
+
 class Menu extends StatelessWidget {
   const Menu({super.key});
 
@@ -11,13 +13,7 @@ class Menu extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-            child: Text(
-              'Scotland\'s Mountains',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary,
-                fontSize: 24,
-              ),
-            ),
+            child: TitleLogo(color: Theme.of(context).colorScheme.onPrimary),
           ),
           ListTile(
             leading: const Icon(Icons.photo),
