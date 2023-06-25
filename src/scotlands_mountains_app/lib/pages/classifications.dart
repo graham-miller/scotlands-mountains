@@ -4,8 +4,8 @@ import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
 import '../models/classification.dart';
 import '../models/mountain.dart';
 import '../repositories/classifications_repository.dart';
+import '../widgets/app_scaffold.dart';
 import '../widgets/map/mountains_map.dart';
-import '../widgets/sm_app_bar.dart';
 import '../widgets/mountains_list.dart';
 
 class Classifications extends StatefulWidget {
@@ -41,8 +41,7 @@ class _ClassificationsState extends State<Classifications> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SmAppBar(),
+    return AppScaffold(
       body: Column(
         children: [
           ClassificationSelector(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scotlands_mountains_app/widgets/map/mountains_map.dart';
 
 import '../expandible_fab.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../repositories/data.dart';
-import '../widgets/sm_app_bar.dart';
+import '../widgets/app_scaffold.dart';
 
 class Loading extends StatefulWidget {
   final Function initializationCompleteCallback;
@@ -12,6 +12,7 @@ class Loading extends StatefulWidget {
 
   void copyDbToAppData() async {
     await Data().initialize();
+    await Future.delayed(const Duration(seconds: 1));
     initializationCompleteCallback();
   }
 
@@ -42,18 +43,17 @@ class _LoadingState extends State<Loading> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: const SmAppBar(),
+    return AppScaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CircularProgressIndicator(
-                value: _controller.value,
-                semanticsLabel: 'Circular progress indicator',
-              ),
-            ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          CircularProgressIndicator(
+            value: _controller.value,
+            semanticsLabel: 'Circular progress indicator',
           ),
-        ));
+        ],
+      ),
+    ));
   }
 }

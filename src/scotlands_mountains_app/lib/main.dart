@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import './pages/loading.dart';
 import './pages/classifications.dart';
+import 'pages/about.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".local");
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
             initializationCompleteCallback: () =>
                 Navigator.popAndPushNamed(context, '/classifications')),
         '/classifications': (context) => const Classifications(),
+        '/about': (context) => const About(),
       },
     );
   }
