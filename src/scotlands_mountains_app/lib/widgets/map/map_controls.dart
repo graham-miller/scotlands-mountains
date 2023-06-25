@@ -5,8 +5,17 @@ import '../expandible_fab.dart';
 
 class MapControls extends StatelessWidget {
   final void Function() onReset;
+  final void Function() onSelectOutdoors;
+  final void Function() onSelectSatellite;
+  final void Function() onSelectStreets;
 
-  const MapControls({super.key, required this.onReset});
+  const MapControls({
+    super.key,
+    required this.onReset,
+    required this.onSelectOutdoors,
+    required this.onSelectSatellite,
+    required this.onSelectStreets,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,20 +25,20 @@ class MapControls extends StatelessWidget {
         distance: 112,
         children: [
           ActionButton(
-            onPressed: () {},
+            onPressed: onSelectOutdoors,
             icon: const Icon(Icons.map),
           ),
           ActionButton(
-            onPressed: () {},
+            onPressed: onSelectSatellite,
             icon: const Icon(Icons.satellite),
           ),
           ActionButton(
-            onPressed: () {},
+            onPressed: onSelectStreets,
             icon: const Icon(Icons.directions_car_filled),
           ),
           ActionButton(
             onPressed: onReset,
-            icon: const Icon(Icons.restore),
+            icon: const Icon(Icons.settings_backup_restore),
           ),
         ],
       ),

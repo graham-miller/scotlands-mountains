@@ -32,6 +32,8 @@ class _MountainsMapState extends State<MountainsMap> {
   final _defaultRotation = 0.0;
   final _mapController = MapController();
 
+  var _selectedLayer = Layer.outdoors;
+
   @override
   Widget build(BuildContext context) {
     final mapOptions = MapOptions(
@@ -54,13 +56,31 @@ class _MountainsMapState extends State<MountainsMap> {
         const MapboxAttribution(),
         MapControls(
           onReset: () {
-            _mapController.move(_defaultCenter, _defaultZoom);
-            _mapController.rotate(_defaultRotation);
+            setState(() {
+              _selectedLayer = Layer.outdoors;
+            });
+            _mapController.moveAndRotate(
+                _defaultCenter, _defaultZoom, _defaultRotation);
+          },
+          onSelectOutdoors: () {
+            setState(() {
+              _selectedLayer = Layer.outdoors;
+            });
+          },
+          onSelectSatellite: () {
+            setState(() {
+              _selectedLayer = Layer.satellite;
+            });
+          },
+          onSelectStreets: () {
+            setState(() {
+              _selectedLayer = Layer.streets;
+            });
           },
         )
       ],
       children: [
-        _layers[Layer.outdoors]!,
+        _layers[_selectedLayer]!,
         MountainLayer(
           mapController: _mapController,
           mountains: widget.mountains,
