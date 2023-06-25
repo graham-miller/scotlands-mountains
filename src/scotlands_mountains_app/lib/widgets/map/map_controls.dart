@@ -44,10 +44,3 @@ class MapControls extends StatelessWidget {
     );
   }
 }
-
-/*
-FloatingActionButton(
-              onPressed: onReset,
-              child: const Icon(Icons.restore),
-            )
-*/
