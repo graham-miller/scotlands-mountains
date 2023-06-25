@@ -69,6 +69,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .local
+    - assets/cc-by.png
     - assets/logo.svg
     - assets/mapbox-logo-black.svg
     - assets/mapbox-logo-black.png

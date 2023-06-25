@@ -41,7 +41,7 @@ class MapboxAttribution extends StatelessWidget {
                       }),
                   TextButton(
                       child: const Text('Improve this map'),
-                      onPressed: () {
+                      onPressed: () async {
                         launchUrl(
                             Uri.parse('https://www.mapbox.com/map-feedback/'));
                       })
