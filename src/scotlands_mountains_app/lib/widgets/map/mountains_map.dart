@@ -40,6 +40,8 @@ class _MountainsMapState extends State<MountainsMap> {
       maxBounds: LatLngBounds(LatLng(54, -9), LatLng(61, 0)),
       center: _defaultCenter,
       zoom: _defaultZoom,
+      minZoom: 6,
+      maxZoom: 18,
       onMapReady: () {
         _mapController.mapEventStream.listen((event) {
           if (event is MapEventRotate) {
