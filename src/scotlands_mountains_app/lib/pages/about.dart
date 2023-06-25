@@ -54,14 +54,14 @@ class About extends StatelessWidget {
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.primary,
-                                      decorationColor:
-                                          Theme.of(context).colorScheme.primary,
-                                      decoration: TextDecoration.underline,
                                     ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () async {
-                                        launchUrl(Uri.parse(
-                                            'http://hills-database.co.uk/'));
+                                        launchUrl(
+                                            Uri.parse(
+                                                'http://hills-database.co.uk/'),
+                                            mode:
+                                                LaunchMode.externalApplication);
                                       },
                                   ),
                                   const TextSpan(text: ', licensed under '),
@@ -71,14 +71,14 @@ class About extends StatelessWidget {
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.primary,
-                                      decorationColor:
-                                          Theme.of(context).colorScheme.primary,
-                                      decoration: TextDecoration.underline,
                                     ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () async {
-                                        launchUrl(Uri.parse(
-                                            'https://creativecommons.org/licenses/by/4.0/'));
+                                        launchUrl(
+                                            Uri.parse(
+                                                'https://creativecommons.org/licenses/by/4.0/'),
+                                            mode:
+                                                LaunchMode.externalApplication);
                                       },
                                   ),
                                   const TextSpan(text: '.'),

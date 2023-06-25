@@ -31,19 +31,22 @@ class MapboxAttribution extends StatelessWidget {
                       child: const Text('© Mapbox'),
                       onPressed: () async {
                         launchUrl(
-                            Uri.parse('https://www.mapbox.com/about/maps/'));
+                            Uri.parse('https://www.mapbox.com/about/maps/'),
+                            mode: LaunchMode.externalApplication);
                       }),
                   TextButton(
                       child: const Text('© OpenStreetMap'),
                       onPressed: () async {
                         launchUrl(
-                            Uri.parse('http://www.openstreetmap.org/about/'));
+                            Uri.parse('http://www.openstreetmap.org/about/'),
+                            mode: LaunchMode.externalApplication);
                       }),
                   TextButton(
                       child: const Text('Improve this map'),
                       onPressed: () async {
                         launchUrl(
-                            Uri.parse('https://www.mapbox.com/map-feedback/'));
+                            Uri.parse('https://www.mapbox.com/map-feedback/'),
+                            mode: LaunchMode.externalApplication);
                       })
                 ],
               ),
