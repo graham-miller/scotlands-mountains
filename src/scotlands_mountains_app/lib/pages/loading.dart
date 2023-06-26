@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../repositories/data.dart';
 import '../widgets/app_scaffold.dart';
 
@@ -11,9 +12,9 @@ class Loading extends StatefulWidget {
   }
 
   void copyDbToAppData() async {
-    await Data().initialize();
-    await Future.delayed(const Duration(seconds: 1));
-    initializationCompleteCallback();
+    await Future.wait(
+        [Data().initialize(), Future.delayed(const Duration(seconds: 5))]);
+    //initializationCompleteCallback();
   }
 
   @override
@@ -31,7 +32,7 @@ class _LoadingState extends State<Loading> with TickerProviderStateMixin {
     )..addListener(() {
         setState(() {});
       });
-    _controller.repeat(reverse: true);
+    _controller.repeat(reverse: false);
     super.initState();
   }
 
@@ -43,15 +44,31 @@ class _LoadingState extends State<Loading> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
+    return Scaffold(
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          CircularProgressIndicator(
-            value: _controller.value,
-            semanticsLabel: 'Circular progress indicator',
-          ),
+          Stack(children: [
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: CircularProgressIndicator(
+                strokeWidth: 8,
+                value: _controller.value,
+                semanticsLabel: 'Circular progress indicator',
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 18, 20, 20),
+              child: SvgPicture.asset(
+                'assets/logo.svg',
+                height: 60,
+                colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.primary, BlendMode.srcIn),
+              ),
+            )
+          ]),
         ],
       ),
     ));
