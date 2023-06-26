@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../../util/util.dart';
 
 class MapboxAttribution extends StatelessWidget {
   const MapboxAttribution({super.key});
@@ -29,24 +30,21 @@ class MapboxAttribution extends StatelessWidget {
                 children: [
                   TextButton(
                       child: const Text('© Mapbox'),
-                      onPressed: () async {
-                        launchUrl(
-                            Uri.parse('https://www.mapbox.com/about/maps/'),
-                            mode: LaunchMode.externalApplication);
+                      onPressed: () {
+                        Util.openInBrowser(
+                            'https://www.mapbox.com/about/maps/');
                       }),
                   TextButton(
                       child: const Text('© OpenStreetMap'),
-                      onPressed: () async {
-                        launchUrl(
-                            Uri.parse('http://www.openstreetmap.org/about/'),
-                            mode: LaunchMode.externalApplication);
+                      onPressed: () {
+                        Util.openInBrowser(
+                            'http://www.openstreetmap.org/about/');
                       }),
                   TextButton(
                       child: const Text('Improve this map'),
-                      onPressed: () async {
-                        launchUrl(
-                            Uri.parse('https://www.mapbox.com/map-feedback/'),
-                            mode: LaunchMode.externalApplication);
+                      onPressed: () {
+                        Util.openInBrowser(
+                            'https://www.mapbox.com/map-feedback/');
                       })
                 ],
               ),

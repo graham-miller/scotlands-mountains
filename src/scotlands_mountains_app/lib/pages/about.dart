@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../util/util.dart';
 import '../widgets/app_scaffold.dart';
 
 class About extends StatelessWidget {
@@ -52,9 +52,8 @@ class About extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () async {
-                        launchUrl(Uri.parse('http://hills-database.co.uk/'),
-                            mode: LaunchMode.externalApplication);
+                      ..onTap = () {
+                        Util.openInBrowser('http://hills-database.co.uk/');
                       },
                   ),
                   const TextSpan(text: ', licensed under '),
@@ -65,11 +64,9 @@ class About extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () async {
-                        launchUrl(
-                            Uri.parse(
-                                'https://creativecommons.org/licenses/by/4.0/'),
-                            mode: LaunchMode.externalApplication);
+                      ..onTap = () {
+                        Util.openInBrowser(
+                            'https://creativecommons.org/licenses/by/4.0/');
                       },
                   ),
                   const TextSpan(text: '.'),
