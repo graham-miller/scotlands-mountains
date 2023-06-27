@@ -9,6 +9,12 @@ class MountainsRepository {
       INNER JOIN MountainClassifications mc ON m.id = mc.mountainsId
       INNER JOIN Classifications c ON mc.classificationsId = c.id
       WHERE c.id = ?
+      AND m.id IN (
+        SELECT DISTINCT mountainsId
+        FROM Countries co
+        INNER JOIN MountainCountries mco ON co.id = mco.countriesId
+        WHERE co.isEnabled = 1
+      )
       ORDER BY m.height DESC
       ''';
     final db = await Data().getDatabase();
@@ -23,6 +29,12 @@ class MountainsRepository {
       SELECT *
       FROM Mountains
       WHERE name LIKE ?
+      AND id IN (
+        SELECT DISTINCT mountainsId
+        FROM Countries co
+        INNER JOIN MountainCountries mco ON co.id = mco.countriesId
+        WHERE co.isEnabled = 1
+      )
       ORDER BY height DESC
       LIMIT 500
       ''';

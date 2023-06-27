@@ -19,7 +19,20 @@ class _SearchState extends State<Search> {
 
   _SearchState();
 
-  void _search(String term) async {
+  @override
+  void initState() {
+    _searchField.addListener(_search);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchField.removeListener(_search);
+    super.dispose();
+  }
+
+  void _search() async {
+    final term = _searchField.value.text;
     if (term.length > 2) {
       final mountains = await MountainsRepository().search(term);
 
@@ -49,14 +62,14 @@ class _SearchState extends State<Search> {
                           child: const Icon(Icons.clear),
                           onTap: () {
                             _searchField.clear();
-                            _search('');
+                            _search();
                           },
                         )
                       : null),
               controller: _searchField,
-              onChanged: (term) {
-                _search(term);
-              },
+              // onChanged: (term) {
+              //   _search(term);
+              // },
             ),
           ),
           Expanded(

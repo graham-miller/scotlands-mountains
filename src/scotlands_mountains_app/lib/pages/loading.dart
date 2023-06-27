@@ -12,7 +12,7 @@ class Loading extends StatefulWidget {
 
   void copyDbToAppData() async {
     await Future.wait(
-        [Data().initialize(), Future.delayed(const Duration(seconds: 5))]);
+        [Data().initialize(), Future.delayed(const Duration(seconds: 2))]);
     initializationCompleteCallback();
   }
 

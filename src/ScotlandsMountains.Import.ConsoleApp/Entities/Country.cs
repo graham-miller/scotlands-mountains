@@ -2,5 +2,7 @@
 
 public class Country : Entity
 {
+    public bool IsEnabled { get; set; }
+
     public List<Mountain> Mountains { get; set; } = new();
 }

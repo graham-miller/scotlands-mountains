@@ -8,12 +8,12 @@ internal class CreateCountriesStep : Step
     {
         context.CountriesByInitial = new Dictionary<char, Country>
         {
-            { 'S', new() { Name = "Scotland" } },
-            { 'E', new() { Name = "England" } },
-            { 'W', new() { Name = "Wales" } },
-            { 'I', new() { Name = "Ireland" } },
-            { 'C', new() { Name = "Channel Islands" } },
-            { 'M', new() { Name = "Isle of Man" } }
+            { 'S', new() { Name = "Scotland", IsEnabled = true } },
+            { 'E', new() { Name = "England", IsEnabled = false } },
+            { 'W', new() { Name = "Wales", IsEnabled = false } },
+            { 'I', new() { Name = "Ireland", IsEnabled = false } },
+            { 'C', new() { Name = "Channel Islands", IsEnabled = false } },
+            { 'M', new() { Name = "Isle of Man", IsEnabled = false } }
         };
     }
 
