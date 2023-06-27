@@ -10,21 +10,22 @@ class TitleLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
+        const Text(
           'Scotland\'s',
-          style: TextStyle(color: color, fontSize: 24),
+          style: TextStyle(fontSize: 24),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(8, 10, 0, 10),
           child: SvgPicture.asset(
             'assets/logo.svg',
             height: 28,
-            colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.onBackground, BlendMode.srcIn),
           ),
         ),
-        Text(
+        const Text(
           'ountains',
-          style: TextStyle(color: color, fontSize: 24),
+          style: TextStyle(fontSize: 24),
         ),
       ],
     );

@@ -41,37 +41,35 @@ class About extends StatelessWidget {
     return Column(
       children: [
         RichText(
-            selectionColor: Colors.black,
             text: TextSpan(
                 text: 'Mountain data taken from ',
-                style:
-                    TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground),
                 children: [
-                  TextSpan(
-                    text: 'The Database of British and Irish Hills v17.5',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Util.openInBrowser('http://hills-database.co.uk/');
-                      },
-                  ),
-                  const TextSpan(text: ', licensed under '),
-                  TextSpan(
-                    text:
-                        'Creative Commons Attribution 4.0 International Licence',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Util.openInBrowser(
-                            'https://creativecommons.org/licenses/by/4.0/');
-                      },
-                  ),
-                  const TextSpan(text: '.'),
-                ])),
+              TextSpan(
+                text: 'The Database of British and Irish Hills v17.5',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Util.openInBrowser('http://hills-database.co.uk/');
+                  },
+              ),
+              const TextSpan(text: ', licensed under '),
+              TextSpan(
+                text: 'Creative Commons Attribution 4.0 International Licence',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Util.openInBrowser(
+                        'https://creativecommons.org/licenses/by/4.0/');
+                  },
+              ),
+              const TextSpan(text: '.'),
+            ])),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
