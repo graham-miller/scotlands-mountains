@@ -42,6 +42,7 @@ class _ClassificationsState extends State<Classifications> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      activeRoute: AppRoutes.classifications,
       body: Column(
         children: [
           ClassificationSelector(

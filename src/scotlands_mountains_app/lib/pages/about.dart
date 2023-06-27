@@ -10,14 +10,15 @@ class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+        activeRoute: AppRoutes.about,
         body: Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _buildAboutCard(context, const Text('Developed by Graham Miller.')),
-        _buildAboutCard(context, _buildDobihCardContent(context))
-      ],
-    ));
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _buildAboutCard(context, const Text('Developed by Graham Miller.')),
+            _buildAboutCard(context, _buildDobihCardContent(context))
+          ],
+        ));
   }
 
   Widget _buildAboutCard(BuildContext context, Widget child) {

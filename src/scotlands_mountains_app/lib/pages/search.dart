@@ -47,9 +47,9 @@ class _SearchState extends State<Search> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      activeRoute: AppRoutes.search,
       body: Column(
         children: [
           Padding(
