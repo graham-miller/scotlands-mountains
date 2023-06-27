@@ -14,7 +14,7 @@ class About extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _buildAboutCard(context, const Text('Developed by Graham Miller')),
+        _buildAboutCard(context, const Text('Developed by Graham Miller.')),
         _buildAboutCard(context, _buildDobihCardContent(context))
       ],
     ));

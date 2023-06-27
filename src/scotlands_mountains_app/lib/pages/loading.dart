@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../repositories/data.dart';
-import '../widgets/app_scaffold.dart';
 
 class Loading extends StatefulWidget {
   final Function initializationCompleteCallback;

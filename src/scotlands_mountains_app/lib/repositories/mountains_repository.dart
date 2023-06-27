@@ -15,4 +15,19 @@ class MountainsRepository {
 
     return (await db.rawQuery(sql, [id])).map((map) => Mountain(map)).toList();
   }
+
+  Future<List<Mountain>> search(String term) async {
+    final arg = '%$term%';
+
+    const sql = '''
+      SELECT *
+      FROM Mountains
+      WHERE name LIKE ?
+      ORDER BY height DESC
+      LIMIT 500
+      ''';
+    final db = await Data().getDatabase();
+
+    return (await db.rawQuery(sql, [arg])).map((map) => Mountain(map)).toList();
+  }
 }

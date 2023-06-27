@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import './pages/loading.dart';
-import './pages/classifications.dart';
+import 'pages/loading.dart';
+import 'pages/classifications.dart';
 import 'pages/about.dart';
+import 'pages/search.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".local");
@@ -25,9 +26,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/loading',
       routes: {
         '/loading': (context) => Loading(
-            initializationCompleteCallback: () =>
-                Navigator.popAndPushNamed(context, '/classifications')),
+              initializationCompleteCallback: () =>
+                  Navigator.popAndPushNamed(context, '/classifications'),
+            ),
+        //'/lens': (context) => { }
         '/classifications': (context) => const Classifications(),
+        '/search': (context) => const Search(),
+        //'/favourites': (context) => { }
+        //'/settings': (context) => { }
         '/about': (context) => const About(),
       },
     );

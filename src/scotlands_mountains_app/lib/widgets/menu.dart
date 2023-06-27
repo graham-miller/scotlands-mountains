@@ -35,6 +35,7 @@ class Menu extends StatelessWidget {
             title: const Text('Search'),
             onTap: () {
               Navigator.pop(context);
+              Navigator.popAndPushNamed(context, '/search');
             },
           ),
           ListTile(
