@@ -40,17 +40,40 @@ class _ClassificationSelectorState extends State<ClassificationSelector> {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: DropdownButton<Classification>(
-          value: _selected,
-          icon: const Icon(Icons.arrow_drop_down),
-          items: _classifications
-              .map((c) => DropdownMenuItem<Classification>(
-                  value: c, child: Text(c.name)))
-              .toList(),
-          onChanged: (value) => setState(() {
-            widget.onClassificationSelected(value);
-            _selected = value;
-          }),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DropdownButton<Classification>(
+              value: _selected,
+              icon: const Icon(Icons.arrow_drop_down),
+              items: _classifications
+                  .map((c) => DropdownMenuItem<Classification>(
+                      value: c, child: Text(c.name)))
+                  .toList(),
+              onChanged: (value) => setState(() {
+                widget.onClassificationSelected(value);
+                _selected = value;
+              }),
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              onPressed: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text(_selected!.name),
+                  content: Text(_selected!.description),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Close'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
         ));
   }
 }
