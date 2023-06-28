@@ -10,6 +10,8 @@ class MountainsRepository {
       ''';
     final db = await Data().getDatabase();
 
+    // TODO retrieve: maps, classifications, aliases, countries, region
+
     return Mountain((await db.rawQuery(sql, [id])).single);
   }
 
