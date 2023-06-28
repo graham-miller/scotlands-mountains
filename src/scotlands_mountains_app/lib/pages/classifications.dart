@@ -4,7 +4,6 @@ import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
 import '../models/classification.dart';
 import '../models/mountain.dart';
 import '../repositories/classifications_repository.dart';
-import '../widgets/app_scaffold.dart';
 import '../widgets/map/mountains_map.dart';
 import '../widgets/mountains_list.dart';
 
@@ -38,25 +37,22 @@ class _ClassificationsState extends State<Classifications> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: AppScaffold(
-        activeRoute: AppRoutes.classifications,
-        body: Column(
-          children: [
-            const TabBar(
-              tabs: [
-                Tab(text: 'List', icon: Icon(Icons.list)),
-                Tab(text: 'Map', icon: Icon(Icons.map)),
-              ],
-            ),
-            ClassificationSelector(
-                onClassificationSelected: (c) => _loadMountains(c)),
-            Expanded(
-                child: TabBarView(children: [
-              MountainsList(mountains: _mountains),
-              MountainsMap(mountains: _mountains),
-            ]))
-          ],
-        ),
+      child: Column(
+        children: [
+          const TabBar(
+            tabs: [
+              Tab(text: 'List', icon: Icon(Icons.list)),
+              Tab(text: 'Map', icon: Icon(Icons.map)),
+            ],
+          ),
+          ClassificationSelector(
+              onClassificationSelected: (c) => _loadMountains(c)),
+          Expanded(
+              child: TabBarView(children: [
+            MountainsList(mountains: _mountains),
+            MountainsMap(mountains: _mountains),
+          ]))
+        ],
       ),
     );
   }

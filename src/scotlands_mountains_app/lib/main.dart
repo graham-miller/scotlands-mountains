@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scotlands_mountains_app/widgets/shell.dart';
 import 'pages/classifications.dart';
 import 'pages/about.dart';
 import 'pages/search.dart';
@@ -13,26 +14,31 @@ Future main() async {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      redirect: (context, state) => '/classifications',
-    ),
-    GoRoute(
-      path: '/classifications',
-      builder: (context, state) => const Classifications(),
-    ),
-    GoRoute(
-      path: '/search',
-      builder: (context, state) => const Search(),
-    ),
-    GoRoute(
-      path: '/about',
-      builder: (context, state) => const About(),
-    ),
-  ],
-);
+final GoRouter _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
+  ShellRoute(
+    builder: (context, state, child) {
+      return Shell(child: child);
+    },
+    routes: [
+      GoRoute(
+        path: '/',
+        redirect: (context, state) => '/classifications',
+      ),
+      GoRoute(
+        path: '/classifications',
+        builder: (context, state) => const Classifications(),
+      ),
+      GoRoute(
+        path: '/search',
+        builder: (context, state) => const Search(),
+      ),
+      GoRoute(
+        path: '/about',
+        builder: (context, state) => const About(),
+      ),
+    ],
+  ),
+]);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

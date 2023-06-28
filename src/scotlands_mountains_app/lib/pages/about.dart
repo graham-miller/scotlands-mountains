@@ -2,23 +2,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../util/util.dart';
-import '../widgets/app_scaffold.dart';
 
 class About extends StatelessWidget {
   const About({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-        activeRoute: AppRoutes.about,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            _buildAboutCard(context, const Text('Developed by Graham Miller.')),
-            _buildAboutCard(context, _buildDobihCardContent(context))
-          ],
-        ));
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        _buildAboutCard(context, const Text('Developed by Graham Miller.')),
+        _buildAboutCard(context, _buildDobihCardContent(context))
+      ],
+    );
   }
 
   Widget _buildAboutCard(BuildContext context, Widget child) {

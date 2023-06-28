@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
 import '../models/mountain.dart';
-import '../widgets/app_scaffold.dart';
 import '../widgets/map/mountains_map.dart';
 import '../widgets/mountains_list.dart';
 
@@ -47,10 +46,8 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
-      child: AppScaffold(
-        activeRoute: AppRoutes.classifications,
-        body: Column(
+        length: 2,
+        child: Column(
           children: [
             const TabBar(
               tabs: [
@@ -81,8 +78,6 @@ class _SearchState extends State<Search> {
               MountainsMap(mountains: _mountains),
             ]))
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

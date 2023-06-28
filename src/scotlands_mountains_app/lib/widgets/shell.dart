@@ -3,35 +3,17 @@ import 'package:go_router/go_router.dart';
 
 import 'title_logo.dart';
 
-enum AppRoutes { classifications, search, about }
+class Shell extends StatelessWidget {
+  final Widget child;
 
-class AppScaffold extends StatelessWidget {
-  final Widget body;
-  final AppRoutes activeRoute;
-
-  const AppScaffold({super.key, required this.body, required this.activeRoute});
-
-  _navigate(BuildContext context, AppRoutes selectedRoute) {
-    switch (selectedRoute) {
-      case AppRoutes.classifications:
-        context.go('/classifications');
-        break;
-      case AppRoutes.search:
-        context.go('/search');
-        break;
-      case AppRoutes.about:
-        context.go('/about');
-        break;
-      default:
-    }
-  }
+  const Shell({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
       drawer: _drawer(context),
-      body: body,
+      body: child,
     );
   }
 
@@ -51,10 +33,11 @@ class AppScaffold extends StatelessWidget {
   }
 
   Widget _drawer(BuildContext context) {
+    final selectedIndex = _selectedIndex(context);
+
     return NavigationDrawer(
-      selectedIndex: AppRoutes.values.indexOf(activeRoute),
-      onDestinationSelected: (value) =>
-          _navigate(context, AppRoutes.values[value]),
+      selectedIndex: selectedIndex,
+      onDestinationSelected: (value) => _navigate(context, value),
       children: [
         DrawerHeader(
           child: TitleLogo(color: Theme.of(context).colorScheme.onBackground),
@@ -87,5 +70,30 @@ class AppScaffold extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  int _selectedIndex(BuildContext context) {
+    final currentRoute =
+        GoRouter.of(context).routeInformationProvider.value.location;
+
+    var routeIndex = GoRouter.of(context)
+        .configuration
+        .routes[0]
+        .routes
+        .where((x) => (x as GoRoute).path != '/')
+        .toList()
+        .indexWhere((x) => (x as GoRoute).path == currentRoute);
+
+    return routeIndex < 0 ? 0 : routeIndex;
+  }
+
+  _navigate(BuildContext context, int value) {
+    GoRouter.of(context).pop();
+
+    var path = (GoRouter.of(context).configuration.routes[0].routes[value + 1]
+            as GoRoute)
+        .path;
+
+    context.go(path);
   }
 }
