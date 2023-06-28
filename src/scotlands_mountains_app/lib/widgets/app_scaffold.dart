@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'title_logo.dart';
 
@@ -7,25 +8,19 @@ enum AppRoutes { classifications, search, about }
 class AppScaffold extends StatelessWidget {
   final Widget body;
   final AppRoutes activeRoute;
-  final BottomNavigationBar? bottomNavigationBar;
 
-  const AppScaffold(
-      {super.key,
-      required this.body,
-      required this.activeRoute,
-      this.bottomNavigationBar});
+  const AppScaffold({super.key, required this.body, required this.activeRoute});
 
   _navigate(BuildContext context, AppRoutes selectedRoute) {
-    Navigator.pop(context);
     switch (selectedRoute) {
       case AppRoutes.classifications:
-        Navigator.popAndPushNamed(context, '/classifications');
+        context.go('/classifications');
         break;
       case AppRoutes.search:
-        Navigator.popAndPushNamed(context, '/search');
+        context.go('/search');
         break;
       case AppRoutes.about:
-        Navigator.popAndPushNamed(context, '/about');
+        context.go('/about');
         break;
       default:
     }
@@ -37,7 +32,6 @@ class AppScaffold extends StatelessWidget {
       appBar: _appBar(context),
       drawer: _drawer(context),
       body: body,
-      bottomNavigationBar: bottomNavigationBar,
     );
   }
 

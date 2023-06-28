@@ -17,11 +17,6 @@ class Classifications extends StatefulWidget {
 
 class _ClassificationsState extends State<Classifications> {
   List<Mountain> _mountains = List.empty();
-  bool _showMap = false;
-
-  _ClassificationsState() {
-    _loadMountains(null);
-  }
 
   void _loadMountains(Classification? classification) async {
     classification ??= await ClassificationsRepository().getDefault();
@@ -41,33 +36,28 @@ class _ClassificationsState extends State<Classifications> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      activeRoute: AppRoutes.classifications,
-      body: Column(
-        children: [
-          ClassificationSelector(
-              onClassificationSelected: (c) => _loadMountains(c)),
-          Expanded(
-              child: _showMap
-                  ? MountainsMap(mountains: _mountains)
-                  : MountainsList(mountains: _mountains)),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'List',
+    return DefaultTabController(
+      length: 2,
+      child: AppScaffold(
+        activeRoute: AppRoutes.classifications,
+        body: Column(
+          children: [
+            const TabBar(
+              tabs: [
+                Tab(text: 'List', icon: Icon(Icons.list)),
+                Tab(text: 'Map', icon: Icon(Icons.map)),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              label: 'Map',
-            ),
+            ClassificationSelector(
+                onClassificationSelected: (c) => _loadMountains(c)),
+            Expanded(
+                child: TabBarView(children: [
+              MountainsList(mountains: _mountains),
+              MountainsMap(mountains: _mountains),
+            ]))
           ],
-          currentIndex: _showMap ? 1 : 0,
-          onTap: (i) => setState(() {
-                _showMap = i == 1;
-              })),
+        ),
+      ),
     );
   }
 }

@@ -15,7 +15,6 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   List<Mountain> _mountains = List.empty();
   final _searchField = TextEditingController();
-  bool _showMap = false;
 
   _SearchState();
 
@@ -35,7 +34,6 @@ class _SearchState extends State<Search> {
     final term = _searchField.value.text;
     if (term.length > 2) {
       final mountains = await MountainsRepository().search(term);
-
       setState(() {
         _mountains = mountains;
       });
@@ -48,51 +46,43 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      activeRoute: AppRoutes.search,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(33, 0, 40, 8),
-            child: TextField(
-              decoration: InputDecoration(
-                  icon: const Icon(Icons.search),
-                  suffixIcon: (_searchField.value.text) != ''
-                      ? GestureDetector(
-                          child: const Icon(Icons.clear),
-                          onTap: () {
-                            _searchField.clear();
-                            _search();
-                          },
-                        )
-                      : null),
-              controller: _searchField,
-              // onChanged: (term) {
-              //   _search(term);
-              // },
+    return DefaultTabController(
+      length: 2,
+      child: AppScaffold(
+        activeRoute: AppRoutes.classifications,
+        body: Column(
+          children: [
+            const TabBar(
+              tabs: [
+                Tab(text: 'List', icon: Icon(Icons.list)),
+                Tab(text: 'Map', icon: Icon(Icons.map)),
+              ],
             ),
-          ),
-          Expanded(
-              child: _showMap
-                  ? MountainsMap(mountains: _mountains)
-                  : MountainsList(mountains: _mountains)),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'List',
+            Padding(
+              padding: const EdgeInsets.fromLTRB(33, 0, 40, 8),
+              child: TextField(
+                decoration: InputDecoration(
+                    icon: const Icon(Icons.search),
+                    suffixIcon: (_searchField.value.text) != ''
+                        ? GestureDetector(
+                            child: const Icon(Icons.clear),
+                            onTap: () {
+                              _searchField.clear();
+                              _search();
+                            },
+                          )
+                        : null),
+                controller: _searchField,
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              label: 'Map',
-            ),
+            Expanded(
+                child: TabBarView(children: [
+              MountainsList(mountains: _mountains),
+              MountainsMap(mountains: _mountains),
+            ]))
           ],
-          currentIndex: _showMap ? 1 : 0,
-          onTap: (i) => setState(() {
-                _showMap = i == 1;
-              })),
+        ),
+      ),
     );
   }
 }

@@ -1,40 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'pages/loading.dart';
+import 'package:go_router/go_router.dart';
 import 'pages/classifications.dart';
 import 'pages/about.dart';
 import 'pages/search.dart';
+import 'repositories/data.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".local");
+  await Data().initialize();
+
   runApp(const MyApp());
 }
+
+final GoRouter _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      redirect: (context, state) => '/classifications',
+    ),
+    GoRoute(
+      path: '/classifications',
+      builder: (context, state) => const Classifications(),
+    ),
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const Search(),
+    ),
+    GoRoute(
+      path: '/about',
+      builder: (context, state) => const About(),
+    ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: _router,
       title: 'Scotland\'s Mountains',
       theme: ThemeData(
         brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
         useMaterial3: true,
       ),
-      initialRoute: '/loading',
-      routes: {
-        '/loading': (context) => Loading(
-              initializationCompleteCallback: () =>
-                  Navigator.popAndPushNamed(context, '/classifications'),
-            ),
-        //'/lens': (context) => { }
-        '/classifications': (context) => const Classifications(),
-        '/search': (context) => const Search(),
-        //'/favourites': (context) => { }
-        //'/settings': (context) => { }
-        '/about': (context) => const About(),
-      },
     );
   }
 
