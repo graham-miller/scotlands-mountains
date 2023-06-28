@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -28,33 +31,60 @@ class _MountainsMapState extends State<MountainsMap> {
     Layer.satelliteStreets: MapboxTileLayer(styleId: 'satellite-streets-v12'),
   };
 
-  final _defaultCenter = LatLng(56.816922, -4.18265);
-  final _defaultZoom = 7.0;
-  final _defaultRotation = 0.0;
   final _mapController = MapController();
 
-  var _selectedLayer = Layer.outdoors;
+  Layer _selectedLayer = Layer.outdoors;
+  bool _isControllerReady = false;
+  StreamSubscription<MapEvent>? _subscription;
+  MapOptions? _mapOptions;
 
   @override
-  Widget build(BuildContext context) {
-    final mapOptions = MapOptions(
+  void initState() {
+    super.initState();
+
+    _mapOptions = MapOptions(
       maxBounds: LatLngBounds(LatLng(54, -9), LatLng(61, 0)),
-      center: _defaultCenter,
-      zoom: _defaultZoom,
       minZoom: 6,
       maxZoom: 18,
       onMapReady: () {
-        _mapController.mapEventStream.listen((event) {
-          if (event is MapEventRotate) {
-            setState(() {});
-          }
+        setState(() {
+          _isControllerReady = true;
+          _subscription = _mapController.mapEventStream.listen((event) {
+            if (event is MapEventRotate) {
+              setState(() {});
+            }
+          });
         });
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _subscription?.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final fitBounds = LatLngBounds(
+        LatLng(
+          widget.mountains.map((m) => m.latitude).reduce(min),
+          widget.mountains.map((m) => m.longitude).reduce(min),
+        ),
+        LatLng(
+          widget.mountains.map((m) => m.latitude).reduce(max),
+          widget.mountains.map((m) => m.longitude).reduce(max),
+        ));
+
+    if (_isControllerReady) {
+      _mapController.fitBounds(fitBounds,
+          options: const FitBoundsOptions(forceIntegerZoomLevel: true));
+    }
 
     return FlutterMap(
       mapController: _mapController,
-      options: mapOptions,
+      options: _mapOptions!,
       nonRotatedChildren: [
         Scalebar(
             options: ScalebarOptions(
@@ -66,11 +96,9 @@ class _MountainsMapState extends State<MountainsMap> {
         const MapboxAttribution(),
         MapControls(
           onReset: () {
-            setState(() {
-              _selectedLayer = Layer.outdoors;
-            });
-            _mapController.moveAndRotate(
-                _defaultCenter, _defaultZoom, _defaultRotation);
+            _mapController.rotate(0);
+            _mapController.fitBounds(fitBounds,
+                options: const FitBoundsOptions(forceIntegerZoomLevel: true));
           },
           onSelectOutdoors: () {
             setState(() {
