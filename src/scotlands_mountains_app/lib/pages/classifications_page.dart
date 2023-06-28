@@ -7,14 +7,14 @@ import '../repositories/classifications_repository.dart';
 import '../widgets/map/mountains_map.dart';
 import '../widgets/mountains_list.dart';
 
-class Classifications extends StatefulWidget {
-  const Classifications({super.key});
+class ClassificationsPage extends StatefulWidget {
+  const ClassificationsPage({super.key});
 
   @override
-  State<Classifications> createState() => _ClassificationsState();
+  State<ClassificationsPage> createState() => _ClassificationsPageState();
 }
 
-class _ClassificationsState extends State<Classifications> {
+class _ClassificationsPageState extends State<ClassificationsPage> {
   List<Mountain> _mountains = List.empty();
 
   void _loadMountains(Classification? classification) async {

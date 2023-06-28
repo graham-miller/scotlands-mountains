@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scotlands_mountains_app/widgets/shell.dart';
-import 'pages/classifications.dart';
-import 'pages/about.dart';
-import 'pages/search.dart';
+import 'pages/classifications_page.dart';
+import 'pages/about_page.dart';
+import 'pages/mountain_page.dart';
+import 'pages/search_page.dart';
 import 'repositories/data.dart';
 
 Future main() async {
@@ -14,7 +15,7 @@ Future main() async {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
+final GoRouter _router = GoRouter(initialLocation: '/', routes: [
   ShellRoute(
     builder: (context, state, child) {
       return Shell(child: child);
@@ -26,15 +27,20 @@ final GoRouter _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
       ),
       GoRoute(
         path: '/classifications',
-        builder: (context, state) => const Classifications(),
+        builder: (context, state) => const ClassificationsPage(),
+      ),
+      GoRoute(
+        path: '/mountains/:id',
+        builder: (context, state) =>
+            MountainPage(id: int.parse(state.pathParameters['id']!)),
       ),
       GoRoute(
         path: '/search',
-        builder: (context, state) => const Search(),
+        builder: (context, state) => const SearchPage(),
       ),
       GoRoute(
         path: '/about',
-        builder: (context, state) => const About(),
+        builder: (context, state) => const AboutPage(),
       ),
     ],
   ),

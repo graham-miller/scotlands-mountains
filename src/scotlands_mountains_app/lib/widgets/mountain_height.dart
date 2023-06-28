@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/mountain.dart';
-
-class MountainsHeight extends StatelessWidget {
-  final Mountain mountain;
+class Height extends StatelessWidget {
+  final double height;
   final heightFormat = NumberFormat("#,###", "en_GB");
 
-  MountainsHeight({super.key, required this.mountain});
+  Height({super.key, required this.height});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-        '${heightFormat.format(mountain.height)}m (${heightFormat.format(mountain.height * 3.28084)}ft)');
+        '${heightFormat.format(height)}m (${heightFormat.format(height * 3.28084)}ft)');
   }
 }

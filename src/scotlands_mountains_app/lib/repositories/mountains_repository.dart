@@ -2,6 +2,17 @@ import '../models/mountain.dart';
 import 'data.dart';
 
 class MountainsRepository {
+  Future<Mountain> get(int id) async {
+    const sql = '''
+      SELECT *
+      FROM Mountains m
+      WHERE id = ?
+      ''';
+    final db = await Data().getDatabase();
+
+    return Mountain((await db.rawQuery(sql, [id])).single);
+  }
+
   Future<List<Mountain>> getByClassificationId(int id) async {
     const sql = '''
       SELECT m.*

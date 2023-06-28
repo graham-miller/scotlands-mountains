@@ -4,18 +4,18 @@ import '../models/mountain.dart';
 import '../widgets/map/mountains_map.dart';
 import '../widgets/mountains_list.dart';
 
-class Search extends StatefulWidget {
-  const Search({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<Search> createState() => _SearchState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchState extends State<Search> {
+class _SearchPageState extends State<SearchPage> {
   List<Mountain> _mountains = List.empty();
   final _searchField = TextEditingController();
 
-  _SearchState();
+  _SearchPageState();
 
   @override
   void initState() {
