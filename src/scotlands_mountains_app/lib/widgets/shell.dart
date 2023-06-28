@@ -6,7 +6,24 @@ import 'title_logo.dart';
 class Shell extends StatelessWidget {
   final Widget child;
 
-  const Shell({super.key, required this.child});
+  Shell({super.key, required this.child});
+
+  final List<String> _routes = [
+    '/classifications',
+    '/search',
+    '/about',
+  ];
+
+  int _selectedIndex(BuildContext context) {
+    final index = _routes.indexOf(
+        GoRouter.of(context).routeInformationProvider.value.location ?? '');
+    return index < 0 ? 0 : index;
+  }
+
+  _navigate(BuildContext context, int value) {
+    GoRouter.of(context).pop();
+    context.go(_routes[value]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,30 +87,5 @@ class Shell extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  int _selectedIndex(BuildContext context) {
-    final currentRoute =
-        GoRouter.of(context).routeInformationProvider.value.location;
-
-    var routeIndex = GoRouter.of(context)
-        .configuration
-        .routes[0]
-        .routes
-        .where((x) => (x as GoRoute).path != '/')
-        .toList()
-        .indexWhere((x) => (x as GoRoute).path == currentRoute);
-
-    return routeIndex < 0 ? 0 : routeIndex;
-  }
-
-  _navigate(BuildContext context, int value) {
-    GoRouter.of(context).pop();
-
-    var path = (GoRouter.of(context).configuration.routes[0].routes[value + 1]
-            as GoRoute)
-        .path;
-
-    context.go(path);
   }
 }
