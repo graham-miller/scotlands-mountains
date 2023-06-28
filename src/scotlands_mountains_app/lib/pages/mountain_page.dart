@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../models/mountain.dart';
 import '../repositories/mountains_repository.dart';
@@ -35,14 +34,6 @@ class _MountainPageState extends State<MountainPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        ListTile(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              GoRouter.of(context).pop();
-            },
-          ),
-        ),
         ListTile(
           title: const Text('Name'),
           subtitle: Text(_mountain != null ? _mountain!.name : ''),

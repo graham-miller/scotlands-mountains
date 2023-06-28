@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
-import 'package:scotlands_mountains_app/widgets/shell.dart';
+import 'package:scotlands_mountains_app/pages/shell.dart';
 import 'pages/classifications_page.dart';
 import 'pages/about_page.dart';
 import 'pages/mountain_page.dart';
@@ -15,16 +15,12 @@ Future main() async {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(initialLocation: '/', routes: [
+final GoRouter _router = GoRouter(initialLocation: '/classifications', routes: [
   ShellRoute(
     builder: (context, state, child) {
       return Shell(child: child);
     },
     routes: [
-      GoRoute(
-        path: '/',
-        redirect: (context, state) => '/classifications',
-      ),
       GoRoute(
         path: '/classifications',
         builder: (context, state) => const ClassificationsPage(),

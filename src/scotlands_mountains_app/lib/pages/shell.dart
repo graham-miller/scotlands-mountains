@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'title_logo.dart';
+import '../widgets/title_logo.dart';
 
 class Shell extends StatelessWidget {
   final Widget child;
@@ -20,6 +20,12 @@ class Shell extends StatelessWidget {
     return index < 0 ? 0 : index;
   }
 
+  bool _isSubPage(BuildContext context) {
+    final index = _routes.indexOf(
+        GoRouter.of(context).routeInformationProvider.value.location ?? '');
+    return index < 0;
+  }
+
   _navigate(BuildContext context, int value) {
     GoRouter.of(context).pop();
     context.go(_routes[value]);
@@ -36,15 +42,31 @@ class Shell extends StatelessWidget {
 
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
+      leading: Builder(
+        builder: (context) {
+          return _isSubPage(context)
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => context.pop(),
+                )
+              : IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                );
+        },
+      ),
       title: TitleLogo(
         color: Theme.of(context).colorScheme.onSecondary,
       ),
       actions: [
         Builder(
-            builder: (context) => IconButton(
-                  icon: const Icon(Icons.account_circle),
-                  onPressed: () => Scaffold.of(context).openDrawer(),
-                )),
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.account_circle),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            );
+          },
+        ),
       ],
     );
   }
