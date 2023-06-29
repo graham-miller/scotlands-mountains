@@ -3,6 +3,7 @@ import 'package:scotlands_mountains_app/widgets/ordered_classifications.dart';
 
 import '../models/mountain_graph.dart';
 import '../repositories/mountains_repository.dart';
+import '../widgets/drop.dart';
 import '../widgets/mountain_height.dart';
 import '../widgets/ordered_maps.dart';
 
@@ -43,19 +44,23 @@ class _MountainPageState extends State<MountainPage> {
             style: const TextStyle(fontSize: 20),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: _mountain != null ? Height(height: _mountain!.height) : null,
+        ),
         Expanded(
           child: ListView(
             children: [
               ListTile(
+                  title: const Text('Classifications'),
+                  subtitle: _mountain != null
+                      ? OrderedClassifications(
+                          classifications: _mountain!.classifications)
+                      : null),
+              ListTile(
                 title: const Text('Aliases'),
                 subtitle: Text(
                     _mountain != null ? _mountain!.aliases.join(', ') : ''),
-              ),
-              ListTile(
-                title: const Text('Height'),
-                subtitle: _mountain != null
-                    ? Height(height: _mountain!.height)
-                    : null,
               ),
               ListTile(
                 title: const Text('Latitude, longitude'),
@@ -78,12 +83,6 @@ class _MountainPageState extends State<MountainPage> {
                     : ''),
               ),
               ListTile(
-                  title: const Text('Classifications'),
-                  subtitle: _mountain != null
-                      ? OrderedClassifications(
-                          classifications: _mountain!.classifications)
-                      : null),
-              ListTile(
                   title: const Text('Maps'),
                   subtitle: _mountain != null
                       ? OrderedMaps(maps: _mountain!.maps)
@@ -100,19 +99,8 @@ class _MountainPageState extends State<MountainPage> {
               ),
               ListTile(
                   title: const Text('Drop'),
-                  subtitle: (_mountain != null
-                      ? Height(height: _mountain!.drop)
-                      : null)),
-              ListTile(
-                title: const Text('Col'),
-                subtitle: Text(_mountain != null ? _mountain!.col : ''),
-              ),
-              ListTile(
-                title: const Text('Col height'),
-                subtitle: _mountain != null
-                    ? Height(height: _mountain!.colHeight)
-                    : null,
-              ),
+                  subtitle:
+                      _mountain != null ? Drop(mountain: _mountain!) : null),
             ],
           ),
         ),

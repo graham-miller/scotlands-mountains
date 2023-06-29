@@ -12,9 +12,9 @@ class SearchTermHighlightedMountainsList extends MountainsList {
   @override
   Widget getName(String name, BuildContext context) {
     final style = TextStyle(
-        fontWeight: FontWeight.bold,
-        color: Theme.of(context).colorScheme.onTertiaryContainer,
-        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer);
+        // fontWeight: FontWeight.bold,
+        color: Theme.of(context).colorScheme.onSecondaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.secondaryContainer);
     final List<TextSpan> segments = List.empty(growable: true);
 
     var remaining = name;
