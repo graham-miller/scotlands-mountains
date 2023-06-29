@@ -13,7 +13,7 @@ class ClassificationsRepository {
 
     final db = await Data().getDatabase();
 
-    return Classification((await db.rawQuery(sql)).single);
+    return Classification((await db.rawQuery(sql).then((x) => x.single)));
   }
 
   Future<List<Classification>> getAll() async {

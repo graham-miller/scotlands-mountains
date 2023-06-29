@@ -15,15 +15,24 @@ class MountainsRepository {
       FROM Mountains m
       WHERE id = ?
       ''';
-    final mountainMaps = (await db.rawQuery(sql, [id])).single;
-    final aliases = await _getAliases(id);
-    final maps = await _getOsMaps(id);
-    final classifications = await _getClassifications(id);
-    final countries = await _getCountries(id);
-    final region = await _getRegion(id);
+
+    final mountain = db.rawQuery(sql, [id]).then((x) => x.single);
+    final aliases = _getAliases(id);
+    final maps = _getOsMaps(id);
+    final classifications = _getClassifications(id);
+    final countries = _getCountries(id);
+    final region = _getRegion(id);
+
+    var graph = await Future.wait(
+        [mountain, aliases, maps, classifications, countries, region]);
 
     return MountainGraph(
-        mountainMaps, aliases, maps, classifications, countries, region);
+        graph.elementAt(0) as Map<String, dynamic>,
+        graph.elementAt(1) as List<String>,
+        graph.elementAt(2) as List<OsMap>,
+        graph.elementAt(3) as List<Classification>,
+        graph.elementAt(4) as List<Country>,
+        graph.elementAt(5) as Region);
   }
 
   Future<List<Mountain>> getByClassificationId(int id) async {
@@ -131,6 +140,6 @@ class MountainsRepository {
       ''';
     final db = await Data().getDatabase();
 
-    return (await db.rawQuery(sql, [id])).map((map) => Region(map)).single;
+    return Region(await db.rawQuery(sql, [id]).then((x) => x.single));
   }
 }
