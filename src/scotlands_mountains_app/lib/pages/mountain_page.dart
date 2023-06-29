@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/mountain.dart';
+import '../models/mountain_graph.dart';
 import '../repositories/mountains_repository.dart';
 import '../widgets/mountain_height.dart';
 
@@ -14,7 +14,7 @@ class MountainPage extends StatefulWidget {
 }
 
 class _MountainPageState extends State<MountainPage> {
-  Mountain? _mountain;
+  MountainGraph? _mountain;
 
   void _loadMountain() async {
     final mountain = await MountainsRepository().get(widget.id);
@@ -54,6 +54,28 @@ class _MountainPageState extends State<MountainPage> {
           subtitle: Text(_mountain != null ? _mountain!.gridRef : ''),
         ),
         ListTile(
+          title: const Text('Region'),
+          subtitle: Text(_mountain != null ? _mountain!.region.name : ''),
+        ),
+        ListTile(
+          title: const Text('Countries'),
+          subtitle: Text(_mountain != null
+              ? _mountain!.countries.map((x) => x.name).join(', ')
+              : ''),
+        ),
+        ListTile(
+          title: const Text('Classifications'),
+          subtitle: Text(_mountain != null
+              ? _mountain!.classifications.map((x) => x.nameSingular).join(', ')
+              : ''),
+        ),
+        ListTile(
+          title: const Text('Maps'),
+          subtitle: Text(_mountain != null
+              ? _mountain!.maps.map((x) => x.code).join(', ')
+              : ''),
+        ),
+        ListTile(
           title: const Text('Summit features'),
           subtitle: Text(_mountain != null ? _mountain!.feature ?? '' : ''),
         ),
@@ -78,10 +100,4 @@ class _MountainPageState extends State<MountainPage> {
       ],
     );
   }
-
-/*
-      this.drop,
-      this.col,
-      this.colHeight,
-*/
 }
