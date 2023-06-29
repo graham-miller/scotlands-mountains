@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:scotlands_mountains_app/widgets/ordered_classifications.dart';
 
 import '../models/mountain_graph.dart';
 import '../repositories/mountains_repository.dart';
 import '../widgets/mountain_height.dart';
+import '../widgets/ordered_maps.dart';
 
 class MountainPage extends StatefulWidget {
   final int id;
@@ -76,19 +78,16 @@ class _MountainPageState extends State<MountainPage> {
                     : ''),
               ),
               ListTile(
-                title: const Text('Classifications'),
-                subtitle: Text(_mountain != null
-                    ? _mountain!.classifications
-                        .map((x) => x.nameSingular)
-                        .join(', ')
-                    : ''),
-              ),
+                  title: const Text('Classifications'),
+                  subtitle: _mountain != null
+                      ? OrderedClassifications(
+                          classifications: _mountain!.classifications)
+                      : null),
               ListTile(
-                title: const Text('Maps'),
-                subtitle: Text(_mountain != null
-                    ? _mountain!.maps.map((x) => x.code).join(', ')
-                    : ''),
-              ),
+                  title: const Text('Maps'),
+                  subtitle: _mountain != null
+                      ? OrderedMaps(maps: _mountain!.maps)
+                      : null),
               ListTile(
                 title: const Text('Summit features'),
                 subtitle:
@@ -100,10 +99,10 @@ class _MountainPageState extends State<MountainPage> {
                     _mountain != null ? _mountain!.observations ?? '' : ''),
               ),
               ListTile(
-                title: const Text('Drop'),
-                subtitle:
-                    _mountain != null ? Height(height: _mountain!.drop) : null,
-              ),
+                  title: const Text('Drop'),
+                  subtitle: (_mountain != null
+                      ? Height(height: _mountain!.drop)
+                      : null)),
               ListTile(
                 title: const Text('Col'),
                 subtitle: Text(_mountain != null ? _mountain!.col : ''),
