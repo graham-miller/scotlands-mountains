@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
-import 'package:scotlands_mountains_app/pages/shell.dart';
+
+import 'pages/shell.dart';
 import 'pages/classifications_page.dart';
 import 'pages/about_page.dart';
 import 'pages/mountain_page.dart';

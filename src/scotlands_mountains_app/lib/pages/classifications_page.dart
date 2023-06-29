@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
-import 'package:scotlands_mountains_app/widgets/classification_selector.dart';
+
+import '../repositories/mountains_repository.dart';
+import '../widgets/classification_selector.dart';
 import '../models/classification.dart';
 import '../models/mountain.dart';
 import '../repositories/classifications_repository.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
+
+import '../repositories/mountains_repository.dart';
 import '../widgets/search_term_highlighted_mountains_list.dart';
 import '../models/mountain.dart';
 import '../widgets/map/mountains_map.dart';
