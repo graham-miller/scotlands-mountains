@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:scotlands_mountains_app/widgets/mountain_height.dart';
+import 'mountain_height.dart';
 
 import '../models/mountain.dart';
 
@@ -16,7 +16,7 @@ class MountainsList extends StatelessWidget {
       itemBuilder: (context, index) {
         return ListTile(
             leading: CircleAvatar(child: Text(((index) + 1).toString())),
-            title: Text(mountains[index].name),
+            title: getName(mountains[index].name, context),
             subtitle: Height(height: mountains[index].height),
             trailing: IconButton(
               icon: const Icon(Icons.more_vert),
@@ -26,5 +26,10 @@ class MountainsList extends StatelessWidget {
             ));
       },
     );
+  }
+
+  @protected
+  Widget getName(String name, BuildContext context) {
+    return Text(name);
   }
 }

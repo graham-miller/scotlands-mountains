@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/repositories/mountains_repository.dart';
+import '../widgets/search_term_highlighted_mountains_list.dart';
 import '../models/mountain.dart';
 import '../widgets/map/mountains_map.dart';
-import '../widgets/mountains_list.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -74,7 +74,8 @@ class _SearchPageState extends State<SearchPage> {
             ),
             Expanded(
                 child: TabBarView(children: [
-              MountainsList(mountains: _mountains),
+              SearchTermHighlightedMountainsList(
+                  mountains: _mountains, term: _searchField.value.text),
               MountainsMap(mountains: _mountains),
             ]))
           ],
