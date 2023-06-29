@@ -55,9 +55,7 @@ class Shell extends StatelessWidget {
                 );
         },
       ),
-      title: TitleLogo(
-        color: Theme.of(context).colorScheme.onSecondary,
-      ),
+      title: const TitleLogo(),
       actions: [
         Builder(
           builder: (context) {
@@ -77,19 +75,19 @@ class Shell extends StatelessWidget {
     return NavigationDrawer(
       selectedIndex: selectedIndex,
       onDestinationSelected: (value) => _navigate(context, value),
-      children: [
+      children: const [
         DrawerHeader(
-          child: TitleLogo(color: Theme.of(context).colorScheme.onBackground),
+          child: TitleLogo(),
         ),
         // const NavigationDrawerDestination(
         //   label: Text('Mountain Lens'),
         //   icon: Icon(Icons.photo),
         // ),
-        const NavigationDrawerDestination(
+        NavigationDrawerDestination(
           label: Text('Classifications'),
           icon: Icon(Icons.list),
         ),
-        const NavigationDrawerDestination(
+        NavigationDrawerDestination(
           label: Text('Search'),
           icon: Icon(Icons.search),
         ),
@@ -102,8 +100,8 @@ class Shell extends StatelessWidget {
         //   label: Text('Settings'),
         //   icon: Icon(Icons.settings),
         // ),
-        const Divider(),
-        const NavigationDrawerDestination(
+        Divider(),
+        NavigationDrawerDestination(
           label: Text('About'),
           icon: Icon(Icons.info_outline),
         ),

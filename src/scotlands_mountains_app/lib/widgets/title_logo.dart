@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class TitleLogo extends StatelessWidget {
-  final Color color;
-
-  const TitleLogo({super.key, required this.color});
+  const TitleLogo({super.key});
 
   @override
   Widget build(BuildContext context) {
