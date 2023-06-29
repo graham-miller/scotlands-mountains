@@ -7,9 +7,9 @@ internal class ClassificationData : IEnumerable<ClassificationInfo>
     {
         new ("Marilyns", 12, true, "Marilyn", x => x.Marilyn, "British and Irish hills of any height with a drop of at least 150 metres on all sides. The geographical area includes the Isle of Man and the islands of St Kilda."),
         new ("Marilyn Twins", null, false, "Marilyn Twin", x => x.MarilynTwin, "A Marilyn Twin Top is a summit of equal height to another Marilyn where the drop between the two is less than 150m and at least 30m. The only example is 21168 Knockalla Mountain NE Top in Ireland."),
-        new ("HuMPs", 13, true, "HuMP", x => x.Hump, "British and Irish Hills of any height with a drop of at least 100 metres or more on all sides. The name Hump stands for Hundred Metre Prominence."),
+        new ("HuMPs", 13, true, "HuMP", x => x.Hump, "British and Irish Hills of any height with a drop of at least 100 metres or more on all sides. The name HuMP stands for Hundred Metre Prominence."),
         new ("HuMP Twins", null, false, "HuMP Twin", x => x.HumpTwin, "A Twin Hump is defined as a summit of equal height to another Hump where the drop between the two summits is at least 30m but less than 100m."),
-        new ("TuMPs", 14, true, "TuMP", x => x.Tump, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
+        new ("TuMPs", 14, true, "TuMP", x => x.Tump, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014. The name TuMP stands for Thirty Metre Prominence."),
         new ("Simms", null, false, "Simm", x => x.Simm, "British hills at least 600 metres high with a drop of at least 30 metres on all sides."),
         new ("Dodds", null, false, "Dodd", x => x.Dodd, "Hills in Scotland, England, Wales, the Isle of Man and Ireland between 500m and 599.9m high with a drop of at least 30 metres on all sides."),
         new ("Munros", 1, true, "Munro", x => x.Munro, "Scottish hills at least 3000 feet in height regarded by the SMC as distinct and separate mountains, based on a list originally published in 1891."),
@@ -24,11 +24,11 @@ internal class ClassificationData : IEnumerable<ClassificationInfo>
         new ("Deweys", null, false, "Dewey", x => x.Dewey, "Hills in England, Wales and the Isle of Man at least 500m high and below 609.6m with a drop of at least 30m on all sides."),
         new ("Donald Deweys", 10, true, "Donald Dewey", x => x.DonaldDewey, "Hills in the Scottish Lowlands at least 500m high and below 609.6m with a drop of at least 30m on all sides."),
         new ("Highland Fives", 11, true, "Highland Five", x => x.HighlandFive, "Hills in the Scottish Highlands at least 500m high and below 600m with a drop of at least 30m on all sides."),
-        new ("TuMPs (400m to 499m)", 15, true, "TuMP (400m to 499m)", x => x.Tump400To499M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
-        new ("TuMPs (300m to 399m)", 16, true, "TuMP (300m to 399m)", x => x.Tump300To399M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
-        new ("TuMPs (200m to 299m)", 17, true, "TuMP (200m to 299m)", x => x.Tump200To299M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
-        new ("TuMPs (100m to 199m)", 18, true, "TuMP (100m to 199m)", x => x.Tump100To199M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
-        new ("TuMPs (0m to 99m)", 19, true, "TuMP (0m to 99m)", x => x.Tump0To99M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
+        new ("TuMPs (400m to 499m)", null, false, "TuMP (400m to 499m)", x => x.Tump400To499M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
+        new ("TuMPs (300m to 399m)", null, false, "TuMP (300m to 399m)", x => x.Tump300To399M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
+        new ("TuMPs (200m to 299m)", null, false, "TuMP (200m to 299m)", x => x.Tump200To299M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
+        new ("TuMPs (100m to 199m)", null, false, "TuMP (100m to 199m)", x => x.Tump100To199M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
+        new ("TuMPs (0m to 99m)", null, false, "TuMP (0m to 99m)", x => x.Tump0To99M, "British hills of any height with at least 30m of drop. The geographical area was extended to the Channel Islands in September 2014."),
         new ("Wainwrights", null, false, "Wainwright", x => x.Wainwright, "The 214 hills listed in volumes 1-7 of Wainwright's A Pictorial Guide to the Lakeland Fells."),
         new ("Wainwright Outlying Fells", null, false, "Wainwright Outlying Fell", x => x.WainwrightOutlyingFell, "Hills listed in Wainwright's The Outlying Fells of Lakeland."),
         new ("Birketts", null, false, "Birkett", x => x.Birkett, "Lake District hills over 1,000ft."),
@@ -67,7 +67,7 @@ internal class ClassificationData : IEnumerable<ClassificationInfo>
         new ("Carns", null, false, "Carn", x => x.Carn, "Hills in Ireland between 400 and 499.9m high with a drop of at least 30m on all sides."),
         new ("Binnions", null, false, "Binnion", x => x.Binnion, "Hills in Ireland with height below 400m and a drop of at least 100m on all sides."),
         new ("Other lists", null, false, "Other list", x => x.OtherList, ""),
-        new ("Unclassified", null, false, "Unclassified", x => x.Unclassified, ""),
+        new ("Unclassified", null, false, "Unclassified", x => x.Unclassified, "")
     };
 
     public IEnumerator<ClassificationInfo> GetEnumerator()
