@@ -57,10 +57,13 @@ class _MountainPageState extends State<MountainPage> {
                       ? OrderedClassifications(
                           classifications: _mountain!.classifications)
                       : null),
-              ListTile(
-                title: const Text('Aliases'),
-                subtitle: Text(
-                    _mountain != null ? _mountain!.aliases.join(', ') : ''),
+              Visibility(
+                visible: !(_mountain?.aliases.isEmpty ?? false),
+                child: ListTile(
+                  title: const Text('Aliases'),
+                  subtitle: Text(
+                      _mountain != null ? _mountain!.aliases.join(', ') : ''),
+                ),
               ),
               ListTile(
                 title: const Text('Latitude, longitude'),
