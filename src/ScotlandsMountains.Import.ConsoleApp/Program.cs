@@ -4,14 +4,13 @@ Console.InputEncoding = Encoding.UTF8;
 var steps = new List<Step>
 {
     new ReadHillCsvZipStep(),
+    new CreateMapsStep(),
     new CreateCountriesStep(),
     new CreateMountainsStep(),
     new AssignParentMountainStep(),
     new CreateAndAssignClassificationsStep(),
     new CreateAndAssignRegionsStep(),
-    new CreateAndAssignMapsStep(),
-    new PrepareData(),
-    new WriteDataToFileStep(),
+    new AssignMapsStep(),
     new CreateAndPopulateDatabaseStep(),
     new CopyDatabaseToAppAssetsStep()
 };

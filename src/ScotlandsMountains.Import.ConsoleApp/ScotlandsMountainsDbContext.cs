@@ -14,7 +14,11 @@ public class ScotlandsMountainsDbContext : DbContext
     public DbSet<Country> Countries { get; set; } = null!;
         
     public DbSet<Map> Maps { get; set; } = null!;
-        
+
+    public DbSet<MapSeries> MapSeries { get; set; } = null!;
+    
+    public DbSet<MapPublisher> MapPublishers { get; set; } = null!;
+
     public DbSet<Mountain> Mountains { get; set; } = null!;
         
     public DbSet<Region> Regions { get; set; } = null!;

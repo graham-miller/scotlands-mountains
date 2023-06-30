@@ -27,8 +27,6 @@ internal class Context
     public virtual IDictionary<char, Country> CountriesByInitial { get; set; } = null!;
     
     public virtual IList<Region> Regions { get; set; } = null!;
-    
-    public virtual IList<Map> Maps { get; set; } = null!;
 
-    public virtual Domain Domain { get; set; } = null!;
+    public MapPublisher MapPublisher { get; set; } = null!;
 }
