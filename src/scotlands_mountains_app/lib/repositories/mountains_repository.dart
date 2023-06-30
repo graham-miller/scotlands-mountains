@@ -92,9 +92,11 @@ class MountainsRepository {
 
   Future<List<OsMap>> _getOsMaps(int id) async {
     const sql = '''
-      SELECT m.*
+      SELECT m.*, s.scale, s.name AS series, p.name AS publisher
       FROM Maps m
       INNER JOIN MountainMaps mm ON m.id == mm.mapsId
+      INNER JOIN MapSeries s ON m.seriesId = s.id
+      INNER JOIN MapPublishers p ON s.publisherId = p.id
       WHERE mm.mountainsId = ?
       ''';
     final db = await Data().getDatabase();
