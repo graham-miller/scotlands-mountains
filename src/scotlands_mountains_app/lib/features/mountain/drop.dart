@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:scotlands_mountains_app/widgets/mountain_height.dart';
 
-import '../models/mountain.dart';
+import '../../models/mountain.dart';
+import '../shared/mountain_height.dart';
 
 class Drop extends StatelessWidget {
   final scaleFormat = NumberFormat("#,###", "en_GB");

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../expandible_fab.dart';
+import 'expandible_fab.dart';
 
 class MapControls extends StatelessWidget {
   final void Function() onReset;

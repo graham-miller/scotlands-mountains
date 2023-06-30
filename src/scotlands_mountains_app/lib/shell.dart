@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../widgets/title_logo.dart';
+import 'features/shared/title_logo.dart';
 
 class Shell extends StatelessWidget {
   final Widget child;

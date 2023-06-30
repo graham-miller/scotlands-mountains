@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../repositories/mountains_repository.dart';
-import '../widgets/classification_selector.dart';
-import '../models/classification.dart';
-import '../models/mountain.dart';
-import '../repositories/classifications_repository.dart';
-import '../widgets/map/mountains_map.dart';
-import '../widgets/mountains_list.dart';
+import '../../repositories/mountains_repository.dart';
+import 'classification_selector.dart';
+import '../../models/classification.dart';
+import '../../models/mountain.dart';
+import '../../repositories/classifications_repository.dart';
+import '../map/mountains_map.dart';
+import 'mountains_list.dart';
 
 class ClassificationsPage extends StatefulWidget {
   const ClassificationsPage({super.key});

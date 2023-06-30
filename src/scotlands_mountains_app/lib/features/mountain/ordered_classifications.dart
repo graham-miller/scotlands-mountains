@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/classification.dart';
+import '../../models/classification.dart';
 
 class OrderedClassifications extends StatelessWidget {
   final List<Classification> classifications;

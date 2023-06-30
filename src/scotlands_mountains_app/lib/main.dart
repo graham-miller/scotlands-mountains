@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 
-import 'pages/shell.dart';
-import 'pages/classifications_page.dart';
-import 'pages/about_page.dart';
-import 'pages/mountain_page.dart';
-import 'pages/search_page.dart';
+import 'shell.dart';
+import 'features/classifications/classifications_page.dart';
+import 'features/about/about_page.dart';
+import 'features/mountain/mountain_page.dart';
+import 'features/search/search_page.dart';
 import 'repositories/data.dart';
 
 Future main() async {

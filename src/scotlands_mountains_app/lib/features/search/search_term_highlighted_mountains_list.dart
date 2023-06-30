@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'mountains_list.dart';
+import '../classifications/mountains_list.dart';
 
 class SearchTermHighlightedMountainsList extends MountainsList {
   final String term;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/classification.dart';
-import '../repositories/classifications_repository.dart';
+import '../../models/classification.dart';
+import '../../repositories/classifications_repository.dart';
 
 class ClassificationSelector extends StatefulWidget {
   final Function onClassificationSelected;

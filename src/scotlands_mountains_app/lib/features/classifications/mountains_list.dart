@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'mountain_height.dart';
-import '../models/mountain.dart';
+import '../shared/mountain_height.dart';
+import '../../models/mountain.dart';
 
 class MountainsList extends StatelessWidget {
   final List<Mountain> mountains;

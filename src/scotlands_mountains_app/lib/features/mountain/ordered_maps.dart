@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/os_map.dart';
+import '../../models/os_map.dart';
+import '../shared/util.dart';
 
 class OrderedMaps extends StatelessWidget {
   final scaleFormat = NumberFormat("#,###", "en_GB");
@@ -54,7 +55,10 @@ class OrderedMaps extends StatelessWidget {
                   actions: <Widget>[
                     TextButton(
                       child: const Text('Buy'),
-                      onPressed: () {/*TODO link to amazon*/},
+                      onPressed: () {
+                        Util.openInBrowser(
+                            'https://www.amazon.co.uk/s?k=${m.isbn}');
+                      },
                     ),
                     TextButton(
                       child: const Text('Close'),

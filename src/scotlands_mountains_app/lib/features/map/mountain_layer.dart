@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 
 import 'rotate_with_map.dart';
 import '../../models/mountain.dart';
-import '../mountain_height.dart';
+import '../shared/mountain_height.dart';
 
 class MountainLayer extends StatelessWidget {
   final MapController mapController;

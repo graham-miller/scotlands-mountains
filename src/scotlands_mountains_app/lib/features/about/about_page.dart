@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../util/util.dart';
+import '../shared/util.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

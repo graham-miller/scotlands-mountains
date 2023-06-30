@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../repositories/mountains_repository.dart';
-import '../widgets/search_term_highlighted_mountains_list.dart';
-import '../models/mountain.dart';
-import '../widgets/map/mountains_map.dart';
+import '../../repositories/mountains_repository.dart';
+import 'search_term_highlighted_mountains_list.dart';
+import '../../models/mountain.dart';
+import '../map/mountains_map.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

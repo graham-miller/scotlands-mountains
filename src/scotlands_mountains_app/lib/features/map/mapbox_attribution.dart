@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../util/util.dart';
+import '../shared/util.dart';
 
 class MapboxAttribution extends StatelessWidget {
   const MapboxAttribution({super.key});
