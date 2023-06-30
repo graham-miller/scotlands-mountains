@@ -12,7 +12,7 @@ var steps = new List<Step>
     new CreateAndAssignRegionsStep(),
     new AssignMapsStep(),
     new CreateAndPopulateDatabaseStep(),
-    //new CopyDatabaseToAppAssetsStep()
+    new CopyDatabaseToAppAssetsStep()
 };
 
 AnsiConsole.Write(
