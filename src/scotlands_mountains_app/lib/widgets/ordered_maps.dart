@@ -20,11 +20,53 @@ class OrderedMaps extends StatelessWidget {
       return scaleComparison;
     });
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Wrap(
+      direction: Axis.horizontal,
+      spacing: 4,
+      runSpacing: -2,
       children: ordered.map((m) {
-        return Text(
-            '${m.code}${m.name != null ? ' ${m.name!}' : ''} (1:${scaleFormat.format((1 / m.scale).round())})');
+        return TextButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.resolveWith((states) =>
+                  Theme.of(context).colorScheme.onSecondaryContainer),
+              backgroundColor: MaterialStateProperty.resolveWith(
+                  (states) => Theme.of(context).colorScheme.secondaryContainer),
+            ),
+            onPressed: () {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text('${m.code} ${m.name}'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Publisher: ${m.publisher}'),
+                      Text('Series: ${m.series}'),
+                      Text(
+                          'Scale: 1:${scaleFormat.format((1 / m.scale).round())}'),
+                      Text('ISBN: ${m.isbn}'),
+                      const Text(''),
+                      const Text(
+                          'We use affiliate links to amazon.co.uk so when you buy a map linked from here we receive a small commission payment which helps support the development of Scotland\'s Mountains.')
+                    ],
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Buy'),
+                      onPressed: () {/*TODO link to amazon*/},
+                    ),
+                    TextButton(
+                      child: const Text('Close'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+            child: Text('${m.code} ${m.name}'));
       }).toList(),
     );
   }
