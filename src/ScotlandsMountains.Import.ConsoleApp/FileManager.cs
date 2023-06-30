@@ -5,14 +5,17 @@ public class FileManager
     public FileManager()
     {
         HillCsv = new FileInfo(Path.Join(GetDataFolderPath(), "hillcsv.zip"));
-        OutputJson = new FileInfo(Path.Join(GetDataFolderPath(), "scotlands-mountains.json"));
+        ExplorerTxt = new FileInfo(Path.Join(GetDataFolderPath(), "explorer.txt"));
+        LandrangerTxt = new FileInfo(Path.Join(GetDataFolderPath(), "landranger.txt"));
         OutputDb = new FileInfo(Path.Join(GetDataFolderPath(), "scotlands_mountains.db"));
         AppAssetsDb = new FileInfo(Path.Join(GetAppAssetsFolderPath(), "scotlands_mountains.db"));
     }
 
     public virtual FileInfo HillCsv { get; }
 
-    public virtual FileInfo OutputJson { get; }
+    public virtual FileInfo ExplorerTxt { get; }
+
+    public virtual FileInfo LandrangerTxt { get; }
 
     public virtual FileInfo OutputDb { get; }
     

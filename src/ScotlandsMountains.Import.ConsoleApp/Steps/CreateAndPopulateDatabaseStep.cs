@@ -9,9 +9,14 @@ internal class CreateAndPopulateDatabaseStep : Step
         if (context.FileManager.OutputDb.Exists) context.FileManager.OutputDb.Delete();
 
         using var dbContext = new ScotlandsMountainsDbContext(context.FileManager.OutputDb);
-        
+
+        var mountains = context.MountainsByDobihId.Values
+            .OrderByDescending(x => x.Value.Height)
+            .Select(x => x.Value)
+            .ToList();
+
         dbContext.Database.EnsureCreated();
-        dbContext.Mountains.AddRange(context.Domain.Mountains);
+        dbContext.Mountains.AddRange(mountains);
         dbContext.SaveChanges();
     }
 
