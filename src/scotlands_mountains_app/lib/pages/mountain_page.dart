@@ -90,15 +90,21 @@ class _MountainPageState extends State<MountainPage> {
                   subtitle: _mountain != null
                       ? OrderedMaps(maps: _mountain!.maps)
                       : null),
-              ListTile(
-                title: const Text('Summit features'),
-                subtitle:
-                    Text(_mountain != null ? _mountain!.feature ?? '' : ''),
+              Visibility(
+                visible: !(_mountain?.feature?.isEmpty ?? true),
+                child: ListTile(
+                  title: const Text('Summit features'),
+                  subtitle:
+                      Text(_mountain != null ? _mountain!.feature ?? '' : ''),
+                ),
               ),
-              ListTile(
-                title: const Text('Summit observations'),
-                subtitle: Text(
-                    _mountain != null ? _mountain!.observations ?? '' : ''),
+              Visibility(
+                visible: !(_mountain?.observations?.isEmpty ?? true),
+                child: ListTile(
+                  title: const Text('Summit observations'),
+                  subtitle: Text(
+                      _mountain != null ? _mountain!.observations ?? '' : ''),
+                ),
               ),
               ListTile(
                   title: const Text('Drop'),
