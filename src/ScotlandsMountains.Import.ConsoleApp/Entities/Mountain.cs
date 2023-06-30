@@ -24,7 +24,7 @@ public class Mountain : Entity
     
     public List<Alias> Aliases { get; set; } = null!;
 
-    public List<Classification> Classifications { get; set; } = new();
+    public List<MountainClassification> Classifications { get; set; } = new();
     
     public List<Country> Countries { get; set; } = new();
     

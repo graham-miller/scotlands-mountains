@@ -39,8 +39,8 @@ class MountainsRepository {
     const sql = '''
       SELECT m.*
       FROM Mountains m
-      INNER JOIN MountainClassifications mc ON m.id = mc.mountainsId
-      INNER JOIN Classifications c ON mc.classificationsId = c.id
+      INNER JOIN MountainClassifications mc ON m.id = mc.mountainId
+      INNER JOIN Classifications c ON mc.classificationId = c.id
       WHERE c.id = ?
       AND m.id IN (
         SELECT DISTINCT mountainsId
@@ -108,8 +108,8 @@ class MountainsRepository {
     const sql = '''
       SELECT c.*
       FROM Classifications c
-      INNER JOIN MountainClassifications mc ON c.id == mc.classificationsId
-      WHERE mc.mountainsId = ?
+      INNER JOIN MountainClassifications mc ON c.id == mc.classificationId
+      WHERE mc.mountainId = ?
       AND c.isActive = 1
       ORDER BY displayOrder ASC
       ''';

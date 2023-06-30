@@ -10,5 +10,5 @@ public class Classification : Entity
     
     public string Description { get; set; } = null!;
 
-    public List<Mountain> Mountains { get; set; } = new();
+    public List<MountainClassification> Mountains { get; set; } = new();
 }

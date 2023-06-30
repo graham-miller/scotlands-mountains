@@ -20,7 +20,11 @@ public class ScotlandsMountainsDbContext : DbContext
     public DbSet<MapPublisher> MapPublishers { get; set; } = null!;
 
     public DbSet<Mountain> Mountains { get; set; } = null!;
-        
+    
+    public DbSet<Alias> Aliases{ get; set; } = null!;
+
+    public DbSet<MountainClassification> MountainClassifications { get; set; } = null!;
+
     public DbSet<Region> Regions { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
