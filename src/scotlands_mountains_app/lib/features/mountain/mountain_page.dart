@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:scotlands_mountains_app/features/map/mountains_map.dart';
 
 import '../../models/mountain_graph.dart';
 import '../../repositories/mountains_repository.dart';
 import '../shared/mountain_height.dart';
 import 'mountain_details.dart';
+import 'mountain_photos.dart';
 
 class MountainPage extends StatefulWidget {
   final int id;
@@ -14,8 +16,10 @@ class MountainPage extends StatefulWidget {
   State<MountainPage> createState() => _MountainPageState();
 }
 
-class _MountainPageState extends State<MountainPage> {
+class _MountainPageState extends State<MountainPage>
+    with SingleTickerProviderStateMixin {
   MountainGraph? _mountain;
+  late TabController _tabController;
 
   void _loadMountain() async {
     final mountain = await MountainsRepository().get(widget.id);
@@ -29,6 +33,7 @@ class _MountainPageState extends State<MountainPage> {
   void initState() {
     super.initState();
     _loadMountain();
+    _tabController = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -50,9 +55,23 @@ class _MountainPageState extends State<MountainPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Height(height: _mountain!.height),
               ),
-        _mountain == null
-            ? const SizedBox.shrink()
-            : MountainDetails(mountain: _mountain!),
+        TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Details', icon: Icon(Icons.list)),
+            Tab(text: 'Photos', icon: Icon(Icons.photo)),
+            Tab(text: 'Map', icon: Icon(Icons.map)),
+          ],
+        ),
+        Expanded(
+          child: _mountain == null
+              ? const SizedBox.shrink()
+              : TabBarView(controller: _tabController, children: [
+                  MountainDetails(mountain: _mountain!),
+                  MountainPhotos(mountain: _mountain!),
+                  MountainsMap(mountains: [_mountain!]),
+                ]),
+        ),
       ],
     );
   }

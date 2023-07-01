@@ -40,14 +40,14 @@ class _ClassificationsPageState extends State<ClassificationsPage> {
       length: 2,
       child: Column(
         children: [
+          ClassificationSelector(
+              onClassificationSelected: (c) => _loadMountains(c)),
           const TabBar(
             tabs: [
               Tab(text: 'List', icon: Icon(Icons.list)),
               Tab(text: 'Map', icon: Icon(Icons.map)),
             ],
           ),
-          ClassificationSelector(
-              onClassificationSelected: (c) => _loadMountains(c)),
           Expanded(
               child: TabBarView(children: [
             MountainsList(mountains: _mountains),

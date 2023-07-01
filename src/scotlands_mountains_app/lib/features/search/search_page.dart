@@ -50,12 +50,6 @@ class _SearchPageState extends State<SearchPage> {
         length: 2,
         child: Column(
           children: [
-            const TabBar(
-              tabs: [
-                Tab(text: 'List', icon: Icon(Icons.list)),
-                Tab(text: 'Map', icon: Icon(Icons.map)),
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(33, 0, 40, 8),
               child: TextField(
@@ -72,6 +66,12 @@ class _SearchPageState extends State<SearchPage> {
                         : null),
                 controller: _searchField,
               ),
+            ),
+            const TabBar(
+              tabs: [
+                Tab(text: 'List', icon: Icon(Icons.list)),
+                Tab(text: 'Map', icon: Icon(Icons.map)),
+              ],
             ),
             Expanded(
                 child: TabBarView(children: [
