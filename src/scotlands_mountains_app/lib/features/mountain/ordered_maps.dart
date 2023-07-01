@@ -49,21 +49,22 @@ class OrderedMaps extends StatelessWidget {
                       Text('ISBN: ${m.isbn}'),
                       const Text(''),
                       const Text(
-                          'We use affiliate links to amazon.co.uk so when you buy a map linked from here we receive a small commission payment which helps support the development of Scotland\'s Mountains.')
+                          'We use affiliate links so when you buy a map we receive a small commission at no additional cost to you which helps support the development of Scotland\'s Mountains.')
                     ],
                   ),
                   actions: <Widget>[
                     TextButton(
-                      child: const Text('Buy'),
-                      onPressed: () {
-                        Util.openInBrowser(
-                            'https://www.amazon.co.uk/s?k=${m.isbn}');
-                      },
-                    ),
-                    TextButton(
                       child: const Text('Close'),
                       onPressed: () {
                         Navigator.of(context).pop();
+                      },
+                    ),
+                    FilledButton.icon(
+                      icon: const Icon(Icons.shopping_cart),
+                      label: const Text('Buy'),
+                      onPressed: () {
+                        Util.openInBrowser(
+                            'https://www.amazon.co.uk/s?k=${m.isbn}');
                       },
                     ),
                   ],

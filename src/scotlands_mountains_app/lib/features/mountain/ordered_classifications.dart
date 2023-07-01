@@ -31,7 +31,7 @@ class OrderedClassifications extends StatelessWidget {
                     title: Text(c.name),
                     content: Text(c.description),
                     actions: <Widget>[
-                      TextButton(
+                      FilledButton(
                         child: const Text('Close'),
                         onPressed: () {
                           Navigator.of(context).pop();

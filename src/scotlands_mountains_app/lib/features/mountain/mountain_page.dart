@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/mountain_graph.dart';
 import '../../repositories/mountains_repository.dart';
 import '../shared/mountain_height.dart';
-import 'drop.dart';
-import 'ordered_classifications.dart';
-import 'ordered_maps.dart';
+import 'mountain_details.dart';
 
 class MountainPage extends StatefulWidget {
   final int id;
@@ -37,82 +35,24 @@ class _MountainPageState extends State<MountainPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            _mountain != null ? _mountain!.name : '',
-            style: const TextStyle(fontSize: 20),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _mountain != null ? Height(height: _mountain!.height) : null,
-        ),
-        Expanded(
-          child: ListView(
-            children: [
-              ListTile(
-                  title: const Text('Classifications'),
-                  subtitle: _mountain != null
-                      ? OrderedClassifications(
-                          classifications: _mountain!.classifications)
-                      : null),
-              Visibility(
-                visible: !(_mountain?.aliases.isEmpty ?? false),
-                child: ListTile(
-                  title: const Text('Aliases'),
-                  subtitle: Text(
-                      _mountain != null ? _mountain!.aliases.join(', ') : ''),
+        _mountain == null
+            ? const SizedBox.shrink()
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _mountain!.name,
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
-              ListTile(
-                title: const Text('Latitude, longitude'),
-                subtitle: Text(_mountain != null
-                    ? '${_mountain!.latitude}, ${_mountain!.longitude}'
-                    : ''),
+        _mountain == null
+            ? const SizedBox.shrink()
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Height(height: _mountain!.height),
               ),
-              ListTile(
-                title: const Text('Grid ref.'),
-                subtitle: Text(_mountain != null ? _mountain!.gridRef : ''),
-              ),
-              ListTile(
-                title: const Text('Region'),
-                subtitle: Text(_mountain != null ? _mountain!.region.name : ''),
-              ),
-              ListTile(
-                title: const Text('Countries'),
-                subtitle: Text(_mountain != null
-                    ? _mountain!.countries.map((x) => x.name).join(', ')
-                    : ''),
-              ),
-              ListTile(
-                  title: const Text('Maps'),
-                  subtitle: _mountain != null
-                      ? OrderedMaps(maps: _mountain!.maps)
-                      : null),
-              Visibility(
-                visible: !(_mountain?.feature?.isEmpty ?? true),
-                child: ListTile(
-                  title: const Text('Summit features'),
-                  subtitle:
-                      Text(_mountain != null ? _mountain!.feature ?? '' : ''),
-                ),
-              ),
-              Visibility(
-                visible: !(_mountain?.observations?.isEmpty ?? true),
-                child: ListTile(
-                  title: const Text('Summit observations'),
-                  subtitle: Text(
-                      _mountain != null ? _mountain!.observations ?? '' : ''),
-                ),
-              ),
-              ListTile(
-                  title: const Text('Drop'),
-                  subtitle:
-                      _mountain != null ? Drop(mountain: _mountain!) : null),
-            ],
-          ),
-        ),
+        _mountain == null
+            ? const SizedBox.shrink()
+            : MountainDetails(mountain: _mountain!),
       ],
     );
   }

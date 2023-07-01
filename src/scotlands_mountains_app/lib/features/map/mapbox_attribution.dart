@@ -49,7 +49,7 @@ class MapboxAttribution extends StatelessWidget {
                 ],
               ),
               actions: <Widget>[
-                TextButton(
+                FilledButton(
                   child: const Text('Close'),
                   onPressed: () {
                     Navigator.of(context).pop();

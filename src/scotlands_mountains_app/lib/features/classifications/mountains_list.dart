@@ -15,15 +15,14 @@ class MountainsList extends StatelessWidget {
       itemCount: mountains.length,
       itemBuilder: (context, index) {
         return ListTile(
-            leading: CircleAvatar(child: Text(((index) + 1).toString())),
-            title: getName(mountains[index].name, context),
-            subtitle: Height(height: mountains[index].height),
-            trailing: IconButton(
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {
-                context.push('/mountains/${mountains[index].id}');
-              },
-            ));
+          leading: CircleAvatar(child: Text(((index) + 1).toString())),
+          title: getName(mountains[index].name, context),
+          subtitle: Height(height: mountains[index].height),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            context.push('/mountains/${mountains[index].id}');
+          },
+        );
       },
     );
   }

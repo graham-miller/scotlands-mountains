@@ -65,16 +65,17 @@ class MountainLayer extends StatelessWidget {
                     content: Height(height: mountain.height),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text('More'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          context.push('/mountains/${mountain.id}');
-                        },
-                      ),
-                      TextButton(
                         child: const Text('Close'),
                         onPressed: () {
                           Navigator.of(context).pop();
+                        },
+                      ),
+                      FilledButton.icon(
+                        icon: const Icon(Icons.chevron_right),
+                        label: const Text('More'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          context.push('/mountains/${mountain.id}');
                         },
                       ),
                     ],
