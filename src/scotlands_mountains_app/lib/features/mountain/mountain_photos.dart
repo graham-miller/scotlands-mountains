@@ -35,7 +35,13 @@ class _MountainPhotosState extends State<MountainPhotos> {
               child: Text('An error has occurred!'),
             );
           } else if (snapshot.hasData) {
-            return Image.network(snapshot.data!.items[0].link);
+            return SingleChildScrollView(
+              child: Column(
+                  children: snapshot.data!.map((i) {
+                var url = i.imgServer + i.image;
+                return Image.network(url);
+              }).toList()),
+            );
           } else {
             return const Center(
               child: CircularProgressIndicator(),
@@ -44,20 +50,30 @@ class _MountainPhotosState extends State<MountainPhotos> {
         });
   }
 
-  Future<GeographApiResponse> fetchPhotos(http.Client client) async {
+  Future<List<GeographApiPhotoResponse>> fetchPhotos(http.Client client) async {
+    // TODO use compute
+
     const String apiKey = '441670a7e7';
     const String term = 'ben+nevis';
 
     final response = await client.get(Uri.parse(
         'https://api.geograph.org.uk/syndicator.php?key=$apiKey&text=$term&format=JSON'));
 
-    return compute(parsePhotos, response.body);
+    const JsonDecoder decoder = JsonDecoder();
+    final parsed = decoder.convert(response.body);
+    final result = GeographApiSearchResponse.fromJson(parsed);
+
+    var photos = await Future.wait(result.items.map((e) async {
+      final response = await client.get(Uri.parse(
+          'https://api.geograph.org.uk/api/photo/${e.guid}/$apiKey?output=json'));
+
+      const JsonDecoder decoder = JsonDecoder();
+      final parsed = decoder.convert(response.body);
+      var result = GeographApiPhotoResponse.fromJson(parsed);
+
+      return result;
+    }));
+
+    return photos;
   }
-}
-
-GeographApiResponse parsePhotos(String responseBody) {
-  const JsonDecoder decoder = JsonDecoder();
-  final parsed = decoder.convert(responseBody);
-
-  return GeographApiResponse.fromJson(parsed);
 }

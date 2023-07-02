@@ -1,45 +1,45 @@
-class GeographApiResponse {
+class GeographApiSearchResponse {
   final String generator;
   final String title;
   final String description;
   final String link;
-  final String syndicationURL;
-  final String? prevURL;
-  final String? nextURL;
+  final String syndicationUrl;
+  final String? prevUrl;
+  final String? nextUrl;
   final String icon;
   final String date;
-  final List<GeographApiResponseItem> items;
+  final List<GeographApiSearchResponseItem> items;
 
-  const GeographApiResponse._(
+  const GeographApiSearchResponse._(
       {required this.generator,
       required this.title,
       required this.description,
       required this.link,
-      required this.syndicationURL,
-      required this.prevURL,
-      required this.nextURL,
+      required this.syndicationUrl,
+      required this.prevUrl,
+      required this.nextUrl,
       required this.icon,
       required this.date,
       required this.items});
 
-  factory GeographApiResponse.fromJson(dynamic json) {
-    return GeographApiResponse._(
+  factory GeographApiSearchResponse.fromJson(dynamic json) {
+    return GeographApiSearchResponse._(
         generator: json['generator'],
         title: json['title'],
         description: json['description'],
         link: json['link'],
-        syndicationURL: json['syndicationURL'],
-        prevURL: json.containsKey('prevURL') ? json['prevURL'] : null,
-        nextURL: json.containsKey('nextURL') ? json['nextURL'] : null,
+        syndicationUrl: json['syndicationURL'],
+        prevUrl: json.containsKey('prevURL') ? json['prevURL'] : null,
+        nextUrl: json.containsKey('nextURL') ? json['nextURL'] : null,
         icon: json['icon'],
         date: json['date'],
         items: List.from(json['items'])
-            .map((i) => GeographApiResponseItem.fromJson(i))
+            .map((i) => GeographApiSearchResponseItem.fromJson(i))
             .toList());
   }
 }
 
-class GeographApiResponseItem {
+class GeographApiSearchResponseItem {
   final String title;
   final String description;
   final String link;
@@ -56,7 +56,7 @@ class GeographApiResponseItem {
   final String thumbTag;
   final String licence;
 
-  const GeographApiResponseItem._(
+  const GeographApiSearchResponseItem._(
       {required this.title,
       required this.description,
       required this.link,
@@ -73,8 +73,8 @@ class GeographApiResponseItem {
       required this.thumbTag,
       required this.licence});
 
-  factory GeographApiResponseItem.fromJson(dynamic json) {
-    return GeographApiResponseItem._(
+  factory GeographApiSearchResponseItem.fromJson(dynamic json) {
+    return GeographApiSearchResponseItem._(
         title: json['title'],
         description: json['description'],
         link: json['link'],
@@ -90,5 +90,56 @@ class GeographApiResponseItem {
         thumb: json['thumb'],
         thumbTag: json['thumbTag'],
         licence: json['licence']);
+  }
+}
+
+class GeographApiPhotoResponse {
+  final String title;
+  final String gridReference;
+  final String profileLink;
+  final String realName;
+  final String imgServer;
+  final String thumbnail;
+  final String image;
+  final List<String> sizeInfo;
+  final String taken;
+  final int submitted;
+  final String? tags;
+  final String comment;
+  final String wgs84Lat;
+  final String wgs84Long;
+
+  GeographApiPhotoResponse._(
+      {required this.title,
+      required this.gridReference,
+      required this.profileLink,
+      required this.realName,
+      required this.imgServer,
+      required this.thumbnail,
+      required this.image,
+      required this.sizeInfo,
+      required this.taken,
+      required this.submitted,
+      required this.tags,
+      required this.comment,
+      required this.wgs84Lat,
+      required this.wgs84Long});
+
+  factory GeographApiPhotoResponse.fromJson(dynamic json) {
+    return GeographApiPhotoResponse._(
+        title: json['title'],
+        gridReference: json['grid_reference'],
+        profileLink: json['profile_link'],
+        realName: json['realname'],
+        imgServer: json['imgserver'],
+        thumbnail: json['thumbnail'],
+        image: json['image'],
+        sizeInfo: List.from(json['sizeinfo']),
+        taken: json['taken'],
+        submitted: json['submitted'],
+        tags: json['tags'],
+        comment: json['comment'],
+        wgs84Lat: json['wgs84_lat'],
+        wgs84Long: json['wgs84_long']);
   }
 }
