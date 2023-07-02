@@ -16,7 +16,7 @@ Future main() async {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(initialLocation: '/classifications', routes: [
+final GoRouter _router = GoRouter(initialLocation: '/mountains/1', routes: [
   ShellRoute(
     builder: (context, state, child) {
       return Shell(child: child);
