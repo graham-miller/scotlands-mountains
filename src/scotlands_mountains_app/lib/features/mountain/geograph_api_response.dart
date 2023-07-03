@@ -47,7 +47,7 @@ class GeographApiSearchResponseItem {
   final String guid;
   final String source;
   final int date;
-  final String imageTaken;
+  final String? imageTaken;
   final int dateUpdated;
   final String? tags;
   final String lat;
