@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import 'geograph_api_response.dart';
@@ -28,7 +28,7 @@ class _MountainPhotosState extends State<MountainPhotos> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: fetchPhotos(http.Client()),
+        future: searchPhotos(widget.mountain.name, http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -50,30 +50,32 @@ class _MountainPhotosState extends State<MountainPhotos> {
         });
   }
 
-  Future<List<GeographApiPhotoResponse>> fetchPhotos(http.Client client) async {
-    // TODO use compute
-
-    const String apiKey = '441670a7e7';
-    const String term = 'ben+nevis';
+  Future<List<GeographApiPhotoResponse>> searchPhotos(
+      String term, http.Client client) async {
+    final String escapedTerm = Uri.encodeComponent(term.replaceAll(' ', '+'));
 
     final response = await client.get(Uri.parse(
-        'https://api.geograph.org.uk/syndicator.php?key=$apiKey&text=$term&format=JSON'));
+        'https://api.geograph.org.uk/syndicator.php?key=${dotenv.env['GEOGRAPH_API_KEY']}&text=$escapedTerm&format=JSON'));
 
     const JsonDecoder decoder = JsonDecoder();
     final parsed = decoder.convert(response.body);
     final result = GeographApiSearchResponse.fromJson(parsed);
 
-    var photos = await Future.wait(result.items.map((e) async {
-      final response = await client.get(Uri.parse(
-          'https://api.geograph.org.uk/api/photo/${e.guid}/$apiKey?output=json'));
-
-      const JsonDecoder decoder = JsonDecoder();
-      final parsed = decoder.convert(response.body);
-      var result = GeographApiPhotoResponse.fromJson(parsed);
-
-      return result;
-    }));
+    var photos = await Future.wait(
+        result.items.map((e) async => await getPhotoInfo(e.guid, client)));
 
     return photos;
+  }
+
+  Future<GeographApiPhotoResponse> getPhotoInfo(
+      String guid, http.Client client) async {
+    final response = await client.get(Uri.parse(
+        'https://api.geograph.org.uk/api/photo/$guid/${dotenv.env['GEOGRAPH_API_KEY']}?output=json'));
+
+    const JsonDecoder decoder = JsonDecoder();
+    final parsed = decoder.convert(response.body);
+    var result = GeographApiPhotoResponse.fromJson(parsed);
+
+    return result;
   }
 }

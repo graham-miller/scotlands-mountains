@@ -10,13 +10,13 @@ import 'features/search/search_page.dart';
 import 'repositories/data.dart';
 
 Future main() async {
-  await dotenv.load(fileName: ".local");
+  await dotenv.load(fileName: ".env");
   await Data().initialize();
 
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(initialLocation: '/mountains/1', routes: [
+final GoRouter _router = GoRouter(initialLocation: '/classifications', routes: [
   ShellRoute(
     builder: (context, state, child) {
       return Shell(child: child);
