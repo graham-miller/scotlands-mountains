@@ -24,6 +24,7 @@ class MountainPhotos extends StatefulWidget {
 class _MountainPhotosState extends State<MountainPhotos> {
   final _client = http.Client();
   final List<Photo> _photos = List.empty(growable: true);
+  final _controller = CarouselController();
   late final CarouselOptions _options;
 
   int _index = 0;
@@ -58,14 +59,68 @@ class _MountainPhotosState extends State<MountainPhotos> {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
           child: CarouselSlider.builder(
-              options: _options,
-              itemCount: _photos.length,
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) =>
-                      Image.network(_photos[itemIndex].imageUrl)),
+            carouselController: _controller,
+            options: _options,
+            itemCount: _photos.length,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    Image.network(_photos[itemIndex].imageUrl),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.chevron_left),
+              onPressed: _index == 0
+                  ? null
+                  : () {
+                      _controller.previousPage();
+                    },
+            ),
+            Text('${_index + 1} of ${_photos.length}'),
+            IconButton(
+              icon: const Icon(Icons.chevron_right),
+              onPressed: _index == _photos.length - 1
+                  ? null
+                  : () {
+                      _controller.nextPage();
+                    },
+            ),
+          ],
         ),
         ListTile(
           title: Text(_photos[_index].title),
+          subtitle: RichText(
+            text: TextSpan(
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground),
+                text: 'Photo © ',
+                children: [
+                  TextSpan(
+                    text: _photos[_index].author,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Util.openInBrowser(_photos[_index].authorUrl);
+                      },
+                  ),
+                  const TextSpan(text: ' ('),
+                  TextSpan(
+                    text: 'cc-by-sa/2.0',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Util.openInBrowser(_photos[_index].licenceUrl);
+                      },
+                  ),
+                  const TextSpan(text: ')'),
+                ]),
+          ),
         ),
         ListTile(
           subtitle: Text(_photos[_index].description),
@@ -75,44 +130,10 @@ class _MountainPhotosState extends State<MountainPhotos> {
             text: TextSpan(
               style:
                   TextStyle(color: Theme.of(context).colorScheme.onBackground),
-              text: '© Copyright ',
+              //text: 'Source: ',
               children: [
                 TextSpan(
-                  text: _photos[_index].author,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Util.openInBrowser(_photos[_index].authorUrl);
-                    },
-                ),
-                const TextSpan(text: ' and licensed for '),
-                TextSpan(
-                  text: 'reuse',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Util.openInBrowser(_photos[_index].reuseUrl);
-                    },
-                ),
-                const TextSpan(text: ' under this '),
-                TextSpan(
-                  text: 'Creative Commons Licence',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Util.openInBrowser(_photos[_index].licenceUrl);
-                    },
-                ),
-                const TextSpan(text: '.'),
-                const TextSpan(text: ' Source: '),
-                TextSpan(
-                  text: 'Geograph',
+                  text: _photos[_index].geographUrl,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -121,7 +142,6 @@ class _MountainPhotosState extends State<MountainPhotos> {
                       Util.openInBrowser(_photos[_index].geographUrl);
                     },
                 ),
-                const TextSpan(text: '.'),
               ],
             ),
           ),
