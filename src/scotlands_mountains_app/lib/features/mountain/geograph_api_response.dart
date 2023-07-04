@@ -53,7 +53,7 @@ class GeographApiSearchResponseItem {
   final String lat;
   final String long;
   final String thumb;
-  final String thumbTag;
+  final String? thumbTag;
   final String licence;
 
   const GeographApiSearchResponseItem._(
@@ -70,7 +70,7 @@ class GeographApiSearchResponseItem {
       required this.lat,
       required this.long,
       required this.thumb,
-      required this.thumbTag,
+      this.thumbTag,
       required this.licence});
 
   factory GeographApiSearchResponseItem.fromJson(dynamic json) {
