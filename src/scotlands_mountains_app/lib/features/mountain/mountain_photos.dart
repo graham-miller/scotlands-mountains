@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:photo_view/photo_view.dart';
 
 import '../shared/util.dart';
 import 'geograph_api_response.dart';
@@ -62,24 +63,37 @@ class _MountainPhotosState extends State<MountainPhotos> {
             carouselController: _controller,
             options: _options,
             itemCount: _photos.length,
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    GestureDetector(
-                        child: Image.network(_photos[itemIndex].imageUrl),
-                        onTap: () {
-                          showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog.fullscreen(
-                                  child: IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
+            itemBuilder: (BuildContext context, int itemIndex,
+                    int pageViewIndex) =>
+                GestureDetector(
+                    child: Image.network(_photos[itemIndex].imageUrl),
+                    onTap: () {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog.fullscreen(
+                              backgroundColor: Colors.black,
+                              child: Stack(
+                                children: [
+                                  PhotoView(
+                                    imageProvider: NetworkImage(
+                                        _photos[itemIndex].imageUrl),
+                                  ),
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.close),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ])
+                                ],
                               ));
-                            },
-                          );
-                        }),
+                        },
+                      );
+                    }),
           ),
         ),
         Row(
