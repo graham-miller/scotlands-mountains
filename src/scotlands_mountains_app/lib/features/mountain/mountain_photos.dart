@@ -183,12 +183,9 @@ class _MountainPhotosState extends State<MountainPhotos> {
     setState(() => _photos.clear());
 
     final String term = Uri.encodeComponent(widget.mountain.name);
-    final gridRefParts = widget.mountain.gridRef.split(' ');
-    final gridRef = gridRefParts[0] +
-        gridRefParts[1].substring(0, 2) +
-        gridRefParts[2].substring(0, 2);
-    // final String lat = widget.mountain.latitude.toString();
-    // final String long = widget.mountain.longitude.toString();
+    final parts = widget.mountain.gridRef.split(' ');
+    final gridRef =
+        parts[0] + parts[1].substring(0, 2) + parts[2].substring(0, 2);
     final url =
         'https://api.geograph.org.uk/syndicator.php?key=${dotenv.env['GEOGRAPH_API_KEY']}&text=$term+near+$gridRef&perpage=10&format=JSON';
 
