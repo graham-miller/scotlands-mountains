@@ -41,7 +41,7 @@ class GeographApiSearchResponse {
 
 class GeographApiSearchResponseItem {
   final String title;
-  final String description;
+  final String? description;
   final String link;
   final String author;
   final String guid;
@@ -70,7 +70,7 @@ class GeographApiSearchResponseItem {
       required this.lat,
       required this.long,
       required this.thumb,
-      this.thumbTag,
+      required this.thumbTag,
       required this.licence});
 
   factory GeographApiSearchResponseItem.fromJson(dynamic json) {
@@ -104,7 +104,7 @@ class GeographApiPhotoResponse {
   final List<String> sizeInfo;
   final String taken;
   final int submitted;
-  final String? tags;
+  final String tags;
   final String comment;
   final String wgs84Lat;
   final String wgs84Long;
@@ -137,8 +137,8 @@ class GeographApiPhotoResponse {
         sizeInfo: List.from(json['sizeinfo']),
         taken: json['taken'],
         submitted: json['submitted'],
-        tags: json['tags'],
-        comment: json['comment'],
+        tags: json['tags'] ?? '',
+        comment: json['comment'] ?? '',
         wgs84Lat: json['wgs84_lat'],
         wgs84Long: json['wgs84_long']);
   }

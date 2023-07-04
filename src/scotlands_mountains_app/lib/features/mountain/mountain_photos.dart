@@ -182,11 +182,17 @@ class _MountainPhotosState extends State<MountainPhotos> {
   void searchPhotos() async {
     setState(() => _photos.clear());
 
-    final String escapedTerm =
-        Uri.encodeComponent(widget.mountain.name.replaceAll(' ', '+'));
+    final String term = Uri.encodeComponent(widget.mountain.name);
+    final gridRefParts = widget.mountain.gridRef.split(' ');
+    final gridRef = gridRefParts[0] +
+        gridRefParts[1].substring(0, 2) +
+        gridRefParts[2].substring(0, 2);
+    // final String lat = widget.mountain.latitude.toString();
+    // final String long = widget.mountain.longitude.toString();
+    final url =
+        'https://api.geograph.org.uk/syndicator.php?key=${dotenv.env['GEOGRAPH_API_KEY']}&text=$term+near+$gridRef&perpage=10&format=JSON';
 
-    final response = await _client.get(Uri.parse(
-        'https://api.geograph.org.uk/syndicator.php?key=${dotenv.env['GEOGRAPH_API_KEY']}&text=$escapedTerm&format=JSON'));
+    final response = await _client.get(Uri.parse(url));
 
     const JsonDecoder decoder = JsonDecoder();
     final parsed = decoder.convert(response.body);
@@ -199,8 +205,9 @@ class _MountainPhotosState extends State<MountainPhotos> {
   }
 
   Future<GeographApiPhotoResponse> getPhotoInfo(String guid) async {
-    final response = await _client.get(Uri.parse(
-        'https://api.geograph.org.uk/api/photo/$guid/${dotenv.env['GEOGRAPH_API_KEY']}?output=json'));
+    final url =
+        'https://api.geograph.org.uk/api/photo/$guid/${dotenv.env['GEOGRAPH_API_KEY']}?output=json';
+    final response = await _client.get(Uri.parse(url));
 
     const JsonDecoder decoder = JsonDecoder();
     final parsed = decoder.convert(response.body);
