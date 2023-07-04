@@ -64,7 +64,22 @@ class _MountainPhotosState extends State<MountainPhotos> {
             itemCount: _photos.length,
             itemBuilder:
                 (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    Image.network(_photos[itemIndex].imageUrl),
+                    GestureDetector(
+                        child: Image.network(_photos[itemIndex].imageUrl),
+                        onTap: () {
+                          showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog.fullscreen(
+                                  child: IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ));
+                            },
+                          );
+                        }),
           ),
         ),
         Row(
