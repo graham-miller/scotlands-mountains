@@ -108,7 +108,6 @@ class GeographApiPhotoResponse {
   final String comment;
   final String wgs84Lat;
   final String wgs84Long;
-  final String guid;
 
   GeographApiPhotoResponse._(
       {required this.title,
@@ -124,10 +123,9 @@ class GeographApiPhotoResponse {
       required this.tags,
       required this.comment,
       required this.wgs84Lat,
-      required this.wgs84Long,
-      required this.guid});
+      required this.wgs84Long});
 
-  factory GeographApiPhotoResponse.fromJson(dynamic json, String guid) {
+  factory GeographApiPhotoResponse.fromJson(dynamic json) {
     return GeographApiPhotoResponse._(
         title: json['title'],
         gridReference: json['grid_reference'],
@@ -142,7 +140,6 @@ class GeographApiPhotoResponse {
         tags: json['tags'],
         comment: json['comment'],
         wgs84Lat: json['wgs84_lat'],
-        wgs84Long: json['wgs84_long'],
-        guid: guid);
+        wgs84Long: json['wgs84_long']);
   }
 }

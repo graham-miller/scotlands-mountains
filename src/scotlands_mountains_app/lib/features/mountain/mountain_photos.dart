@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+import '../shared/util.dart';
 import 'geograph_api_response.dart';
 import '../../models/mountain.dart';
-
-// Ref.: https://docs.flutter.dev/cookbook/networking/background-parsing
-// Ref.: https://www.geograph.org.uk/help/api
+import 'models/photo.dart';
 
 class MountainPhotos extends StatefulWidget {
   final client = http.Client();
@@ -23,7 +23,7 @@ class MountainPhotos extends StatefulWidget {
 
 class _MountainPhotosState extends State<MountainPhotos> {
   final _client = http.Client();
-  final List<GeographApiPhotoResponse> _photos = List.empty(growable: true);
+  final List<Photo> _photos = List.empty(growable: true);
   late final CarouselOptions _options;
 
   int _index = 0;
@@ -60,22 +60,71 @@ class _MountainPhotosState extends State<MountainPhotos> {
           child: CarouselSlider.builder(
               options: _options,
               itemCount: _photos.length,
-              itemBuilder: (BuildContext context, int itemIndex,
-                      int pageViewIndex) =>
-                  Image.network(
-                      _photos[itemIndex].imgServer + _photos[itemIndex].image)),
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) =>
+                      Image.network(_photos[itemIndex].imageUrl)),
         ),
         ListTile(
           title: Text(_photos[_index].title),
         ),
         ListTile(
-          subtitle: Text(_photos[_index].comment),
+          subtitle: Text(_photos[_index].description),
         ),
         ListTile(
-          subtitle: Text(
-              '© Copyright David Dixon and licensed for reuse under this Creative Commons Licence. https://www.geograph.org.uk/photo/${_photos[_index].guid}'),
-// https://www.geograph.org.uk/profile/43729
-// https://www.geograph.org.uk/reuse.php?id=5470523
+          subtitle: RichText(
+            text: TextSpan(
+              style:
+                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
+              text: '© Copyright ',
+              children: [
+                TextSpan(
+                  text: _photos[_index].author,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Util.openInBrowser(_photos[_index].authorUrl);
+                    },
+                ),
+                const TextSpan(text: ' and licensed for '),
+                TextSpan(
+                  text: 'reuse',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Util.openInBrowser(_photos[_index].reuseUrl);
+                    },
+                ),
+                const TextSpan(text: ' under this '),
+                TextSpan(
+                  text: 'Creative Commons Licence',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Util.openInBrowser(_photos[_index].licenceUrl);
+                    },
+                ),
+                const TextSpan(text: '.'),
+                const TextSpan(text: ' Source: '),
+                TextSpan(
+                  text: 'Geograph',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Util.openInBrowser(_photos[_index].geographUrl);
+                    },
+                ),
+                const TextSpan(text: '.'),
+              ],
+            ),
+          ),
         ),
       ],
     );
@@ -94,8 +143,8 @@ class _MountainPhotosState extends State<MountainPhotos> {
     final parsed = decoder.convert(response.body);
     final result = GeographApiSearchResponse.fromJson(parsed);
 
-    var photos = await Future.wait(
-        result.items.map((e) async => await getPhotoInfo(e.guid)));
+    var photos = await Future.wait(result.items.map((e) async =>
+        Photo.fromGeographResponse(e, await getPhotoInfo(e.guid))));
 
     setState(() => _photos.addAll(photos));
   }
@@ -106,7 +155,7 @@ class _MountainPhotosState extends State<MountainPhotos> {
 
     const JsonDecoder decoder = JsonDecoder();
     final parsed = decoder.convert(response.body);
-    var result = GeographApiPhotoResponse.fromJson(parsed, guid);
+    var result = GeographApiPhotoResponse.fromJson(parsed);
 
     return result;
   }
