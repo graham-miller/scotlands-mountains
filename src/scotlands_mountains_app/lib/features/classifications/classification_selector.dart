@@ -63,7 +63,7 @@ class _ClassificationSelectorState extends State<ClassificationSelector> {
                   title: Text(_selected!.name),
                   content: Text(_selected!.description),
                   actions: <Widget>[
-                    TextButton(
+                    FilledButton(
                       child: const Text('Close'),
                       onPressed: () {
                         Navigator.of(context).pop();

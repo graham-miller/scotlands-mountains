@@ -10,7 +10,7 @@ import 'features/search/search_page.dart';
 import 'repositories/data.dart';
 
 Future main() async {
-  await dotenv.load(fileName: ".local");
+  await dotenv.load(fileName: ".env");
   await Data().initialize();
 
   runApp(const MyApp());

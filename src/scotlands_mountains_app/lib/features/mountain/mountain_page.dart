@@ -39,6 +39,7 @@ class _MountainPageState extends State<MountainPage>
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _mountain == null
             ? const SizedBox.shrink()
