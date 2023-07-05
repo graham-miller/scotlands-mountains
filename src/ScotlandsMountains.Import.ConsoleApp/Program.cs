@@ -11,6 +11,7 @@ var steps = new List<Step>
     new CreateAndAssignClassificationsStep(),
     new CreateAndAssignRegionsStep(),
     new AssignMapsStep(),
+    new FixMountainNamesStep(),
     new CreateAndPopulateDatabaseStep(),
     new CopyDatabaseToAppAssetsStep()
 };

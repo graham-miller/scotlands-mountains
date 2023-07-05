@@ -182,6 +182,7 @@ class _MountainPhotosState extends State<MountainPhotos> {
   void searchPhotos() async {
     setState(() => _photos.clear());
 
+    // TODO remove any part of name in (..)
     final String term = Uri.encodeComponent(widget.mountain.name);
     final parts = widget.mountain.gridRef.split(' ');
     final gridRef =
