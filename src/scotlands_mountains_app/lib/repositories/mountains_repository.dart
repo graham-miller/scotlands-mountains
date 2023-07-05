@@ -22,9 +22,10 @@ class MountainsRepository {
     final classifications = _getClassifications(id);
     final countries = _getCountries(id);
     final region = _getRegion(id);
+    final parent = _getParent(id);
 
     var graph = await Future.wait(
-        [mountain, aliases, maps, classifications, countries, region]);
+        [mountain, aliases, maps, classifications, countries, region, parent]);
 
     return MountainGraph(
         graph.elementAt(0) as Map<String, dynamic>,
@@ -32,7 +33,8 @@ class MountainsRepository {
         graph.elementAt(2) as List<OsMap>,
         graph.elementAt(3) as List<Classification>,
         graph.elementAt(4) as List<Country>,
-        graph.elementAt(5) as Region);
+        graph.elementAt(5) as Region,
+        graph.elementAt(6) as Mountain?);
   }
 
   Future<List<Mountain>> getByClassificationId(int id) async {
@@ -153,5 +155,21 @@ class MountainsRepository {
     final db = await Data().getDatabase();
 
     return Region(await db.rawQuery(sql, [id]).then((x) => x.single));
+  }
+
+  Future<Mountain?> _getParent(int id) async {
+    const sql = '''
+      SELECT p.*
+      FROM Mountains m
+      INNER JOIN Mountains p ON m.parentId = p.id
+      WHERE m.Id = ?
+      ''';
+    final db = await Data().getDatabase();
+
+    return await db.rawQuery(sql, [id]).then((result) {
+      var map = result.singleOrNull;
+
+      return map == null ? null : Mountain(map);
+    });
   }
 }

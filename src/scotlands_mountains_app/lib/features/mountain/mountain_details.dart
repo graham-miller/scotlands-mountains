@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../models/mountain_graph.dart';
 import 'drop.dart';
@@ -47,13 +48,21 @@ class MountainDetails extends StatelessWidget {
             ? const SizedBox.shrink()
             : ListTile(
                 title: const Text('Summit features'),
-                subtitle: Text(mountain.feature ?? ''),
+                subtitle: Text(mountain.feature!),
               ),
         mountain.observations == null
             ? const SizedBox.shrink()
             : ListTile(
                 title: const Text('Summit observations'),
-                subtitle: Text(mountain.observations ?? ''),
+                subtitle: Text(mountain.observations!),
+              ),
+        mountain.parent == null
+            ? const SizedBox.shrink()
+            : ListTile(
+                title: const Text('Parent'),
+                subtitle: Text(mountain.parent!.name),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('/mountains/${mountain.parent!.id}'),
               ),
         ListTile(
           title: const Text('Drop'),

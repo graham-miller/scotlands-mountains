@@ -10,9 +10,10 @@ class MountainGraph extends Mountain {
   final List<Classification> classifications;
   final List<Country> countries;
   final Region region;
+  final Mountain? parent;
 
   MountainGraph._(map, this.aliases, this.maps, this.classifications,
-      this.countries, this.region)
+      this.countries, this.region, this.parent)
       : super(map);
 
   factory MountainGraph(
@@ -21,8 +22,9 @@ class MountainGraph extends Mountain {
       List<OsMap> maps,
       List<Classification> classifications,
       List<Country> countries,
-      Region region) {
+      Region region,
+      Mountain? parent) {
     return MountainGraph._(
-        map, aliases, maps, classifications, countries, region);
+        map, aliases, maps, classifications, countries, region, parent);
   }
 }
