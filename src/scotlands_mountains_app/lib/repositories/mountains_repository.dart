@@ -61,7 +61,15 @@ class MountainsRepository {
     const sql = '''
       SELECT *
       FROM Mountains
-      WHERE name LIKE ?
+      WHERE (
+        name LIKE ?
+        OR
+        id IN (
+          SELECT mountainId
+          FROM Aliases
+          WHERE name LIKE ?
+        )
+      )
       AND id IN (
         SELECT DISTINCT mountainsId
         FROM Countries co
@@ -73,7 +81,9 @@ class MountainsRepository {
       ''';
     final db = await Data().getDatabase();
 
-    return (await db.rawQuery(sql, [arg])).map((map) => Mountain(map)).toList();
+    return (await db.rawQuery(sql, [arg, arg]))
+        .map((map) => Mountain(map))
+        .toList();
   }
 
   Future<List<String>> _getAliases(int id) async {
