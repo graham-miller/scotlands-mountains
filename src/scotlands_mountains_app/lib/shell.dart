@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'features/shared/title_logo.dart';
 
@@ -13,23 +12,6 @@ class Shell extends StatelessWidget {
     '/search',
     '/about',
   ];
-
-  int _selectedIndex(BuildContext context) {
-    final index = _routes.indexOf(
-        GoRouter.of(context).routeInformationProvider.value.location ?? '');
-    return index < 0 ? 0 : index;
-  }
-
-  bool _isSubPage(BuildContext context) {
-    final index = _routes.indexOf(
-        GoRouter.of(context).routeInformationProvider.value.location ?? '');
-    return index < 0;
-  }
-
-  _navigate(BuildContext context, int value) {
-    GoRouter.of(context).pop();
-    context.go(_routes[value]);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +27,10 @@ class Shell extends StatelessWidget {
       leading: Builder(
         builder: (context) {
           return _isSubPage(context)
+          return Navigator.of(context).canPop()
               ? IconButton(
                   icon: const Icon(Icons.arrow_back),
-                  onPressed: () => context.pop(),
+                  onPressed: () => Navigator.of(context).pop(),
                 )
               : IconButton(
                   icon: const Icon(Icons.menu),
@@ -70,11 +53,11 @@ class Shell extends StatelessWidget {
   }
 
   Widget _drawer(BuildContext context) {
-    final selectedIndex = _selectedIndex(context);
-
     return NavigationDrawer(
-      selectedIndex: selectedIndex,
-      onDestinationSelected: (value) => _navigate(context, value),
+      onDestinationSelected: (value) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(_routes[value], (route) => false);
+      },
       children: const [
         DrawerHeader(
           child: TitleLogo(),

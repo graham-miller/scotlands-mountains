@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'rotate_with_map.dart';
@@ -75,7 +74,8 @@ class MountainLayer extends StatelessWidget {
                         label: const Text('More'),
                         onPressed: () {
                           Navigator.of(context).pop();
-                          context.push('/mountains/${mountain.id}');
+                          Navigator.of(context)
+                              .pushNamed('/mountains', arguments: mountain.id);
                         },
                       ),
                     ],

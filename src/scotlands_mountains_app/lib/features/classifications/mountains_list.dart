@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../shared/mountain_height.dart';
 import '../../models/mountain.dart';
@@ -20,7 +19,8 @@ class MountainsList extends StatelessWidget {
           subtitle: Height(height: mountains[index].height),
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
-            context.push('/mountains/${mountains[index].id}');
+            Navigator.of(context)
+                .pushNamed('/mountains', arguments: mountains[index].id);
           },
         );
       },
