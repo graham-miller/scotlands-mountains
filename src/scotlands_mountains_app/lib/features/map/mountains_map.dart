@@ -53,6 +53,9 @@ class _MountainsMapState extends State<MountainsMap> {
       zoom: _defaultZoom,
       minZoom: 5,
       maxZoom: 18,
+      onTap: (_, __) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+      },
       onMapReady: () {
         setState(() {
           _calculateCenterZoom();
