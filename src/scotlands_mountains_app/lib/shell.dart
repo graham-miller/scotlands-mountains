@@ -26,7 +26,6 @@ class Shell extends StatelessWidget {
     return AppBar(
       leading: Builder(
         builder: (context) {
-          return _isSubPage(context)
           return Navigator.of(context).canPop()
               ? IconButton(
                   icon: const Icon(Icons.arrow_back),
