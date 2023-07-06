@@ -40,13 +40,13 @@ class _MountainPhotosState extends State<MountainPhotos> {
           setState(() => _index = i);
         });
 
-    searchPhotos();
+    _searchPhotos();
   }
 
   @override
   void didUpdateWidget(covariant MountainPhotos oldWidget) {
     super.didUpdateWidget(oldWidget);
-    searchPhotos();
+    _searchPhotos();
   }
 
   @override
@@ -57,129 +57,144 @@ class _MountainPhotosState extends State<MountainPhotos> {
 
     return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-          child: CarouselSlider.builder(
-            carouselController: _controller,
-            options: _options,
-            itemCount: _photos.length,
-            itemBuilder: (BuildContext context, int itemIndex,
-                    int pageViewIndex) =>
-                GestureDetector(
-                    child: Image.network(_photos[itemIndex].imageUrl),
-                    onTap: () {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog.fullscreen(
-                              backgroundColor: Colors.black,
-                              child: Stack(
-                                children: [
-                                  PhotoView(
-                                    imageProvider: NetworkImage(
-                                        _photos[itemIndex].imageUrl),
-                                  ),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ])
-                                ],
-                              ));
-                        },
-                      );
-                    }),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: _index == 0
-                  ? null
-                  : () {
-                      _controller.previousPage();
-                    },
-            ),
-            Text('${_index + 1} of ${_photos.length}'),
-            IconButton(
-              icon: const Icon(Icons.chevron_right),
-              onPressed: _index == _photos.length - 1
-                  ? null
-                  : () {
-                      _controller.nextPage();
-                    },
-            ),
-          ],
-        ),
-        ListTile(
-          title: Text(_photos[_index].title),
-          subtitle: RichText(
-            text: TextSpan(
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground),
-                text: 'Photo © ',
-                children: [
-                  TextSpan(
-                    text: _photos[_index].author,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Util.openInBrowser(_photos[_index].authorUrl);
-                      },
+        _buildPhotoViewer(),
+        _buildPhotoNavigator(),
+        ..._buildPhotoDescription(),
+      ],
+    );
+  }
+
+  Widget _buildPhotoViewer() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      child: CarouselSlider.builder(
+        carouselController: _controller,
+        options: _options,
+        itemCount: _photos.length,
+        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+            GestureDetector(
+          child: Image.network(_photos[itemIndex].imageUrl),
+          onTap: () {
+            showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog.fullscreen(
+                  backgroundColor: Colors.black,
+                  child: Stack(
+                    children: [
+                      PhotoView(
+                        imageProvider:
+                            NetworkImage(_photos[itemIndex].imageUrl),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  const TextSpan(text: ' ('),
-                  TextSpan(
-                    text: 'cc-by-sa/2.0',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Util.openInBrowser(_photos[_index].licenceUrl);
-                      },
-                  ),
-                  const TextSpan(text: ')'),
-                ]),
-          ),
+                );
+              },
+            );
+          },
         ),
-        ListTile(
-          subtitle: Text(_photos[_index].description),
+      ),
+    );
+  }
+
+  Widget _buildPhotoNavigator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: _index == 0
+              ? null
+              : () {
+                  _controller.previousPage();
+                },
         ),
-        ListTile(
-          subtitle: RichText(
-            text: TextSpan(
-              style:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
-              //text: 'Source: ',
-              children: [
-                TextSpan(
-                  text: _photos[_index].geographUrl,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Util.openInBrowser(_photos[_index].geographUrl);
-                    },
-                ),
-              ],
-            ),
-          ),
+        Text('${_index + 1} of ${_photos.length}'),
+        IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: _index == _photos.length - 1
+              ? null
+              : () {
+                  _controller.nextPage();
+                },
         ),
       ],
     );
   }
 
-  void searchPhotos() async {
+  List<Widget> _buildPhotoDescription() {
+    return [
+      ListTile(
+        title: Text(_photos[_index].title),
+        subtitle: RichText(
+          text: TextSpan(
+              style:
+                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
+              text: 'Photo © ',
+              children: [
+                TextSpan(
+                  text: _photos[_index].author,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Util.openInBrowser(_photos[_index].authorUrl);
+                    },
+                ),
+                const TextSpan(text: ' ('),
+                TextSpan(
+                  text: 'cc-by-sa/2.0',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Util.openInBrowser(_photos[_index].licenceUrl);
+                    },
+                ),
+                const TextSpan(text: ')'),
+              ]),
+        ),
+      ),
+      ListTile(
+        subtitle: Text(_photos[_index].description),
+      ),
+      ListTile(
+        subtitle: RichText(
+          text: TextSpan(
+            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            //text: 'Source: ',
+            children: [
+              TextSpan(
+                text: _photos[_index].geographUrl,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Util.openInBrowser(_photos[_index].geographUrl);
+                  },
+              ),
+            ],
+          ),
+        ),
+      ),
+    ];
+  }
+
+  void _searchPhotos() async {
     setState(() => _photos.clear());
 
     final name = widget.mountain.name.contains('(')
@@ -202,12 +217,12 @@ class _MountainPhotosState extends State<MountainPhotos> {
     final result = GeographApiSearchResponse.fromJson(parsed);
 
     var photos = await Future.wait(result.items.map((e) async =>
-        Photo.fromGeographResponse(e, await getPhotoInfo(e.guid))));
+        Photo.fromGeographResponse(e, await _getPhotoInfo(e.guid))));
 
     setState(() => _photos.addAll(photos));
   }
 
-  Future<GeographApiPhotoResponse> getPhotoInfo(String guid) async {
+  Future<GeographApiPhotoResponse> _getPhotoInfo(String guid) async {
     final url =
         'https://api.geograph.org.uk/api/photo/$guid/${dotenv.env['GEOGRAPH_API_KEY']}?output=json';
     final response = await _client.get(Uri.parse(url));
