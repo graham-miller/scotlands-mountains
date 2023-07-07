@@ -47,39 +47,43 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(33, 0, 40, 8),
-              child: TextField(
-                decoration: InputDecoration(
-                    icon: const Icon(Icons.search),
-                    suffixIcon: (_searchField.value.text) != ''
-                        ? GestureDetector(
-                            child: const Icon(Icons.clear),
-                            onTap: () {
-                              _searchField.clear();
-                              _search();
-                            },
-                          )
-                        : null),
-                controller: _searchField,
-              ),
+      length: 2,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(33, 0, 40, 8),
+            child: TextField(
+              decoration: InputDecoration(
+                  icon: const Icon(Icons.search),
+                  suffixIcon: (_searchField.value.text) != ''
+                      ? GestureDetector(
+                          child: const Icon(Icons.clear),
+                          onTap: () {
+                            _searchField.clear();
+                            _search();
+                          },
+                        )
+                      : null),
+              controller: _searchField,
             ),
-            const TabBar(
-              tabs: [
-                Tab(text: 'List', icon: Icon(Icons.list)),
-                Tab(text: 'Map', icon: Icon(Icons.map)),
+          ),
+          const TabBar(
+            tabs: [
+              Tab(text: 'List', icon: Icon(Icons.list)),
+              Tab(text: 'Map', icon: Icon(Icons.map)),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                SearchTermHighlightedMountainsList(
+                    mountains: _mountains, term: _searchField.value.text),
+                MountainsMap(mountains: _mountains),
               ],
             ),
-            Expanded(
-                child: TabBarView(children: [
-              SearchTermHighlightedMountainsList(
-                  mountains: _mountains, term: _searchField.value.text),
-              MountainsMap(mountains: _mountains),
-            ]))
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

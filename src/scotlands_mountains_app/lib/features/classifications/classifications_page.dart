@@ -49,10 +49,13 @@ class _ClassificationsPageState extends State<ClassificationsPage> {
             ],
           ),
           Expanded(
-              child: TabBarView(children: [
-            MountainsList(mountains: _mountains),
-            MountainsMap(mountains: _mountains),
-          ]))
+            child: TabBarView(
+              children: [
+                MountainsList(mountains: _mountains),
+                MountainsMap(mountains: _mountains),
+              ],
+            ),
+          )
         ],
       ),
     );

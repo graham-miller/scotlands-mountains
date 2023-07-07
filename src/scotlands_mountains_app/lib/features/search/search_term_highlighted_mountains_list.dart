@@ -36,9 +36,10 @@ class SearchTermHighlightedMountainsList extends MountainsList {
     }
 
     return RichText(
-        text: TextSpan(
-            text: '',
-            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-            children: segments));
+      text: TextSpan(
+          text: '',
+          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          children: segments),
+    );
   }
 }

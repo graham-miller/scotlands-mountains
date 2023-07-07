@@ -25,8 +25,9 @@ class OrderedMaps extends StatelessWidget {
       direction: Axis.horizontal,
       spacing: 4,
       runSpacing: -2,
-      children: ordered.map((m) {
-        return TextButton(
+      children: ordered.map(
+        (m) {
+          return TextButton(
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.resolveWith((states) =>
                   Theme.of(context).colorScheme.onSecondaryContainer),
@@ -71,8 +72,10 @@ class OrderedMaps extends StatelessWidget {
                 ),
               );
             },
-            child: Text('${m.code} ${m.name}'));
-      }).toList(),
+            child: Text('${m.code} ${m.name}'),
+          );
+        },
+      ).toList(),
     );
   }
 }

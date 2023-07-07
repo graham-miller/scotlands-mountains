@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:go_router/go_router.dart';
 
+import 'features/mountain/mountain_page.dart';
 import 'shell.dart';
 import 'features/classifications/classifications_page.dart';
 import 'features/about/about_page.dart';
-import 'features/mountain/mountain_page.dart';
 import 'features/search/search_page.dart';
 import 'repositories/data.dart';
 
@@ -16,40 +15,12 @@ Future main() async {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(initialLocation: '/classifications', routes: [
-  ShellRoute(
-    builder: (context, state, child) {
-      return Shell(child: child);
-    },
-    routes: [
-      GoRoute(
-        path: '/classifications',
-        builder: (context, state) => const ClassificationsPage(),
-      ),
-      GoRoute(
-        path: '/mountains/:id',
-        builder: (context, state) =>
-            MountainPage(id: int.parse(state.pathParameters['id']!)),
-      ),
-      GoRoute(
-        path: '/search',
-        builder: (context, state) => const SearchPage(),
-      ),
-      GoRoute(
-        path: '/about',
-        builder: (context, state) => const AboutPage(),
-      ),
-    ],
-  ),
-]);
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
+    return MaterialApp(
       title: 'Scotland\'s Mountains',
       theme: ThemeData(
         brightness: Brightness.light,
@@ -57,6 +28,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
         useMaterial3: true,
       ),
+      initialRoute: '/classifications',
+      routes: {
+        '/classifications': (context) =>
+            Shell(child: const ClassificationsPage()),
+        '/mountains': (context) => Shell(
+            child: MountainPage(
+                id: ModalRoute.of(context)!.settings.arguments as int)),
+        '/search': (context) => Shell(child: const SearchPage()),
+        '/about': (context) => Shell(child: const AboutPage()),
+      },
     );
   }
 

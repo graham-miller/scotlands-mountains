@@ -14,8 +14,10 @@ import 'scalebar.dart';
 
 class MountainsMap extends StatefulWidget {
   final List<Mountain> mountains;
+  final bool showInfo;
 
-  const MountainsMap({super.key, required this.mountains});
+  const MountainsMap(
+      {super.key, required this.mountains, this.showInfo = true});
 
   @override
   State<MountainsMap> createState() => _MountainsMapState();
@@ -53,16 +55,23 @@ class _MountainsMapState extends State<MountainsMap> {
       zoom: _defaultZoom,
       minZoom: 5,
       maxZoom: 18,
+      onTap: (_, __) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+      },
       onMapReady: () {
-        setState(() {
-          _calculateCenterZoom();
-          _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-          _subscription = _mapController.mapEventStream.listen((event) {
-            if (event is MapEventRotate) {
-              setState(() {});
-            }
-          });
-        });
+        setState(
+          () {
+            _calculateCenterZoom();
+            _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
+            _subscription = _mapController.mapEventStream.listen(
+              (event) {
+                if (event is MapEventRotate) {
+                  setState(() {});
+                }
+              },
+            );
+          },
+        );
       },
     );
   }
@@ -121,6 +130,7 @@ class _MountainsMapState extends State<MountainsMap> {
         MountainLayer(
           mapController: _mapController,
           mountains: widget.mountains,
+          showInfo: widget.showInfo,
         ),
       ],
     );

@@ -3,7 +3,7 @@ import 'package:scotlands_mountains_app/features/map/mountains_map.dart';
 
 import '../../models/mountain_graph.dart';
 import '../../repositories/mountains_repository.dart';
-import '../shared/mountain_height.dart';
+import '../shared/util.dart';
 import 'mountain_details.dart';
 import 'mountain_photos.dart';
 
@@ -54,7 +54,7 @@ class _MountainPageState extends State<MountainPage>
             ? const SizedBox.shrink()
             : Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Height(height: _mountain!.height),
+                child: Text(Util.formatHeight(_mountain!.height)),
               ),
         TabBar(
           controller: _tabController,
@@ -70,7 +70,7 @@ class _MountainPageState extends State<MountainPage>
               : TabBarView(controller: _tabController, children: [
                   MountainDetails(mountain: _mountain!),
                   MountainPhotos(mountain: _mountain!),
-                  MountainsMap(mountains: [_mountain!]),
+                  MountainsMap(mountains: [_mountain!], showInfo: false),
                 ]),
         ),
       ],

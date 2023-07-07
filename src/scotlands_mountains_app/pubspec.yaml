@@ -39,7 +39,6 @@ dependencies:
   flutter_map_marker_cluster:
   url_launcher:
   flutter_svg:
-  go_router:
   http:
   carousel_slider:
   photo_view:
