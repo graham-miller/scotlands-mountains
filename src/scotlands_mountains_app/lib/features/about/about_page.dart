@@ -24,11 +24,13 @@ class AboutPage extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-              child: Card(
-                  child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: child,
-          )))
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: child,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -38,11 +40,10 @@ class AboutPage extends StatelessWidget {
     return Column(
       children: [
         RichText(
-            text: TextSpan(
-                text: 'Mountain data taken from ',
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground),
-                children: [
+          text: TextSpan(
+            text: 'Mountain data taken from ',
+            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            children: [
               TextSpan(
                 text: 'The Database of British and Irish Hills v17.5',
                 style: TextStyle(
@@ -66,7 +67,9 @@ class AboutPage extends StatelessWidget {
                   },
               ),
               const TextSpan(text: '.'),
-            ])),
+            ],
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

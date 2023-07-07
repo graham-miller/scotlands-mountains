@@ -34,11 +34,12 @@ class _MountainPhotosState extends State<MountainPhotos> {
   void initState() {
     super.initState();
     _options = CarouselOptions(
-        enableInfiniteScroll: false,
-        enlargeCenterPage: true,
-        onPageChanged: (i, r) {
-          setState(() => _index = i);
-        });
+      enableInfiniteScroll: false,
+      enlargeCenterPage: true,
+      onPageChanged: (i, r) {
+        setState(() => _index = i);
+      },
+    );
 
     _searchPhotos();
   }
@@ -139,33 +140,33 @@ class _MountainPhotosState extends State<MountainPhotos> {
         title: Text(_photos[_index].title),
         subtitle: RichText(
           text: TextSpan(
-              style:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
-              text: 'Photo © ',
-              children: [
-                TextSpan(
-                  text: _photos[_index].author,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Util.openInBrowser(_photos[_index].authorUrl);
-                    },
+            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            text: 'Photo © ',
+            children: [
+              TextSpan(
+                text: _photos[_index].author,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                const TextSpan(text: ' ('),
-                TextSpan(
-                  text: 'cc-by-sa/2.0',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Util.openInBrowser(_photos[_index].licenceUrl);
-                    },
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Util.openInBrowser(_photos[_index].authorUrl);
+                  },
+              ),
+              const TextSpan(text: ' ('),
+              TextSpan(
+                text: 'cc-by-sa/2.0',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                const TextSpan(text: ')'),
-              ]),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Util.openInBrowser(_photos[_index].licenceUrl);
+                  },
+              ),
+              const TextSpan(text: ')'),
+            ],
+          ),
         ),
       ),
       ListTile(

@@ -59,15 +59,19 @@ class _MountainsMapState extends State<MountainsMap> {
         ScaffoldMessenger.of(context).clearSnackBars();
       },
       onMapReady: () {
-        setState(() {
-          _calculateCenterZoom();
-          _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-          _subscription = _mapController.mapEventStream.listen((event) {
-            if (event is MapEventRotate) {
-              setState(() {});
-            }
-          });
-        });
+        setState(
+          () {
+            _calculateCenterZoom();
+            _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
+            _subscription = _mapController.mapEventStream.listen(
+              (event) {
+                if (event is MapEventRotate) {
+                  setState(() {});
+                }
+              },
+            );
+          },
+        );
       },
     );
   }
