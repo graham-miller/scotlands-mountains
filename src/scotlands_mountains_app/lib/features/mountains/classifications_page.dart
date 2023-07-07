@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scotlands_mountains_app/features/mountains/list_or_map_of_mountains.dart';
 
 import '../../repositories/mountains_repository.dart';
 import 'classification_selector.dart';
@@ -30,34 +31,27 @@ class _ClassificationsPageState extends State<ClassificationsPage> {
 
   @override
   void initState() {
-    super.initState();
     _loadMountains(null);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Column(
-        children: [
-          ClassificationSelector(
-              onClassificationSelected: (c) => _loadMountains(c)),
-          const TabBar(
-            tabs: [
-              Tab(text: 'List', icon: Icon(Icons.list)),
-              Tab(text: 'Map', icon: Icon(Icons.map)),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              children: [
-                MountainsList(mountains: _mountains),
-                MountainsMap(mountains: _mountains),
-              ],
-            ),
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        ClassificationSelector(
+          onClassificationSelected: (c) => _loadMountains(c),
+        ),
+        ListOrMapOfMountains(
+          list: MountainsList(mountains: _mountains),
+          map: MountainsMap(mountains: _mountains),
+        ),
+      ],
     );
   }
 }

@@ -27,13 +27,7 @@ class OrderedMaps extends StatelessWidget {
       runSpacing: -2,
       children: ordered.map(
         (m) {
-          return TextButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.resolveWith((states) =>
-                  Theme.of(context).colorScheme.onSecondaryContainer),
-              backgroundColor: MaterialStateProperty.resolveWith(
-                  (states) => Theme.of(context).colorScheme.secondaryContainer),
-            ),
+          return OutlinedButton(
             onPressed: () {
               showDialog<String>(
                 context: context,

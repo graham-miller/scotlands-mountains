@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../mountains/app_pop_up.dart';
 import '../shared/util.dart';
 import 'rotate_with_map.dart';
 import '../../models/mountain.dart';
@@ -64,50 +65,18 @@ class MountainLayer extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
           onTap: () {
-            if (!showInfo) {
-              return;
+            if (showInfo) {
+              AppPopUp.open(
+                title: mountain.name,
+                content: Util.formatHeight(mountain.height),
+                action: () {
+                  Navigator.of(context)
+                      .pushNamed('/mountains', arguments: mountain.id);
+                },
+                actionLabel: 'More',
+                context: context,
+              );
             }
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Theme.of(context).colorScheme.background,
-                closeIconColor: Theme.of(context).colorScheme.onBackground,
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      mountain.name,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground),
-                    ),
-                    Text(
-                      Util.formatHeight(mountain.height),
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).clearSnackBars();
-                          },
-                          child: const Text('Close'),
-                        ),
-                        FilledButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).clearSnackBars();
-                            Navigator.of(context).pushNamed('/mountains',
-                                arguments: mountain.id);
-                          },
-                          child: const Text('More'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
           },
         ),
       ),

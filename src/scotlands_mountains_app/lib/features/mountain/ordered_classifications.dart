@@ -18,13 +18,7 @@ class OrderedClassifications extends StatelessWidget {
       runSpacing: -2,
       children: ordered.map(
         (c) {
-          return TextButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.resolveWith((states) =>
-                  Theme.of(context).colorScheme.onSecondaryContainer),
-              backgroundColor: MaterialStateProperty.resolveWith(
-                  (states) => Theme.of(context).colorScheme.secondaryContainer),
-            ),
+          return OutlinedButton(
             onPressed: () {
               showDialog<String>(
                 context: context,
@@ -42,16 +36,7 @@ class OrderedClassifications extends StatelessWidget {
                 ),
               );
             },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(c.nameSingular),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                  child: Icon(Icons.info_outlined),
-                )
-              ],
-            ),
+            child: Text(c.nameSingular),
           );
         },
       ).toList(),

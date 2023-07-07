@@ -3,9 +3,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'features/mountain/mountain_page.dart';
 import 'shell.dart';
-import 'features/classifications/classifications_page.dart';
+import 'features/mountains/classifications_page.dart';
 import 'features/about/about_page.dart';
-import 'features/search/search_page.dart';
+import 'features/mountains/search_page.dart';
 import 'repositories/data.dart';
 
 Future main() async {
