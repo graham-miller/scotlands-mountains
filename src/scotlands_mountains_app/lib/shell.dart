@@ -8,6 +8,7 @@ class Shell extends StatelessWidget {
   Shell({super.key, required this.child});
 
   final List<String> _routes = [
+    '/home',
     '/classifications',
     '/search',
     '/about',
@@ -37,13 +38,22 @@ class Shell extends StatelessWidget {
                 );
         },
       ),
-      title: const TitleLogo(),
+      title: GestureDetector(
+        onTap: () {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/home', (route) => false);
+        },
+        child: const TitleLogo(),
+      ),
       actions: [
         Builder(
           builder: (context) {
             return IconButton(
-              icon: const Icon(Icons.account_circle),
-              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/search', (route) => false);
+              },
             );
           },
         ),
@@ -63,10 +73,10 @@ class Shell extends StatelessWidget {
         DrawerHeader(
           child: TitleLogo(),
         ),
-        // const NavigationDrawerDestination(
-        //   label: Text('Mountain Lens'),
-        //   icon: Icon(Icons.photo),
-        // ),
+        NavigationDrawerDestination(
+          label: Text('Home'),
+          icon: Icon(Icons.home),
+        ),
         NavigationDrawerDestination(
           label: Text('Classifications'),
           icon: Icon(Icons.list),

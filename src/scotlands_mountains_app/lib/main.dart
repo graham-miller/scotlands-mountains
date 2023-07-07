@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'features/home/home_page.dart';
 import 'features/mountain/mountain_page.dart';
 import 'shell.dart';
 import 'features/mountains/classifications_page.dart';
@@ -28,8 +29,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
         useMaterial3: true,
       ),
-      initialRoute: '/classifications',
+      initialRoute: '/home',
       routes: {
+        '/home': (context) => Shell(child: const HomePage()),
         '/classifications': (context) =>
             Shell(child: const ClassificationsPage()),
         '/mountains': (context) => Shell(
