@@ -53,6 +53,8 @@ class Shell extends StatelessWidget {
 
   Widget _drawer(BuildContext context) {
     return NavigationDrawer(
+      selectedIndex:
+          _routes.indexOf(ModalRoute.of(context)?.settings.name ?? _routes[0]),
       onDestinationSelected: (value) {
         Navigator.of(context)
             .pushNamedAndRemoveUntil(_routes[value], (route) => false);
