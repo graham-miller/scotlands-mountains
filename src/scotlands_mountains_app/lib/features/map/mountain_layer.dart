@@ -3,16 +3,20 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../shared/util.dart';
 import 'rotate_with_map.dart';
 import '../../models/mountain.dart';
-import '../shared/mountain_height.dart';
 
 class MountainLayer extends StatelessWidget {
   final MapController mapController;
   final List<Mountain> mountains;
+  final bool showInfo;
 
   const MountainLayer(
-      {super.key, required this.mapController, required this.mountains});
+      {super.key,
+      required this.mapController,
+      required this.mountains,
+      this.showInfo = true});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class MountainLayer extends StatelessWidget {
           padding: EdgeInsets.all(50),
           maxZoom: 15,
         ),
-        markers: mountains.map((m) => getMarker(m, context)).toList(),
+        markers: mountains.map((m) => _buildMarker(m, context)).toList(),
         builder: (context, markers) {
           return RotateWithMap(
             mapController: mapController,
@@ -47,7 +51,7 @@ class MountainLayer extends StatelessWidget {
     );
   }
 
-  Marker getMarker(Mountain mountain, BuildContext context) {
+  Marker _buildMarker(Mountain mountain, BuildContext context) {
     return Marker(
       point: LatLng(mountain.latitude, mountain.longitude),
       height: mountain.height,
@@ -60,17 +64,33 @@ class MountainLayer extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
           onTap: () {
+            if (!showInfo) {
+              return;
+            }
             ScaffoldMessenger.of(context).clearSnackBars();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
+                backgroundColor: Theme.of(context).colorScheme.background,
+                showCloseIcon: true,
+                closeIconColor: Theme.of(context).colorScheme.onBackground,
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(mountain.name),
-                    Height(height: mountain.height),
+                    Text(
+                      mountain.name,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground),
+                    ),
+                    Text(
+                      Util.formatHeight(mountain.height),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground),
+                    ),
                   ],
                 ),
                 action: SnackBarAction(
+                  textColor: Theme.of(context).colorScheme.onPrimary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   label: 'More',
                   onPressed: () {
                     ScaffoldMessenger.of(context).clearSnackBars();

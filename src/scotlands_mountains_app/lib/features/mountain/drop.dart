@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/mountain.dart';
-import '../shared/mountain_height.dart';
+import '../shared/util.dart';
 
 class Drop extends StatelessWidget {
   final scaleFormat = NumberFormat("#,###", "en_GB");
@@ -14,13 +14,13 @@ class Drop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        Height(height: mountain.drop),
+        Text(Util.formatHeight(mountain.drop)),
         const Text(' from '),
         Text(mountain.col),
         const Text(' at'),
         const Text(' height'),
         const Text(' of '),
-        Height(height: mountain.colHeight),
+        Text(Util.formatHeight(mountain.colHeight)),
         const Text('.'),
       ],
     );

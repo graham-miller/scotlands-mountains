@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../shared/util.dart';
 
-import '../shared/mountain_height.dart';
 import '../../models/mountain.dart';
 
 class MountainsList extends StatelessWidget {
@@ -16,7 +16,7 @@ class MountainsList extends StatelessWidget {
         return ListTile(
           leading: CircleAvatar(child: Text(((index) + 1).toString())),
           title: getName(mountains[index].name, context),
-          subtitle: Height(height: mountains[index].height),
+          subtitle: Text(Util.formatHeight(mountains[index].height)),
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
             Navigator.of(context)

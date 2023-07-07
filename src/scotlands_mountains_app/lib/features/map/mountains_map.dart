@@ -14,8 +14,10 @@ import 'scalebar.dart';
 
 class MountainsMap extends StatefulWidget {
   final List<Mountain> mountains;
+  final bool showInfo;
 
-  const MountainsMap({super.key, required this.mountains});
+  const MountainsMap(
+      {super.key, required this.mountains, this.showInfo = true});
 
   @override
   State<MountainsMap> createState() => _MountainsMapState();
@@ -124,6 +126,7 @@ class _MountainsMapState extends State<MountainsMap> {
         MountainLayer(
           mapController: _mapController,
           mountains: widget.mountains,
+          showInfo: widget.showInfo,
         ),
       ],
     );
