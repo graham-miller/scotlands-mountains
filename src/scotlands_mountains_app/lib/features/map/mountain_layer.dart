@@ -71,7 +71,6 @@ class MountainLayer extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Theme.of(context).colorScheme.background,
-                showCloseIcon: true,
                 closeIconColor: Theme.of(context).colorScheme.onBackground,
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,17 +85,26 @@ class MountainLayer extends StatelessWidget {
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.onBackground),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                          },
+                          child: const Text('Close'),
+                        ),
+                        FilledButton(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            Navigator.of(context).pushNamed('/mountains',
+                                arguments: mountain.id);
+                          },
+                          child: const Text('More'),
+                        ),
+                      ],
+                    ),
                   ],
-                ),
-                action: SnackBarAction(
-                  textColor: Theme.of(context).colorScheme.onPrimary,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  label: 'More',
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    Navigator.of(context)
-                        .pushNamed('/mountains', arguments: mountain.id);
-                  },
                 ),
               ),
             );
