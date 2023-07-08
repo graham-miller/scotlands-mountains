@@ -24,24 +24,26 @@ class OrderedMaps extends StatelessWidget {
     return Wrap(
       direction: Axis.horizontal,
       spacing: 4,
-      runSpacing: -2,
+      runSpacing: 4,
       children: ordered.map(
-        (m) {
-          return OutlinedButton(
+        (map) {
+          return _buildButton(
+            map: map,
+            context: context,
             onPressed: () {
               showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                  title: Text('${m.code} ${m.name}'),
+                  title: Text('${map.code} ${map.name}'),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Publisher: ${m.publisher}'),
-                      Text('Series: ${m.series}'),
+                      Text('Publisher: ${map.publisher}'),
+                      Text('Series: ${map.series}'),
                       Text(
-                          'Scale: 1:${scaleFormat.format((1 / m.scale).round())}'),
-                      Text('ISBN: ${m.isbn}'),
+                          'Scale: 1:${scaleFormat.format((1 / map.scale).round())}'),
+                      Text('ISBN: ${map.isbn}'),
                       const Text(''),
                       const Text(
                           'We use affiliate links so when you buy a map we receive a small commission at no additional cost to you which helps support the development of Scotland\'s Mountains.')
@@ -59,17 +61,91 @@ class OrderedMaps extends StatelessWidget {
                       label: const Text('Buy'),
                       onPressed: () {
                         Util.openInBrowser(
-                            'https://www.amazon.co.uk/s?k=${m.isbn}');
+                            'https://www.amazon.co.uk/s?k=${map.isbn}');
                       },
                     ),
                   ],
                 ),
               );
             },
-            child: Text('${m.code} ${m.name}'),
           );
         },
       ).toList(),
+    );
+  }
+
+  Widget _buildButton(
+      {required OsMap map,
+      required Function onPressed,
+      required BuildContext context}) {
+    Color typeColor;
+    Color textColor;
+    if (map.series == 'Explorer') {
+      if (map.code.startsWith('OL')) {
+        typeColor = const Color.fromRGBO(255, 237, 0, 1);
+        textColor = Colors.black;
+      } else {
+        typeColor = const Color.fromRGBO(236, 99, 8, 1);
+        textColor = Colors.white;
+      }
+    } else {
+      typeColor = const Color.fromRGBO(229, 0, 124, 1);
+      textColor = Colors.white;
+    }
+
+    return IntrinsicHeight(
+      child: GestureDetector(
+        onTap: () {
+          onPressed();
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(8, 8, 4, 8),
+              decoration: BoxDecoration(
+                color: typeColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  bottomLeft: Radius.circular(25),
+                ),
+                border: Border.all(
+                  color: typeColor,
+                  width: 1,
+                ),
+              ),
+              width: 50,
+              alignment: Alignment.center,
+              child: Text(
+                map.code,
+                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Flexible(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  ),
+                  border: Border.all(
+                    color: typeColor,
+                    width: 1,
+                  ),
+                ),
+                child: Text(
+                  map.name,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
