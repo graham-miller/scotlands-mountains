@@ -37,7 +37,7 @@ class MountainLayer extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Theme.of(context).primaryColor),
+                  color: Colors.red.shade800),
               child: Center(
                 child: Text(
                   markers.length.toString(),
@@ -61,8 +61,8 @@ class MountainLayer extends StatelessWidget {
         child: GestureDetector(
           child: Icon(
             Icons.place,
-            size: 30,
-            color: Theme.of(context).primaryColor,
+            size: 40,
+            color: Colors.red.shade800,
           ),
           onTap: () {
             if (showInfo) {

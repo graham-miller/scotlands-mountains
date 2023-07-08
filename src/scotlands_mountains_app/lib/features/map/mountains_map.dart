@@ -135,14 +135,14 @@ class _MountainsMapState extends State<MountainsMap> {
             _mapController.move(_mapController.center, _mapController.zoom + 1);
             setState(() {
               _canZoomOut = true;
-              _canZoomIn = _mapController.zoom < (_mapOptions.maxZoom! - 1);
+              _canZoomIn = _mapController.zoom < _mapOptions.maxZoom! - 1;
             });
           },
           zoomOut: () {
             _mapController.move(_mapController.center, _mapController.zoom - 1);
             setState(() {
               _canZoomIn = true;
-              _canZoomOut = _mapController.zoom > (_mapOptions.maxZoom! + 1);
+              _canZoomOut = _mapController.zoom > _mapOptions.minZoom! + 1;
             });
           },
           canZoomIn: _canZoomIn,
