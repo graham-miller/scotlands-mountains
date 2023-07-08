@@ -8,6 +8,10 @@ class MapControls extends StatefulWidget {
   final void Function() onSelectOutdoors;
   final void Function() onSelectSatellite;
   final void Function() onSelectStreets;
+  final void Function() zoomIn;
+  final void Function() zoomOut;
+  final bool canZoomIn;
+  final bool canZoomOut;
 
   const MapControls({
     super.key,
@@ -15,6 +19,10 @@ class MapControls extends StatefulWidget {
     required this.onSelectOutdoors,
     required this.onSelectSatellite,
     required this.onSelectStreets,
+    required this.zoomIn,
+    required this.zoomOut,
+    required this.canZoomIn,
+    required this.canZoomOut,
   });
 
   @override
@@ -79,14 +87,16 @@ class _MapControlsState extends State<MapControls>
               icon: Icons.zoom_in,
               axis: Axis.vertical,
               openPosition: 280,
-              onPressed: () {},
+              enabled: widget.canZoomIn,
+              onPressed: () => widget.zoomIn(),
             ),
             ActionButton(
               animation: _animation,
               icon: Icons.zoom_out,
               axis: Axis.vertical,
               openPosition: 210,
-              onPressed: () {},
+              enabled: widget.canZoomOut,
+              onPressed: () => widget.zoomOut(),
             ),
             ActionButton(
               animation: _animation,

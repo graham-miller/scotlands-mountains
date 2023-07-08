@@ -40,11 +40,13 @@ class _MountainsMapState extends State<MountainsMap> {
   final _defaultCenter = LatLng(56.816922, -4.18265);
   final _defaultZoom = 6.0;
   final _mapController = MapController();
+  late final MapOptions _mapOptions;
 
   Layer _selectedLayer = Layer.outdoors;
   StreamSubscription<MapEvent>? _subscription;
-  MapOptions? _mapOptions;
   CenterZoom? _centerZoom;
+  bool _canZoomIn = true;
+  bool _canZoomOut = true;
 
   @override
   void initState() {
@@ -55,6 +57,7 @@ class _MountainsMapState extends State<MountainsMap> {
       zoom: _defaultZoom,
       minZoom: 5,
       maxZoom: 18,
+      interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       onTap: (_, __) {
         ScaffoldMessenger.of(context).clearSnackBars();
       },
@@ -78,22 +81,23 @@ class _MountainsMapState extends State<MountainsMap> {
 
   @override
   void didUpdateWidget(MountainsMap oldWidget) {
-    super.didUpdateWidget(oldWidget);
     _calculateCenterZoom();
     _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
-    super.dispose();
     _subscription?.cancel();
+    _mapController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       mapController: _mapController,
-      options: _mapOptions!,
+      options: _mapOptions,
       nonRotatedChildren: [
         Scalebar(
             options: ScalebarOptions(
@@ -105,6 +109,10 @@ class _MountainsMapState extends State<MountainsMap> {
         const MapboxAttribution(),
         MapControls(
           onReset: () {
+            setState(() {
+              _canZoomIn = true;
+              _canZoomOut = true;
+            });
             _mapController.rotate(0);
             _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
           },
@@ -123,6 +131,22 @@ class _MountainsMapState extends State<MountainsMap> {
               _selectedLayer = Layer.streets;
             });
           },
+          zoomIn: () {
+            _mapController.move(_mapController.center, _mapController.zoom + 1);
+            setState(() {
+              _canZoomOut = true;
+              _canZoomIn = _mapController.zoom < (_mapOptions.maxZoom! - 1);
+            });
+          },
+          zoomOut: () {
+            _mapController.move(_mapController.center, _mapController.zoom - 1);
+            setState(() {
+              _canZoomIn = true;
+              _canZoomOut = _mapController.zoom > (_mapOptions.maxZoom! + 1);
+            });
+          },
+          canZoomIn: _canZoomIn,
+          canZoomOut: _canZoomOut,
         )
       ],
       children: [

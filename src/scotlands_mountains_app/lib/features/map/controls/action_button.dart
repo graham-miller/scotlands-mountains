@@ -6,6 +6,7 @@ class ActionButton extends StatelessWidget {
   final Axis axis;
   final double openPosition;
   final Function onPressed;
+  final bool enabled;
 
   const ActionButton(
       {required this.animation,
@@ -13,6 +14,7 @@ class ActionButton extends StatelessWidget {
       required this.axis,
       required this.openPosition,
       required this.onPressed,
+      this.enabled = true,
       super.key});
 
   @override
@@ -28,10 +30,13 @@ class ActionButton extends StatelessWidget {
             shape: CircleBorder(),
           ),
           child: IconButton(
+            color: enabled ? Colors.black : Colors.red,
             icon: Icon(icon),
-            onPressed: () {
-              onPressed();
-            },
+            onPressed: enabled
+                ? () {
+                    onPressed();
+                  }
+                : null,
           ),
         ),
       ),
