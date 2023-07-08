@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import '../../models/mountain.dart';
 import '../shared/util.dart';
 
-class Drop extends StatelessWidget {
+class Prominence extends StatelessWidget {
   final scaleFormat = NumberFormat("#,###", "en_GB");
   final Mountain mountain;
 
-  Drop({super.key, required this.mountain});
+  Prominence({super.key, required this.mountain});
 
   @override
   Widget build(BuildContext context) {

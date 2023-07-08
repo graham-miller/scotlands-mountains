@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/mountain_graph.dart';
-import 'drop.dart';
+import 'prominence.dart';
 import 'ordered_classifications.dart';
 import 'ordered_maps.dart';
 
@@ -67,8 +67,8 @@ class MountainDetails extends StatelessWidget {
                 },
               ),
         ListTile(
-          title: const Text('Drop'),
-          subtitle: Drop(mountain: mountain),
+          title: const Text('Prominence'),
+          subtitle: Prominence(mountain: mountain),
         ),
       ],
     );
