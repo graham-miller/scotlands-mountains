@@ -93,57 +93,63 @@ class OrderedMaps extends StatelessWidget {
       textColor = Colors.white;
     }
 
-    return IntrinsicHeight(
-      child: GestureDetector(
-        onTap: () {
-          onPressed();
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: const EdgeInsets.fromLTRB(8, 8, 4, 8),
-              decoration: BoxDecoration(
-                color: typeColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  bottomLeft: Radius.circular(25),
-                ),
-                border: Border.all(
-                  color: typeColor,
-                  width: 1,
-                ),
-              ),
-              width: 50,
-              alignment: Alignment.center,
-              child: Text(
-                map.code,
-                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Flexible(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+    return Material(
+      borderRadius: const BorderRadius.all(Radius.circular(25)),
+      elevation: 2,
+      clipBehavior: Clip.antiAlias,
+      child: IntrinsicHeight(
+        child: GestureDetector(
+          onTap: () {
+            onPressed();
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(8, 8, 4, 8),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
+                  color: typeColor,
                   borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
+                    topLeft: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
                   ),
                   border: Border.all(
                     color: typeColor,
                     width: 1,
                   ),
                 ),
+                width: 50,
+                alignment: Alignment.center,
                 child: Text(
-                  map.name,
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground),
+                  map.code,
+                  style:
+                      TextStyle(color: textColor, fontWeight: FontWeight.bold),
                 ),
               ),
-            )
-          ],
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
+                    ),
+                    border: Border.all(
+                      color: typeColor,
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    map.name,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
