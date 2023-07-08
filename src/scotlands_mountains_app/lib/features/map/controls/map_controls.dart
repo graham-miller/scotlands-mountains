@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'action_button.dart';
 import 'open_close_button.dart';
 
 class MapControls extends StatefulWidget {
@@ -52,45 +53,60 @@ class _MapControlsState extends State<MapControls>
         child: Stack(
           alignment: Alignment.bottomRight,
           children: [
-            _buildButton(Icons.drive_eta_outlined, Axis.horizontal, 210,
-                () => widget.onSelectStreets()),
-            _buildButton(Icons.satellite_outlined, Axis.horizontal, 140,
-                () => widget.onSelectSatellite()),
-            _buildButton(Icons.map_outlined, Axis.horizontal, 70,
-                () => widget.onSelectOutdoors()),
-            _buildButton(Icons.zoom_in, Axis.vertical, 280, () {}),
-            _buildButton(Icons.zoom_out, Axis.vertical, 210, () {}),
-            _buildButton(Icons.explore_outlined, Axis.vertical, 140, () {}),
-            _buildButton(
-                Icons.home_outlined, Axis.vertical, 70, () => widget.onReset()),
+            ActionButton(
+              animation: _animation,
+              icon: Icons.drive_eta_outlined,
+              axis: Axis.horizontal,
+              openPosition: 210,
+              onPressed: () => widget.onSelectStreets(),
+            ),
+            ActionButton(
+              animation: _animation,
+              icon: Icons.satellite_outlined,
+              axis: Axis.horizontal,
+              openPosition: 140,
+              onPressed: () => widget.onSelectSatellite(),
+            ),
+            ActionButton(
+              animation: _animation,
+              icon: Icons.map_outlined,
+              axis: Axis.horizontal,
+              openPosition: 70,
+              onPressed: () => widget.onSelectOutdoors(),
+            ),
+            ActionButton(
+              animation: _animation,
+              icon: Icons.zoom_in,
+              axis: Axis.vertical,
+              openPosition: 280,
+              onPressed: () {},
+            ),
+            ActionButton(
+              animation: _animation,
+              icon: Icons.zoom_out,
+              axis: Axis.vertical,
+              openPosition: 210,
+              onPressed: () {},
+            ),
+            ActionButton(
+              animation: _animation,
+              icon: Icons.explore_outlined,
+              axis: Axis.vertical,
+              openPosition: 140,
+              onPressed: () {},
+            ),
+            ActionButton(
+              animation: _animation,
+              icon: Icons.home_outlined,
+              axis: Axis.vertical,
+              openPosition: 70,
+              onPressed: () => widget.onReset(),
+            ),
             OpenCloseButton(
               onOpen: () => _controller.forward(),
               onClose: () => _controller.reverse(),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildButton(
-      IconData icon, Axis axis, double openPosition, Function onPressed) {
-    return Positioned(
-      right: axis == Axis.vertical ? 6 : _animation.value * openPosition,
-      bottom: axis == Axis.horizontal ? 6 : _animation.value * openPosition,
-      child: Material(
-        color: const Color.fromRGBO(0, 0, 0, 0),
-        child: Ink(
-          decoration: const ShapeDecoration(
-            color: Color.fromRGBO(255, 255, 255, 0.8),
-            shape: CircleBorder(),
-          ),
-          child: IconButton(
-            icon: Icon(icon),
-            onPressed: () {
-              onPressed();
-            },
-          ),
         ),
       ),
     );
