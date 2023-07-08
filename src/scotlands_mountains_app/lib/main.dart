@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // initialRoute: '/home',
-      initialRoute: '/home',
+      initialRoute: '/classifications',
       routes: {
         '/home': (context) => Shell(child: const HomePage()),
         '/classifications': (context) =>

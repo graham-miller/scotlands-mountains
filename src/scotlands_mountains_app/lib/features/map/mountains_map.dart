@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-import 'map_controls.dart';
+import './controls/map_controls.dart';
 import 'mapbox_attribution.dart';
 import 'mapbox_tile_layer.dart';
 import 'mountain_layer.dart';
