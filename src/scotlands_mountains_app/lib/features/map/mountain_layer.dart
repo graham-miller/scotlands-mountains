@@ -65,18 +65,18 @@ class MountainLayer extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
           onTap: () {
-            //if (showInfo) {
-            AppPopUp.open(
-              title: mountain.name,
-              content: Util.formatHeight(mountain.height),
-              action: () {
-                Navigator.of(context)
-                    .pushNamed('/mountains', arguments: mountain.id);
-              },
-              actionLabel: 'More',
-              context: context,
-            );
-            //}
+            if (showInfo) {
+              AppPopUp.open(
+                title: mountain.name,
+                content: Util.formatHeight(mountain.height),
+                action: () {
+                  Navigator.of(context)
+                      .pushNamed('/mountains', arguments: mountain.id);
+                },
+                actionLabel: 'More',
+                context: context,
+              );
+            }
           },
         ),
       ),
