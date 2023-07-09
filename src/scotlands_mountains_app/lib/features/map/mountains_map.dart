@@ -71,12 +71,17 @@ class _MountainsMapState extends State<MountainsMap> {
                 if (event is MapEventRotate) {
                   setState(() {});
                 }
+                if (event is MapEventMoveEnd ||
+                    event is MapEventDoubleTapZoomEnd) {
+                  _setCanZoom();
+                }
               },
             );
           },
         );
       },
     );
+    _setCanZoom();
   }
 
   @override
@@ -93,6 +98,18 @@ class _MountainsMapState extends State<MountainsMap> {
     super.dispose();
   }
 
+  void _setCanZoom() {
+    setState(() {
+      try {
+        _canZoomIn = _mapController.zoom < _mapOptions.maxZoom!;
+        _canZoomOut = _mapController.zoom > _mapOptions.minZoom! + 1;
+      } catch (e) {
+        _canZoomIn = true;
+        _canZoomOut = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
@@ -100,21 +117,19 @@ class _MountainsMapState extends State<MountainsMap> {
       options: _mapOptions,
       nonRotatedChildren: [
         Scalebar(
-            options: ScalebarOptions(
-          lineColor: Colors.white,
-          lineWidth: 2,
-          textStyle: const TextStyle(color: Colors.white, fontSize: 12),
-          padding: const EdgeInsets.all(8),
-        )),
+          options: ScalebarOptions(
+            lineColor: Colors.white,
+            lineWidth: 2,
+            textStyle: const TextStyle(color: Colors.white, fontSize: 12),
+            padding: const EdgeInsets.all(8),
+          ),
+        ),
         const MapboxAttribution(),
         MapControls(
           onReset: () {
-            setState(() {
-              _canZoomIn = true;
-              _canZoomOut = true;
-            });
             _mapController.rotate(0);
             _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
+            _setCanZoom();
           },
           onSelectOutdoors: () {
             setState(() {
@@ -133,17 +148,11 @@ class _MountainsMapState extends State<MountainsMap> {
           },
           zoomIn: () {
             _mapController.move(_mapController.center, _mapController.zoom + 1);
-            setState(() {
-              _canZoomOut = true;
-              _canZoomIn = _mapController.zoom < _mapOptions.maxZoom! - 1;
-            });
+            _setCanZoom();
           },
           zoomOut: () {
             _mapController.move(_mapController.center, _mapController.zoom - 1);
-            setState(() {
-              _canZoomIn = true;
-              _canZoomOut = _mapController.zoom > _mapOptions.minZoom! + 1;
-            });
+            _setCanZoom();
           },
           canZoomIn: _canZoomIn,
           canZoomOut: _canZoomOut,
