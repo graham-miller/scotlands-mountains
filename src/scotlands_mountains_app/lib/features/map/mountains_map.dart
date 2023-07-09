@@ -43,7 +43,6 @@ class _MountainsMapState extends State<MountainsMap> {
   late final MapOptions _mapOptions;
 
   Layer _selectedLayer = Layer.outdoors;
-  StreamSubscription<MapEvent>? _subscription;
   CenterZoom? _centerZoom;
   bool _canZoomIn = true;
   bool _canZoomOut = true;
@@ -66,22 +65,21 @@ class _MountainsMapState extends State<MountainsMap> {
           () {
             _calculateCenterZoom();
             _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-            _subscription = _mapController.mapEventStream.listen(
-              (event) {
-                if (event is MapEventRotate) {
-                  setState(() {});
-                }
-                if (event is MapEventMoveEnd ||
-                    event is MapEventDoubleTapZoomEnd) {
-                  _setCanZoom();
-                }
-              },
-            );
           },
         );
       },
+      onPositionChanged: (_, __) {
+        setState(() {
+          _canZoomIn = _mapController.zoom < _mapOptions.maxZoom!;
+          _canZoomOut = _mapController.zoom > _mapOptions.minZoom!;
+        });
+      },
+      onMapEvent: (event) {
+        if (event is MapEventRotate) {
+          setState(() {});
+        }
+      },
     );
-    _setCanZoom();
   }
 
   @override
@@ -93,21 +91,8 @@ class _MountainsMapState extends State<MountainsMap> {
 
   @override
   void dispose() {
-    _subscription?.cancel();
     _mapController.dispose();
     super.dispose();
-  }
-
-  void _setCanZoom() {
-    setState(() {
-      try {
-        _canZoomIn = _mapController.zoom < _mapOptions.maxZoom!;
-        _canZoomOut = _mapController.zoom > _mapOptions.minZoom! + 1;
-      } catch (e) {
-        _canZoomIn = true;
-        _canZoomOut = true;
-      }
-    });
   }
 
   @override
@@ -129,7 +114,6 @@ class _MountainsMapState extends State<MountainsMap> {
           onReset: () {
             _mapController.rotate(0);
             _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-            _setCanZoom();
           },
           onSelectOutdoors: () {
             setState(() {
@@ -148,11 +132,9 @@ class _MountainsMapState extends State<MountainsMap> {
           },
           zoomIn: () {
             _mapController.move(_mapController.center, _mapController.zoom + 1);
-            _setCanZoom();
           },
           zoomOut: () {
             _mapController.move(_mapController.center, _mapController.zoom - 1);
-            _setCanZoom();
           },
           canZoomIn: _canZoomIn,
           canZoomOut: _canZoomOut,
