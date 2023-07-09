@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'map_controls_facade.dart';
 import 'action_button.dart';
 import 'open_close_button.dart';
 
 class MapControls extends StatefulWidget {
-  final void Function() onReset;
-  final void Function() onSelectOutdoors;
-  final void Function() onSelectSatellite;
-  final void Function() onSelectStreets;
-  final void Function() zoomIn;
-  final void Function() zoomOut;
-  final bool canZoomIn;
-  final bool canZoomOut;
+  final MapControlsFacade mapControlsFacade;
 
   const MapControls({
     super.key,
-    required this.onReset,
-    required this.onSelectOutdoors,
-    required this.onSelectSatellite,
-    required this.onSelectStreets,
-    required this.zoomIn,
-    required this.zoomOut,
-    required this.canZoomIn,
-    required this.canZoomOut,
+    required this.mapControlsFacade,
   });
 
   @override
@@ -66,37 +53,37 @@ class _MapControlsState extends State<MapControls>
               icon: Icons.drive_eta_outlined,
               axis: Axis.horizontal,
               openPosition: 210,
-              onPressed: () => widget.onSelectStreets(),
+              onPressed: () => widget.mapControlsFacade.selectStreets(),
             ),
             ActionButton(
               animation: _animation,
               icon: Icons.satellite_outlined,
               axis: Axis.horizontal,
               openPosition: 140,
-              onPressed: () => widget.onSelectSatellite(),
+              onPressed: () => widget.mapControlsFacade.selectSatellite(),
             ),
             ActionButton(
               animation: _animation,
               icon: Icons.map_outlined,
               axis: Axis.horizontal,
               openPosition: 70,
-              onPressed: () => widget.onSelectOutdoors(),
+              onPressed: () => widget.mapControlsFacade.selectOutdoors(),
             ),
             ActionButton(
               animation: _animation,
               icon: Icons.zoom_in,
               axis: Axis.vertical,
               openPosition: 280,
-              enabled: widget.canZoomIn,
-              onPressed: () => widget.zoomIn(),
+              enabled: widget.mapControlsFacade.canZoomIn,
+              onPressed: () => widget.mapControlsFacade.zoomIn(),
             ),
             ActionButton(
               animation: _animation,
               icon: Icons.zoom_out,
               axis: Axis.vertical,
               openPosition: 210,
-              enabled: widget.canZoomOut,
-              onPressed: () => widget.zoomOut(),
+              enabled: widget.mapControlsFacade.canZoomOut,
+              onPressed: () => widget.mapControlsFacade.zoomOut(),
             ),
             ActionButton(
               animation: _animation,
@@ -110,7 +97,7 @@ class _MapControlsState extends State<MapControls>
               icon: Icons.home_outlined,
               axis: Axis.vertical,
               openPosition: 70,
-              onPressed: () => widget.onReset(),
+              onPressed: () => widget.mapControlsFacade.reset(),
             ),
             OpenCloseButton(
               onOpen: () => _controller.forward(),

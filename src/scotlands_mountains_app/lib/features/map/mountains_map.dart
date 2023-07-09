@@ -1,9 +1,6 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:scotlands_mountains_app/features/map/controls/map_controls_facade.dart';
 
 import './controls/map_controls.dart';
 import 'mapbox_attribution.dart';
@@ -23,35 +20,23 @@ class MountainsMap extends StatefulWidget {
   State<MountainsMap> createState() => _MountainsMapState();
 }
 
-enum Layer { outdoors, streets, satellite, satelliteStreets }
-
 class _MountainsMapState extends State<MountainsMap> {
   final Map<Layer, TileLayer> _layers = {
     Layer.outdoors: MapboxTileLayer(styleId: 'outdoors-v12'),
     Layer.streets: MapboxTileLayer(styleId: 'streets-v12'),
     Layer.satellite: MapboxTileLayer(styleId: 'satellite-v9'),
-    Layer.satelliteStreets: MapboxTileLayer(styleId: 'satellite-streets-v12'),
+    //Layer.satelliteStreets: MapboxTileLayer(styleId: 'satellite-streets-v12'),
   };
-  final _fitBoundOptions = const FitBoundsOptions(
-    padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
-    forceIntegerZoomLevel: true,
-  );
-  final _defaultCenter = LatLng(56.816922, -4.18265);
-  final _defaultZoom = 6.0;
   final _mapController = MapController();
   late final MapOptions _mapOptions;
-
-  Layer _selectedLayer = Layer.outdoors;
-  CenterZoom? _centerZoom;
-  bool _canZoomIn = true;
-  bool _canZoomOut = true;
+  late final MapControlsFacade _mapControlsFacade;
 
   @override
   void initState() {
     super.initState();
     _mapOptions = MapOptions(
-      center: _defaultCenter,
-      zoom: _defaultZoom,
+      center: MapControlsFacade.defaultCenter,
+      zoom: MapControlsFacade.defaultZoom,
       minZoom: 5,
       maxZoom: 18,
       interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
@@ -59,18 +44,10 @@ class _MountainsMapState extends State<MountainsMap> {
         ScaffoldMessenger.of(context).clearSnackBars();
       },
       onMapReady: () {
-        setState(
-          () {
-            _calculateCenterZoom();
-            _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-          },
-        );
+        _mapControlsFacade.setCenterZoom(widget.mountains);
       },
       onPositionChanged: (_, __) {
-        setState(() {
-          _canZoomIn = _mapController.zoom < _mapOptions.maxZoom!;
-          _canZoomOut = _mapController.zoom > _mapOptions.minZoom!;
-        });
+        _mapControlsFacade.onPositionChanged();
       },
       onMapEvent: (event) {
         if (event is MapEventRotate) {
@@ -78,12 +55,15 @@ class _MountainsMapState extends State<MountainsMap> {
         }
       },
     );
+    _mapControlsFacade = MapControlsFacade(
+        mapController: _mapController,
+        mapOptions: _mapOptions,
+        redrawMap: () => setState(() {}));
   }
 
   @override
   void didUpdateWidget(MountainsMap oldWidget) {
-    _calculateCenterZoom();
-    _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
+    _mapControlsFacade.setCenterZoom(widget.mountains);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -108,38 +88,10 @@ class _MountainsMapState extends State<MountainsMap> {
           ),
         ),
         const MapboxAttribution(),
-        MapControls(
-          onReset: () {
-            _mapController.rotate(0);
-            _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-          },
-          onSelectOutdoors: () {
-            setState(() {
-              _selectedLayer = Layer.outdoors;
-            });
-          },
-          onSelectSatellite: () {
-            setState(() {
-              _selectedLayer = Layer.satellite;
-            });
-          },
-          onSelectStreets: () {
-            setState(() {
-              _selectedLayer = Layer.streets;
-            });
-          },
-          zoomIn: () {
-            _mapController.move(_mapController.center, _mapController.zoom + 1);
-          },
-          zoomOut: () {
-            _mapController.move(_mapController.center, _mapController.zoom - 1);
-          },
-          canZoomIn: _canZoomIn,
-          canZoomOut: _canZoomOut,
-        )
+        MapControls(mapControlsFacade: _mapControlsFacade)
       ],
       children: [
-        _layers[_selectedLayer]!,
+        _layers[_mapControlsFacade.selectedLayer]!,
         MountainLayer(
           mapController: _mapController,
           mountains: widget.mountains,
@@ -147,31 +99,5 @@ class _MountainsMapState extends State<MountainsMap> {
         ),
       ],
     );
-  }
-
-  void _calculateCenterZoom() {
-    if (widget.mountains.isEmpty) {
-      _centerZoom = CenterZoom(center: _defaultCenter, zoom: _defaultZoom);
-    } else {
-      LatLngBounds? fitBounds;
-      if (widget.mountains.length == 1) {
-        final mountain = widget.mountains.single;
-        fitBounds = LatLngBounds(
-            LatLng(mountain.latitude - 0.01, mountain.longitude - 0.01),
-            LatLng(mountain.latitude + 0.01, mountain.longitude + 0.01));
-      } else {
-        fitBounds = LatLngBounds(
-            LatLng(
-              widget.mountains.map((m) => m.latitude).reduce(min),
-              widget.mountains.map((m) => m.longitude).reduce(min),
-            ),
-            LatLng(
-              widget.mountains.map((m) => m.latitude).reduce(max),
-              widget.mountains.map((m) => m.longitude).reduce(max),
-            ));
-      }
-      _centerZoom = _mapController.centerZoomFitBounds(fitBounds,
-          options: _fitBoundOptions);
-    }
   }
 }
