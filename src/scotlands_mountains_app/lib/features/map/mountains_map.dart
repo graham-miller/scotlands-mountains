@@ -36,7 +36,6 @@ class _MountainsMapState extends State<MountainsMap> {
     padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
     forceIntegerZoomLevel: true,
   );
-  final _maxBounds = LatLngBounds(LatLng(54, -9), LatLng(61, 0));
   final _defaultCenter = LatLng(56.816922, -4.18265);
   final _defaultZoom = 6.0;
   final _mapController = MapController();
@@ -51,7 +50,6 @@ class _MountainsMapState extends State<MountainsMap> {
   void initState() {
     super.initState();
     _mapOptions = MapOptions(
-      maxBounds: _maxBounds,
       center: _defaultCenter,
       zoom: _defaultZoom,
       minZoom: 5,
@@ -69,6 +67,7 @@ class _MountainsMapState extends State<MountainsMap> {
         );
       },
       onPositionChanged: (_, __) {
+        print('onPositionChanged');
         setState(() {
           _canZoomIn = _mapController.zoom < _mapOptions.maxZoom!;
           _canZoomOut = _mapController.zoom > _mapOptions.minZoom!;
