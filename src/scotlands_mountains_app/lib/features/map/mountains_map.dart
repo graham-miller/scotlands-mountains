@@ -67,7 +67,6 @@ class _MountainsMapState extends State<MountainsMap> {
         );
       },
       onPositionChanged: (_, __) {
-        print('onPositionChanged');
         setState(() {
           _canZoomIn = _mapController.zoom < _mapOptions.maxZoom!;
           _canZoomOut = _mapController.zoom > _mapOptions.minZoom!;
