@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:scotlands_mountains_app/features/map/controls/map_controls_facade.dart';
+import 'package:scotlands_mountains_app/features/map/controls/map_facade.dart';
 
-import './controls/map_controls.dart';
+import 'controls/expanding_fab.dart';
 import 'mapbox_attribution.dart';
 import 'mapbox_tile_layer.dart';
 import 'mountain_layer.dart';
@@ -29,14 +29,14 @@ class _MountainsMapState extends State<MountainsMap> {
   };
   final _mapController = MapController();
   late final MapOptions _mapOptions;
-  late final MapControlsFacade _mapControlsFacade;
+  late final MapFacade _mapControlsFacade;
 
   @override
   void initState() {
     super.initState();
     _mapOptions = MapOptions(
-      center: MapControlsFacade.defaultCenter,
-      zoom: MapControlsFacade.defaultZoom,
+      center: MapFacade.defaultCenter,
+      zoom: MapFacade.defaultZoom,
       minZoom: 5,
       maxZoom: 18,
       interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
@@ -55,7 +55,7 @@ class _MountainsMapState extends State<MountainsMap> {
         }
       },
     );
-    _mapControlsFacade = MapControlsFacade(
+    _mapControlsFacade = MapFacade(
         mapController: _mapController,
         mapOptions: _mapOptions,
         redrawMap: () => setState(() {}));
@@ -88,7 +88,7 @@ class _MountainsMapState extends State<MountainsMap> {
           ),
         ),
         const MapboxAttribution(),
-        MapControls(mapControlsFacade: _mapControlsFacade)
+        ExpandingFab(mapFacade: _mapControlsFacade)
       ],
       children: [
         _layers[_mapControlsFacade.selectedLayer]!,

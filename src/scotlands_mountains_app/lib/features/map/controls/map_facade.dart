@@ -8,7 +8,7 @@ import '../../../models/mountain.dart';
 
 enum Layer { streets, satelliteStreets, satellite, outdoors }
 
-class MapControlsFacade {
+class MapFacade {
   static final defaultCenter = LatLng(56.816922, -4.18265);
   static const defaultZoom = 6.0;
   final _fitBoundOptions = const FitBoundsOptions(
@@ -25,7 +25,7 @@ class MapControlsFacade {
   bool canZoomOut = true;
   Layer selectedLayer = Layer.outdoors;
 
-  MapControlsFacade(
+  MapFacade(
       {required this.mapController,
       required this.mapOptions,
       required this.redrawMap}) {
