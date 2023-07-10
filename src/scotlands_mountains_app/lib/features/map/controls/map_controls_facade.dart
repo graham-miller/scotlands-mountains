@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../models/mountain.dart';
 
-enum Layer { outdoors, streets, satellite }
+enum Layer { streets, satelliteStreets, satellite, outdoors }
 
 class MapControlsFacade {
   static final defaultCenter = LatLng(56.816922, -4.18265);
@@ -54,6 +54,11 @@ class MapControlsFacade {
 
   void selectSatellite() {
     selectedLayer = Layer.satellite;
+    redrawMap();
+  }
+
+  void selectSatelliteStreets() {
+    selectedLayer = Layer.satelliteStreets;
     redrawMap();
   }
 

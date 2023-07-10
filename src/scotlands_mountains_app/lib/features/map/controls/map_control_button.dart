@@ -22,8 +22,8 @@ class MapControlButton extends StatelessWidget {
     return Visibility(
       visible: animation.value > 0,
       child: Positioned(
-        right: axis == Axis.vertical ? 3 : animation.value * openPosition,
-        bottom: axis == Axis.horizontal ? 3 : animation.value * openPosition,
+        right: axis == Axis.vertical ? 4 : animation.value * openPosition,
+        bottom: axis == Axis.horizontal ? 4 : animation.value * openPosition,
         child: Material(
           color: const Color.fromRGBO(0, 0, 0, 0),
           child: Ink(
