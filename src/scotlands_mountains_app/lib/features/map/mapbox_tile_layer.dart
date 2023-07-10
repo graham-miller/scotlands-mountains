@@ -5,7 +5,8 @@ class MapboxTileLayer extends TileLayer {
   MapboxTileLayer({super.key, required styleId})
       : super(
             urlTemplate:
-                'https://api.mapbox.com/styles/v1/mapbox/$styleId/tiles/512/{z}/{x}/{y}@2x?access_token=${dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN']}');
+                //'https://api.mapbox.com/styles/v1/mapbox/$styleId/tiles/512/{z}/{x}/{y}@2x?access_token=${dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN']}');
+                'https://api.mapbox.com/styles/v1/mapbox/$styleId/tiles/256/{z}/{x}/{y}?access_token=${dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN']}');
 }
 
 /*

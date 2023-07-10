@@ -1,11 +1,8 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:scotlands_mountains_app/features/map/controls/map_interactions.dart';
 
-import 'map_controls.dart';
+import 'controls/expanding_fab.dart';
 import 'mapbox_attribution.dart';
 import 'mapbox_tile_layer.dart';
 import 'mountain_layer.dart';
@@ -23,110 +20,82 @@ class MountainsMap extends StatefulWidget {
   State<MountainsMap> createState() => _MountainsMapState();
 }
 
-enum Layer { outdoors, streets, satellite, satelliteStreets }
-
 class _MountainsMapState extends State<MountainsMap> {
   final Map<Layer, TileLayer> _layers = {
-    Layer.outdoors: MapboxTileLayer(styleId: 'outdoors-v12'),
     Layer.streets: MapboxTileLayer(styleId: 'streets-v12'),
-    Layer.satellite: MapboxTileLayer(styleId: 'satellite-v9'),
     Layer.satelliteStreets: MapboxTileLayer(styleId: 'satellite-streets-v12'),
+    Layer.satellite: MapboxTileLayer(styleId: 'satellite-v9'),
+    Layer.outdoors: MapboxTileLayer(styleId: 'outdoors-v12'),
   };
-  final _fitBoundOptions = const FitBoundsOptions(
-    padding: EdgeInsets.fromLTRB(8, 8, 8, 70),
-    forceIntegerZoomLevel: true,
-  );
-  final _maxBounds = LatLngBounds(LatLng(54, -9), LatLng(61, 0));
-  final _defaultCenter = LatLng(56.816922, -4.18265);
-  final _defaultZoom = 6.0;
   final _mapController = MapController();
-
-  Layer _selectedLayer = Layer.outdoors;
-  StreamSubscription<MapEvent>? _subscription;
-  MapOptions? _mapOptions;
-  CenterZoom? _centerZoom;
+  late final MapOptions _mapOptions;
+  late final MapInteractions _mapInteractions;
 
   @override
   void initState() {
     super.initState();
     _mapOptions = MapOptions(
-      maxBounds: _maxBounds,
-      center: _defaultCenter,
-      zoom: _defaultZoom,
+      center: MapInteractions.defaultCenter,
+      zoom: MapInteractions.defaultZoom,
       minZoom: 5,
       maxZoom: 18,
+      //interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       onTap: (_, __) {
         ScaffoldMessenger.of(context).clearSnackBars();
       },
       onMapReady: () {
-        setState(
-          () {
-            _calculateCenterZoom();
-            _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-            _subscription = _mapController.mapEventStream.listen(
-              (event) {
-                if (event is MapEventRotate) {
-                  setState(() {});
-                }
-              },
-            );
-          },
-        );
+        _mapInteractions.setCenterZoom(widget.mountains);
+      },
+      onPositionChanged: (_, __) {
+        _mapInteractions.onPositionChanged();
+      },
+      onMapEvent: (event) {
+        if (event is MapEventRotate) {
+          if (_mapInteractions.canRotate) {
+            setState(() {});
+          } else if (_mapController.rotation != 0) {
+            _mapController.rotate(0);
+          }
+        }
       },
     );
+    _mapInteractions = MapInteractions(
+        mapController: _mapController,
+        mapOptions: _mapOptions,
+        redrawMap: () => setState(() {}));
   }
 
   @override
   void didUpdateWidget(MountainsMap oldWidget) {
+    _mapInteractions.setCenterZoom(widget.mountains);
     super.didUpdateWidget(oldWidget);
-    _calculateCenterZoom();
-    _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
   }
 
   @override
   void dispose() {
+    _mapController.dispose();
     super.dispose();
-    _subscription?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       mapController: _mapController,
-      options: _mapOptions!,
+      options: _mapOptions,
       nonRotatedChildren: [
         Scalebar(
-            options: ScalebarOptions(
-          lineColor: Colors.white,
-          lineWidth: 2,
-          textStyle: const TextStyle(color: Colors.white, fontSize: 12),
-          padding: const EdgeInsets.all(8),
-        )),
+          options: ScalebarOptions(
+            lineColor: Colors.white,
+            lineWidth: 2,
+            textStyle: const TextStyle(color: Colors.white, fontSize: 12),
+            padding: const EdgeInsets.all(8),
+          ),
+        ),
         const MapboxAttribution(),
-        MapControls(
-          onReset: () {
-            _mapController.rotate(0);
-            _mapController.move(_centerZoom!.center, _centerZoom!.zoom);
-          },
-          onSelectOutdoors: () {
-            setState(() {
-              _selectedLayer = Layer.outdoors;
-            });
-          },
-          onSelectSatellite: () {
-            setState(() {
-              _selectedLayer = Layer.satellite;
-            });
-          },
-          onSelectStreets: () {
-            setState(() {
-              _selectedLayer = Layer.streets;
-            });
-          },
-        )
+        ExpandingFab(mapInteractions: _mapInteractions)
       ],
       children: [
-        _layers[_selectedLayer]!,
+        _layers[_mapInteractions.selectedLayer]!,
         MountainLayer(
           mapController: _mapController,
           mountains: widget.mountains,
@@ -134,31 +103,5 @@ class _MountainsMapState extends State<MountainsMap> {
         ),
       ],
     );
-  }
-
-  void _calculateCenterZoom() {
-    if (widget.mountains.isEmpty) {
-      _centerZoom = CenterZoom(center: _defaultCenter, zoom: _defaultZoom);
-    } else {
-      LatLngBounds? fitBounds;
-      if (widget.mountains.length == 1) {
-        final mountain = widget.mountains.single;
-        fitBounds = LatLngBounds(
-            LatLng(mountain.latitude - 0.01, mountain.longitude - 0.01),
-            LatLng(mountain.latitude + 0.01, mountain.longitude + 0.01));
-      } else {
-        fitBounds = LatLngBounds(
-            LatLng(
-              widget.mountains.map((m) => m.latitude).reduce(min),
-              widget.mountains.map((m) => m.longitude).reduce(min),
-            ),
-            LatLng(
-              widget.mountains.map((m) => m.latitude).reduce(max),
-              widget.mountains.map((m) => m.longitude).reduce(max),
-            ));
-      }
-      _centerZoom = _mapController.centerZoomFitBounds(fitBounds,
-          options: _fitBoundOptions);
-    }
   }
 }
