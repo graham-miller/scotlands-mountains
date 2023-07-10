@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'layer_selector_button.dart';
 import 'map_controls_facade.dart';
-import 'action_button.dart';
+import 'map_control_button.dart';
 import 'open_close_button.dart';
 
 class MapControls extends StatefulWidget {
@@ -48,28 +49,13 @@ class _MapControlsState extends State<MapControls>
         child: Stack(
           alignment: Alignment.bottomRight,
           children: [
-            ActionButton(
+            LayerSelectorButton(
               animation: _animation,
-              icon: Icons.drive_eta_outlined,
-              axis: Axis.horizontal,
-              openPosition: 210,
-              onPressed: () => widget.mapControlsFacade.selectStreets(),
-            ),
-            ActionButton(
-              animation: _animation,
-              icon: Icons.satellite_outlined,
-              axis: Axis.horizontal,
-              openPosition: 140,
-              onPressed: () => widget.mapControlsFacade.selectSatellite(),
-            ),
-            ActionButton(
-              animation: _animation,
-              icon: Icons.map_outlined,
+              mapControlsFacade: widget.mapControlsFacade,
               axis: Axis.horizontal,
               openPosition: 70,
-              onPressed: () => widget.mapControlsFacade.selectOutdoors(),
             ),
-            ActionButton(
+            MapControlButton(
               animation: _animation,
               icon: Icons.zoom_in,
               axis: Axis.vertical,
@@ -77,7 +63,7 @@ class _MapControlsState extends State<MapControls>
               enabled: widget.mapControlsFacade.canZoomIn,
               onPressed: () => widget.mapControlsFacade.zoomIn(),
             ),
-            ActionButton(
+            MapControlButton(
               animation: _animation,
               icon: Icons.zoom_out,
               axis: Axis.vertical,
@@ -85,14 +71,14 @@ class _MapControlsState extends State<MapControls>
               enabled: widget.mapControlsFacade.canZoomOut,
               onPressed: () => widget.mapControlsFacade.zoomOut(),
             ),
-            ActionButton(
+            MapControlButton(
               animation: _animation,
               icon: Icons.explore_outlined,
               axis: Axis.vertical,
               openPosition: 140,
               onPressed: () {},
             ),
-            ActionButton(
+            MapControlButton(
               animation: _animation,
               icon: Icons.home_outlined,
               axis: Axis.vertical,

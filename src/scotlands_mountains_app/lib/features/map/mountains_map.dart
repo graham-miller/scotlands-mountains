@@ -24,8 +24,8 @@ class _MountainsMapState extends State<MountainsMap> {
   final Map<Layer, TileLayer> _layers = {
     Layer.outdoors: MapboxTileLayer(styleId: 'outdoors-v12'),
     Layer.streets: MapboxTileLayer(styleId: 'streets-v12'),
-    Layer.satellite: MapboxTileLayer(styleId: 'satellite-v9'),
-    //Layer.satelliteStreets: MapboxTileLayer(styleId: 'satellite-streets-v12'),
+    //Layer.satellite: MapboxTileLayer(styleId: 'satellite-v9'),
+    Layer.satellite: MapboxTileLayer(styleId: 'satellite-streets-v12'),
   };
   final _mapController = MapController();
   late final MapOptions _mapOptions;
