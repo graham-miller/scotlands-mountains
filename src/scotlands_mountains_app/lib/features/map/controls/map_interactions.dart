@@ -8,7 +8,7 @@ import '../../../models/mountain.dart';
 
 enum Layer { streets, satelliteStreets, satellite, outdoors }
 
-class MapFacade {
+class MapInteractions {
   static final defaultCenter = LatLng(56.816922, -4.18265);
   static const defaultZoom = 6.0;
   final _fitBoundOptions = const FitBoundsOptions(
@@ -23,9 +23,10 @@ class MapFacade {
   late CenterZoom centerZoom;
   bool canZoomIn = true;
   bool canZoomOut = true;
+  bool canRotate = false;
   Layer selectedLayer = Layer.outdoors;
 
-  MapFacade(
+  MapInteractions(
       {required this.mapController,
       required this.mapOptions,
       required this.redrawMap}) {
@@ -73,6 +74,15 @@ class MapFacade {
 
   void zoomOut() {
     mapController.move(mapController.center, mapController.zoom - 1);
+  }
+
+  void enableRotation() {
+    canRotate = true;
+  }
+
+  void disableRotation() {
+    mapController.rotate(0);
+    canRotate = false;
   }
 
   void setCenterZoom(List<Mountain> mountains) {

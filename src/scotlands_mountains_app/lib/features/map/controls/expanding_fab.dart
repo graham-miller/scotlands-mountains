@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'layer_selector.dart';
-import 'map_facade.dart';
+import 'map_interactions.dart';
 import 'button.dart';
+import 'rotation_toggle.dart';
 
 class ExpandingFab extends StatefulWidget {
-  final MapFacade mapFacade;
+  final MapInteractions mapInteractions;
 
   const ExpandingFab({
     super.key,
-    required this.mapFacade,
+    required this.mapInteractions,
   });
 
   @override
@@ -60,7 +61,7 @@ class _ExpandingFabState extends State<ExpandingFab>
     return [
       LayerSelector(
         animation: _animation,
-        mapControlsFacade: widget.mapFacade,
+        mapInteractions: widget.mapInteractions,
         axis: Axis.horizontal,
         openPosition: 70,
       ),
@@ -69,30 +70,29 @@ class _ExpandingFabState extends State<ExpandingFab>
         icon: Icons.zoom_in,
         axis: Axis.vertical,
         openPosition: 280,
-        enabled: widget.mapFacade.canZoomIn,
-        onPressed: () => widget.mapFacade.zoomIn(),
+        enabled: widget.mapInteractions.canZoomIn,
+        onPressed: () => widget.mapInteractions.zoomIn(),
       ),
       Button(
         animation: _animation,
         icon: Icons.zoom_out,
         axis: Axis.vertical,
         openPosition: 210,
-        enabled: widget.mapFacade.canZoomOut,
-        onPressed: () => widget.mapFacade.zoomOut(),
+        enabled: widget.mapInteractions.canZoomOut,
+        onPressed: () => widget.mapInteractions.zoomOut(),
       ),
-      Button(
+      RotationToggle(
         animation: _animation,
-        icon: Icons.explore_outlined,
         axis: Axis.vertical,
         openPosition: 140,
-        onPressed: () {},
+        mapInteractions: widget.mapInteractions,
       ),
       Button(
         animation: _animation,
         icon: Icons.home_outlined,
         axis: Axis.vertical,
         openPosition: 70,
-        onPressed: () => widget.mapFacade.reset(),
+        onPressed: () => widget.mapInteractions.reset(),
       ),
     ];
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:scotlands_mountains_app/features/map/controls/map_facade.dart';
+import 'package:scotlands_mountains_app/features/map/controls/map_interactions.dart';
 
 import 'controls/expanding_fab.dart';
 import 'mapbox_attribution.dart';
@@ -29,33 +29,37 @@ class _MountainsMapState extends State<MountainsMap> {
   };
   final _mapController = MapController();
   late final MapOptions _mapOptions;
-  late final MapFacade _mapControlsFacade;
+  late final MapInteractions _mapInteractions;
 
   @override
   void initState() {
     super.initState();
     _mapOptions = MapOptions(
-      center: MapFacade.defaultCenter,
-      zoom: MapFacade.defaultZoom,
+      center: MapInteractions.defaultCenter,
+      zoom: MapInteractions.defaultZoom,
       minZoom: 5,
       maxZoom: 18,
-      interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+      //interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       onTap: (_, __) {
         ScaffoldMessenger.of(context).clearSnackBars();
       },
       onMapReady: () {
-        _mapControlsFacade.setCenterZoom(widget.mountains);
+        _mapInteractions.setCenterZoom(widget.mountains);
       },
       onPositionChanged: (_, __) {
-        _mapControlsFacade.onPositionChanged();
+        _mapInteractions.onPositionChanged();
       },
       onMapEvent: (event) {
         if (event is MapEventRotate) {
-          setState(() {});
+          if (_mapInteractions.canRotate) {
+            setState(() {});
+          } else if (_mapController.rotation != 0) {
+            _mapController.rotate(0);
+          }
         }
       },
     );
-    _mapControlsFacade = MapFacade(
+    _mapInteractions = MapInteractions(
         mapController: _mapController,
         mapOptions: _mapOptions,
         redrawMap: () => setState(() {}));
@@ -63,7 +67,7 @@ class _MountainsMapState extends State<MountainsMap> {
 
   @override
   void didUpdateWidget(MountainsMap oldWidget) {
-    _mapControlsFacade.setCenterZoom(widget.mountains);
+    _mapInteractions.setCenterZoom(widget.mountains);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -88,10 +92,10 @@ class _MountainsMapState extends State<MountainsMap> {
           ),
         ),
         const MapboxAttribution(),
-        ExpandingFab(mapFacade: _mapControlsFacade)
+        ExpandingFab(mapInteractions: _mapInteractions)
       ],
       children: [
-        _layers[_mapControlsFacade.selectedLayer]!,
+        _layers[_mapInteractions.selectedLayer]!,
         MountainLayer(
           mapController: _mapController,
           mountains: widget.mountains,

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'animated_control.dart';
-import 'map_facade.dart';
+import 'map_interactions.dart';
 
 class LayerSelector extends StatelessWidget {
   final Animation<double> animation;
-  final MapFacade mapControlsFacade;
+  final MapInteractions mapInteractions;
   final Axis axis;
   final double openPosition;
 
   const LayerSelector({
     required this.animation,
-    required this.mapControlsFacade,
+    required this.mapInteractions,
     required this.axis,
     required this.openPosition,
     super.key,
@@ -32,16 +32,16 @@ class LayerSelector extends StatelessWidget {
           onPressed: (int index) {
             switch (index) {
               case 0:
-                mapControlsFacade.selectStreets();
+                mapInteractions.selectStreets();
                 break;
               case 1:
-                mapControlsFacade.selectSatelliteStreets();
+                mapInteractions.selectSatelliteStreets();
                 break;
               case 2:
-                mapControlsFacade.selectSatellite();
+                mapInteractions.selectSatellite();
                 break;
               default:
-                mapControlsFacade.selectOutdoors();
+                mapInteractions.selectOutdoors();
                 break;
             }
           },
@@ -49,10 +49,10 @@ class LayerSelector extends StatelessWidget {
           selectedColor: Theme.of(context).colorScheme.onPrimary,
           fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
           isSelected: List.from([
-            mapControlsFacade.selectedLayer == Layer.streets,
-            mapControlsFacade.selectedLayer == Layer.satelliteStreets,
-            mapControlsFacade.selectedLayer == Layer.satellite,
-            mapControlsFacade.selectedLayer == Layer.outdoors,
+            mapInteractions.selectedLayer == Layer.streets,
+            mapInteractions.selectedLayer == Layer.satelliteStreets,
+            mapInteractions.selectedLayer == Layer.satellite,
+            mapInteractions.selectedLayer == Layer.outdoors,
           ]),
           children: const [
             Icon(Icons.drive_eta_outlined),
