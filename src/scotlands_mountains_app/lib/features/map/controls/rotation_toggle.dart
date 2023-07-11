@@ -21,14 +21,6 @@ class RotationToggle extends StatefulWidget {
 }
 
 class _RotationToggleState extends State<RotationToggle> {
-  bool _canRotate = false;
-
-  @override
-  void initState() {
-    _canRotate = widget.mapInteractions.canRotate;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return AnimatedControl(
@@ -50,9 +42,7 @@ class _RotationToggleState extends State<RotationToggle> {
               widget.mapInteractions.canRotate
                   ? widget.mapInteractions.disableRotation()
                   : widget.mapInteractions.enableRotation();
-              setState(() {
-                _canRotate = widget.mapInteractions.canRotate;
-              });
+              setState(() {});
             },
           ),
         ),
