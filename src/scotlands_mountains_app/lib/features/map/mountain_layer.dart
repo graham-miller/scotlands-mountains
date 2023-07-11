@@ -4,7 +4,7 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../mountains/app_pop_up.dart';
-import '../shared/util.dart';
+import '../common/util.dart';
 import 'rotate_with_map.dart';
 import '../../models/mountain.dart';
 

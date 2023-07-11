@@ -7,8 +7,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_view/photo_view.dart';
 
-import '../shared/util.dart';
-import 'geograph_api_response.dart';
+import '../common/util.dart';
+import 'models/geograph_api_photo_response.dart';
+import 'models/geograph_api_search_response.dart';
 import '../../models/mountain.dart';
 import 'models/photo.dart';
 

@@ -3,7 +3,7 @@ import 'package:scotlands_mountains_app/features/map/mountains_map.dart';
 
 import '../../models/mountain_graph.dart';
 import '../../repositories/mountains_repository.dart';
-import '../shared/util.dart';
+import '../common/util.dart';
 import 'mountain_details.dart';
 import 'mountain_photos.dart';
 

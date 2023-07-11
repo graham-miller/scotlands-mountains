@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'features/shared/title_logo.dart';
+import 'features/common/title_logo.dart';
 
 class Shell extends StatelessWidget {
   final Widget child;
@@ -11,19 +11,20 @@ class Shell extends StatelessWidget {
     '/home',
     '/classifications',
     '/search',
+    '/weather',
     '/about',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(context),
-      drawer: _drawer(context),
+      appBar: _buildAppBar(context),
+      drawer: _buildDrawer(context),
       body: child,
     );
   }
 
-  PreferredSizeWidget _appBar(BuildContext context) {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
       leading: Builder(
         builder: (context) {
@@ -45,23 +46,23 @@ class Shell extends StatelessWidget {
         },
         child: const TitleLogo(),
       ),
-      actions: [
-        Builder(
-          builder: (context) {
-            return IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/search', (route) => false);
-              },
-            );
-          },
-        ),
+      actions: const [
+        // Builder(
+        //   builder: (context) {
+        //     return IconButton(
+        //       icon: const Icon(Icons.search),
+        //       onPressed: () {
+        //         Navigator.of(context)
+        //             .pushNamedAndRemoveUntil('/search', (route) => false);
+        //       },
+        //     );
+        //   },
+        // ),
       ],
     );
   }
 
-  Widget _drawer(BuildContext context) {
+  Widget _buildDrawer(BuildContext context) {
     return NavigationDrawer(
       selectedIndex:
           _routes.indexOf(ModalRoute.of(context)?.settings.name ?? _routes[0]),
@@ -94,6 +95,11 @@ class Shell extends StatelessWidget {
         //   label: Text('Settings'),
         //   icon: Icon(Icons.settings),
         // ),
+        Divider(),
+        NavigationDrawerDestination(
+          label: Text('Weather'),
+          icon: Icon(Icons.wb_sunny_outlined),
+        ),
         Divider(),
         NavigationDrawerDestination(
           label: Text('About'),

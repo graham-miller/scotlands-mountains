@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/mountain.dart';
-import '../shared/util.dart';
+import '../common/util.dart';
 
 class Prominence extends StatelessWidget {
   final scaleFormat = NumberFormat("#,###", "en_GB");

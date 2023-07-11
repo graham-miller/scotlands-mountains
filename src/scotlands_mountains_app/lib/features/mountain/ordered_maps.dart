@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/os_map.dart';
-import '../shared/util.dart';
+import '../common/util.dart';
 
 class OrderedMaps extends StatelessWidget {
   final scaleFormat = NumberFormat("#,###", "en_GB");
