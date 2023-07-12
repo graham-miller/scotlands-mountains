@@ -4,9 +4,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'features/home/home_page.dart';
 import 'features/mountain/mountain_page.dart';
 import 'features/weather/weather_page.dart';
-import 'features/mountains/classifications_page.dart';
+import 'features/mountain_list/classifications_page.dart';
 import 'features/about/about_page.dart';
-import 'features/mountains/search_page.dart';
+import 'features/mountain_list/search_page.dart';
 import 'repositories/data.dart';
 import 'shell.dart';
 

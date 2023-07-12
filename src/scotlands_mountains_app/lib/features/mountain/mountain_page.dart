@@ -5,7 +5,7 @@ import '../../models/mountain_graph.dart';
 import '../../repositories/mountains_repository.dart';
 import '../common/util.dart';
 import 'mountain_details.dart';
-import 'mountain_photos.dart';
+import '../mountain_photos/mountain_photos.dart';
 
 class MountainPage extends StatefulWidget {
   final int id;

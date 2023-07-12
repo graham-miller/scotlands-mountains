@@ -1,17 +1,13 @@
-import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_view/photo_view.dart';
 
+import 'geograph_client.dart';
 import '../common/util.dart';
-import 'models/geograph_api_photo_response.dart';
-import 'models/geograph_api_search_response.dart';
 import '../../models/mountain.dart';
-import 'models/photo.dart';
+import 'photo.dart';
 
 class MountainPhotos extends StatefulWidget {
   final client = http.Client();
@@ -24,7 +20,6 @@ class MountainPhotos extends StatefulWidget {
 }
 
 class _MountainPhotosState extends State<MountainPhotos> {
-  final _client = http.Client();
   final List<Photo> _photos = List.empty(growable: true);
   final _controller = CarouselController();
   late final CarouselOptions _options;
@@ -199,40 +194,8 @@ class _MountainPhotosState extends State<MountainPhotos> {
   void _searchPhotos() async {
     setState(() => _photos.clear());
 
-    final name = widget.mountain.name.contains('(')
-        ? widget.mountain.name
-            .substring(0, widget.mountain.name.indexOf('('))
-            .trim()
-        : widget.mountain.name;
-
-    final String term = Uri.encodeComponent(name);
-    final parts = widget.mountain.gridRef.split(' ');
-    final gridRef =
-        parts[0] + parts[1].substring(0, 2) + parts[2].substring(0, 2);
-    final url =
-        'https://api.geograph.org.uk/syndicator.php?key=${dotenv.env['GEOGRAPH_API_KEY']}&text=$term+near+$gridRef&perpage=10&format=JSON';
-
-    final response = await _client.get(Uri.parse(url));
-
-    const JsonDecoder decoder = JsonDecoder();
-    final parsed = decoder.convert(response.body);
-    final result = GeographApiSearchResponse.fromJson(parsed);
-
-    var photos = await Future.wait(result.items.map((e) async =>
-        Photo.fromGeographResponse(e, await _getPhotoInfo(e.guid))));
+    var photos = await GeographClient.searchPhotos(widget.mountain);
 
     setState(() => _photos.addAll(photos));
-  }
-
-  Future<GeographApiPhotoResponse> _getPhotoInfo(String guid) async {
-    final url =
-        'https://api.geograph.org.uk/api/photo/$guid/${dotenv.env['GEOGRAPH_API_KEY']}?output=json';
-    final response = await _client.get(Uri.parse(url));
-
-    const JsonDecoder decoder = JsonDecoder();
-    final parsed = decoder.convert(response.body);
-    var result = GeographApiPhotoResponse.fromJson(parsed);
-
-    return result;
   }
 }

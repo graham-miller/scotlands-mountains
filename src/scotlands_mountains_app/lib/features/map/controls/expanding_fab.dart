@@ -99,13 +99,16 @@ class _ExpandingFabState extends State<ExpandingFab>
 
   List<Widget> _buildOpenCloseButton() {
     return [
-      Opacity(
-        opacity: _animation.value,
-        child: FloatingActionButton(
-          onPressed: () {
-            _controller.reverse();
-          },
-          child: const Icon(Icons.close),
+      Visibility(
+        visible: _animation.value == 1,
+        child: Opacity(
+          opacity: _animation.value,
+          child: FloatingActionButton(
+            onPressed: () {
+              _controller.reverse();
+            },
+            child: const Icon(Icons.close),
+          ),
         ),
       ),
       Visibility(

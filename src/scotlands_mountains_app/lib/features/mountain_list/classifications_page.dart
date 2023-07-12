@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scotlands_mountains_app/features/mountains/list_or_map_of_mountains.dart';
+import 'package:scotlands_mountains_app/features/mountain_list/list_or_map_of_mountains.dart';
 
 import '../../repositories/mountains_repository.dart';
 import 'classification_selector.dart';
