@@ -7,7 +7,7 @@ import 'mapbox_attribution.dart';
 import 'mapbox_tile_layer.dart';
 import 'mountain_layer.dart';
 import '../../models/mountain.dart';
-import 'scalebar.dart';
+import 'scalebar/scalebar.dart';
 
 class MountainsMap extends StatefulWidget {
   final List<Mountain> mountains;
