@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // initialRoute: '/home',
-      initialRoute: '/classifications',
+      initialRoute: '/weather',
       routes: {
         '/home': (context) => Shell(child: const HomePage()),
         '/classifications': (context) =>

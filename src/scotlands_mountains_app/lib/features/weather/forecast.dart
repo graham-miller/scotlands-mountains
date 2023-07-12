@@ -1,29 +1,23 @@
 class Forecast {
-  final DateTime dataDate;
-  final DateTime validFrom;
-  final DateTime validTo;
-  final DateTime createdDate;
-  final String uri;
-  final String area;
-  final String risk;
+  final String location;
+  final String issue;
+  final DateTime issued;
+  final String type;
+  //final ParamUnits paramUnits;
+  //final Evening evening;
+  //final List<Day> days;
 
   const Forecast._(
-      {required this.dataDate,
-      required this.validFrom,
-      required this.validTo,
-      required this.createdDate,
-      required this.uri,
-      required this.area,
-      required this.risk});
+      {required this.location,
+      required this.issue,
+      required this.issued,
+      required this.type});
 
   factory Forecast.fromJson(dynamic json) {
     return Forecast._(
-        dataDate: DateTime.parse(json['DataDate'].toString()),
-        validFrom: DateTime.parse(json['ValidFrom'].toString()),
-        validTo: DateTime.parse(json['ValidTo'].toString()),
-        createdDate: DateTime.parse(json['CreatedDate'].toString()),
-        uri: json['URI'],
-        area: json['Area'],
-        risk: json['Risk']);
+        location: json['Location'],
+        issue: json['Issue'],
+        issued: DateTime.parse(json['Issued'].toString()),
+        type: json['Type']);
   }
 }
