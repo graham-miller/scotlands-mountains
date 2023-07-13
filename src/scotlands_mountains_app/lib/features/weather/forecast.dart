@@ -4,7 +4,7 @@ class Forecast {
   final DateTime issued;
   final String type;
   final Units units;
-  //final Evening evening;
+  final Day? evening;
   final List<Day> days;
 
   const Forecast._(
@@ -13,6 +13,7 @@ class Forecast {
       required this.issued,
       required this.type,
       required this.units,
+      required this.evening,
       required this.days});
 
   factory Forecast.fromJson(dynamic json) {
@@ -22,6 +23,7 @@ class Forecast {
         issued: DateTime.parse(json['Issued'].toString()),
         type: json['Type'],
         units: Units.fromJson(json['ParamUnits']),
+        evening: Day.fromJson(json['Evening']),
         days: List<Day>.from(
             json['Days']['Day'].map((j) => Day.fromJson(j)).toList()));
   }
@@ -57,8 +59,8 @@ class Day {
   final String? weather;
   final String? visibility;
   final String? summary;
+  final List<Hazard> hazards;
   // final Temperature? temperature;
-  // final List<Hazard>? Hazards;
   // final List<Period>? Periods;
 
   const Day._(
@@ -69,9 +71,13 @@ class Day {
       required this.cloudFreeHillTop,
       required this.weather,
       required this.visibility,
-      required this.summary});
+      required this.summary,
+      required this.hazards});
 
   factory Day.fromJson(dynamic json) {
+    final hazards =
+        json['Hazards']?['Hazard'].map((j) => Hazard.fromJson(j)).toList();
+
     return Day._(
         validity: DateTime.parse(json['Validity'].toString()),
         headline: json['Headline'],
@@ -80,6 +86,23 @@ class Day {
         cloudFreeHillTop: json['CloudFreeHillTop'],
         weather: json['Weather'],
         visibility: json['Visibility'],
-        summary: json['Summary']);
+        summary: json['Summary'],
+        hazards: json['Hazards'] == null
+            ? List<Hazard>.empty()
+            : List<Hazard>.from(json['Hazards']?['Hazard']
+                .map((j) => Hazard.fromJson(j))
+                .toList()));
+  }
+}
+
+class Hazard {
+  final String type;
+  final String likelihood;
+
+  const Hazard._({required this.type, required this.likelihood});
+
+  factory Hazard.fromJson(dynamic json) {
+    return Hazard._(
+        type: json['Element']['\$'], likelihood: json['Likelihood']['\$']);
   }
 }
