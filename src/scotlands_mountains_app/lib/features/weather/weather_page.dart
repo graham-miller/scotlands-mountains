@@ -77,3 +77,30 @@ class _WeatherPageState extends State<WeatherPage> {
     );
   }
 }
+
+class Level {
+  final String height;
+  final String? windDirection;
+  final int? windSpeed;
+  final int? maxGust;
+  final int? temperature;
+  final int? feelsLike;
+
+  Level._(
+      {required this.height,
+      required this.windDirection,
+      required this.windSpeed,
+      required this.maxGust,
+      required this.temperature,
+      required this.feelsLike});
+
+  factory Level.fromJson(dynamic json) {
+    return Level._(
+        height: json['Level'],
+        windDirection: json['WindDirection'],
+        windSpeed: json['WindSpeed'],
+        maxGust: json['MaxGust'],
+        temperature: json['Temperature'],
+        feelsLike: json['FeelsLike']);
+  }
+}
