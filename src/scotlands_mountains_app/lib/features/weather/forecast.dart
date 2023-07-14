@@ -183,11 +183,13 @@ class Period {
 
 class Level {
   final String height;
-  final String? windDirection;
-  final int? windSpeed;
-  final int? maxGust;
-  final int? temperature;
-  final int? feelsLike;
+  final String windDirection;
+  // values that should otherwise be numeric but cannot expressed numerically may
+  // be sent as strings e.g. "-0", therefore, for safety assume values are strings
+  final String windSpeed;
+  final String maxGust;
+  final String temperature;
+  final String feelsLike;
 
   Level._(
       {required this.height,
@@ -201,9 +203,9 @@ class Level {
     return Level._(
         height: json['Level'],
         windDirection: json['WindDirection'],
-        windSpeed: json['WindSpeed'],
-        maxGust: json['MaxGust'],
-        temperature: json['Temperature'],
-        feelsLike: json['FeelsLike'] == '-0' ? 0 : json['FeelsLike']);
+        windSpeed: json['WindSpeed'].toString(),
+        maxGust: json['MaxGust'].toString(),
+        temperature: json['Temperature'].toString(),
+        feelsLike: json['FeelsLike'].toString());
   }
 }
