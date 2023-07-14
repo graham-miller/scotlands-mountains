@@ -1,5 +1,3 @@
-import 'package:scotlands_mountains_app/features/weather/weather_page.dart';
-
 class Forecast {
   final String location;
   final String issue;
@@ -25,7 +23,7 @@ class Forecast {
         issued: DateTime.parse(json['Issued'].toString()),
         type: json['Type'],
         units: Units.fromJson(json['ParamUnits']),
-        evening: Day.fromJson(json['Evening']),
+        evening: json['Evening'] == null ? null : Day.fromJson(json['Evening']),
         days: List<Day>.from(
             json['Days']['Day'].map((j) => Day.fromJson(j)).toList()));
   }
@@ -61,6 +59,8 @@ class Day {
   final String? weather;
   final String? visibility;
   final String? summary;
+  final String? wind;
+  final String? hillCloud;
   final List<Hazard> hazards;
   final Temperature? temperature;
   final List<Period> periods;
@@ -74,6 +74,8 @@ class Day {
       required this.weather,
       required this.visibility,
       required this.summary,
+      required this.wind,
+      required this.hillCloud,
       required this.hazards,
       required this.temperature,
       required this.periods});
@@ -90,6 +92,8 @@ class Day {
         weather: json['Weather'],
         visibility: json['Visibility'],
         summary: json['Summary'],
+        wind: json['Wind'],
+        hillCloud: json['HillCloud'],
         hazards: json['Hazards'] == null
             ? List<Hazard>.empty()
             : List<Hazard>.from(json['Hazards']?['Hazard']
@@ -174,5 +178,32 @@ class Period {
         freezingLevel: json['FreezingLevel'],
         levels: List<Level>.from(
             json['Height'].map((j) => Level.fromJson(j)).toList()));
+  }
+}
+
+class Level {
+  final String height;
+  final String? windDirection;
+  final int? windSpeed;
+  final int? maxGust;
+  final int? temperature;
+  final int? feelsLike;
+
+  Level._(
+      {required this.height,
+      required this.windDirection,
+      required this.windSpeed,
+      required this.maxGust,
+      required this.temperature,
+      required this.feelsLike});
+
+  factory Level.fromJson(dynamic json) {
+    return Level._(
+        height: json['Level'],
+        windDirection: json['WindDirection'],
+        windSpeed: json['WindSpeed'],
+        maxGust: json['MaxGust'],
+        temperature: json['Temperature'],
+        feelsLike: json['FeelsLike'] == '-0' ? 0 : json['FeelsLike']);
   }
 }
