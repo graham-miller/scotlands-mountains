@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:photo_view/photo_view.dart';
 
 import 'geograph_client.dart';
@@ -10,10 +9,9 @@ import '../../models/mountain.dart';
 import 'photo.dart';
 
 class MountainPhotos extends StatefulWidget {
-  final client = http.Client();
   final Mountain mountain;
 
-  MountainPhotos({super.key, required this.mountain});
+  const MountainPhotos({super.key, required this.mountain});
 
   @override
   State<MountainPhotos> createState() => _MountainPhotosState();

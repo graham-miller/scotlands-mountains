@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 
 import 'forecast.dart';
 import 'forecast_area.dart';
@@ -11,11 +11,9 @@ class MetOfficeClient {
     final url =
         'http://datapoint.metoffice.gov.uk/public/data/txt/wxfcs/mountainarea/json/capabilities?key=${dotenv.env['MET_OFFICE_API_KEY']}';
 
-    final client = http.Client();
-    final response = await client.get(Uri.parse(url));
-
+    var file = await DefaultCacheManager().getSingleFile(url);
     const JsonDecoder decoder = JsonDecoder();
-    final parsed = decoder.convert(response.body);
+    final parsed = decoder.convert(await file.readAsString());
 
     final areas = List<Area>.from(parsed['MountainForecastList']
             ['MountainForecast']
@@ -30,11 +28,10 @@ class MetOfficeClient {
     final url = area.uri
         .replaceFirst('{format}', 'json')
         .replaceFirst('{key}', dotenv.env['MET_OFFICE_API_KEY']!);
-    final client = http.Client();
-    final response = await client.get(Uri.parse(url));
 
+    var file = await DefaultCacheManager().getSingleFile(url);
     const JsonDecoder decoder = JsonDecoder();
-    final parsed = decoder.convert(response.body);
+    final parsed = decoder.convert(await file.readAsString());
     final forecast = Forecast.fromJson(parsed['Report']);
 
     return forecast;
