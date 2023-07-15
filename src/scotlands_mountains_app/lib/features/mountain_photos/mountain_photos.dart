@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:photo_view/photo_view.dart';
 
 import 'geograph_client.dart';
@@ -68,7 +70,12 @@ class _MountainPhotosState extends State<MountainPhotos> {
         itemCount: _photos.length,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
             GestureDetector(
-          child: Image.network(_photos[itemIndex].imageUrl),
+          child: CachedNetworkImage(
+            imageUrl: _photos[itemIndex].imageUrl,
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) =>
+                const Center(child: Icon(Icons.error)),
+          ),
           onTap: () {
             showDialog<void>(
               context: context,
@@ -78,8 +85,8 @@ class _MountainPhotosState extends State<MountainPhotos> {
                   child: Stack(
                     children: [
                       PhotoView(
-                        imageProvider:
-                            NetworkImage(_photos[itemIndex].imageUrl),
+                        imageProvider: CachedNetworkImageProvider(
+                            _photos[itemIndex].imageUrl),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
