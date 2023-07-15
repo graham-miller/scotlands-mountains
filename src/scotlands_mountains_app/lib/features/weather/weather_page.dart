@@ -43,6 +43,7 @@ class _WeatherPageState extends State<WeatherPage>
         setState(() {
           _tabController =
               TabController(length: _showEvening ? 4 : 3, vsync: this);
+          _tabController!.index = _showEvening ? 1 : 0;
           _forecast = forecast;
         });
       });
@@ -65,6 +66,7 @@ class _WeatherPageState extends State<WeatherPage>
         ),
         if (_forecast != null)
           TabBar(
+            isScrollable: true,
             controller: _tabController,
             tabs: <Widget>[
               if (_showEvening)
@@ -95,8 +97,15 @@ class _WeatherPageState extends State<WeatherPage>
   }
 
   Widget _buildEvening(BuildContext context) {
-    return const SizedBox.expand(
-      child: Text('Evening'),
+    return SizedBox.expand(
+      child: ListView(
+        children: [
+          ListTile(
+            title: const Text('Evening summary'),
+            subtitle: Text(_forecast!.evening!.summary!),
+          ),
+        ],
+      ),
     );
   }
 
@@ -110,12 +119,12 @@ class _WeatherPageState extends State<WeatherPage>
             subtitle: Text(day.headline!),
           ),
           ListTile(
-            title: const Text('View'),
-            subtitle: Text(day.view!),
-          ),
-          ListTile(
             title: const Text('Weather'),
             subtitle: Text(day.weather!),
+          ),
+          ListTile(
+            title: const Text('View'),
+            subtitle: Text(day.view!),
           ),
           ListTile(
             title: const Text('Confidence'),
