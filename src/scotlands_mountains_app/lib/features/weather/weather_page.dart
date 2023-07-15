@@ -153,18 +153,6 @@ class _WeatherPageState extends State<WeatherPage>
             subtitle: Text(day.weather!),
           ),
           ListTile(
-            title: const Text('Wind'),
-            subtitle: Text(day.wind!),
-          ),
-          ListTile(
-            title: const Text('Hill cloud'),
-            subtitle: Text(day.hillCloud!),
-          ),
-          ListTile(
-            title: const Text('Visibility'),
-            subtitle: Text(day.visibility!),
-          ),
-          ListTile(
             title: Text('Temperature (${day.temperature!.glen})'),
             subtitle: Text(day.temperature!.glenTemperature),
           ),
@@ -175,6 +163,18 @@ class _WeatherPageState extends State<WeatherPage>
           ListTile(
             title: const Text('Freezing level'),
             subtitle: Text(day.temperature!.freezingLevel),
+          ),
+          ListTile(
+            title: const Text('Wind'),
+            subtitle: Text(day.wind!),
+          ),
+          ListTile(
+            title: const Text('Hill cloud'),
+            subtitle: Text(day.hillCloud!),
+          ),
+          ListTile(
+            title: const Text('Visibility'),
+            subtitle: Text(day.visibility!),
           ),
         ],
       ),
