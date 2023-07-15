@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:scotlands_mountains_app/features/weather/forecast.dart';
 import 'package:scotlands_mountains_app/features/weather/met_office_client.dart';
 
@@ -13,7 +14,8 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
+  final DateFormat dateFormatter = DateFormat('E d LLL');
   List<ForecastArea> _forecastAreas = List.empty();
   ForecastArea? _selectedArea;
   Forecast? _forecast;
@@ -65,9 +67,10 @@ class _WeatherPageState extends State<WeatherPage>
           TabBar(
             controller: _tabController,
             tabs: <Widget>[
-              if (_forecast!.evening != null) const Tab(text: 'Evening'),
-              const Tab(text: 'Day 0'),
-              const Tab(text: 'Day 1'),
+              if (_showEvening)
+                Tab(text: dateFormatter.format(_forecast!.evening!.validity)),
+              Tab(text: dateFormatter.format(_forecast!.days[0].validity)),
+              Tab(text: dateFormatter.format(_forecast!.days[1].validity)),
               const Tab(text: 'Outlook'),
             ],
           ),
@@ -76,7 +79,7 @@ class _WeatherPageState extends State<WeatherPage>
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                if (_forecast!.evening != null) _buildEvening(context),
+                if (_showEvening) _buildEvening(context),
                 _buildDay0(context),
                 _buildDay1(context),
                 _buildOutlook(context),
@@ -98,20 +101,95 @@ class _WeatherPageState extends State<WeatherPage>
   }
 
   Widget _buildDay0(BuildContext context) {
-    return const SizedBox.expand(
-      child: Text('Day 0'),
+    var day = _forecast!.days[0];
+    return SizedBox.expand(
+      child: ListView(
+        children: [
+          ListTile(
+            title: const Text('Headline'),
+            subtitle: Text(day.headline!),
+          ),
+          ListTile(
+            title: const Text('View'),
+            subtitle: Text(day.view!),
+          ),
+          ListTile(
+            title: const Text('Weather'),
+            subtitle: Text(day.weather!),
+          ),
+          ListTile(
+            title: const Text('Confidence'),
+            subtitle: Text(day.confidence!),
+          ),
+          ListTile(
+            title: const Text('Cloud free summits'),
+            subtitle: Text(day.cloudFreeHillTop!),
+          ),
+          ListTile(
+            title: const Text('Visibility'),
+            subtitle: Text(day.visibility!),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildDay1(BuildContext context) {
-    return const SizedBox.expand(
-      child: Text('Day 1'),
+    var day = _forecast!.days[1];
+    return SizedBox.expand(
+      child: ListView(
+        children: [
+          ListTile(
+            title: const Text('Weather'),
+            subtitle: Text(day.weather!),
+          ),
+          ListTile(
+            title: const Text('Wind'),
+            subtitle: Text(day.wind!),
+          ),
+          ListTile(
+            title: const Text('Hill cloud'),
+            subtitle: Text(day.hillCloud!),
+          ),
+          ListTile(
+            title: const Text('Visibility'),
+            subtitle: Text(day.visibility!),
+          ),
+          ListTile(
+            title: Text('Temperature (${day.temperature!.glen})'),
+            subtitle: Text(day.temperature!.glenTemperature),
+          ),
+          ListTile(
+            title: Text('Temperature (${day.temperature!.levelHeight})'),
+            subtitle: Text(day.temperature!.levelTemperature),
+          ),
+          ListTile(
+            title: const Text('Freezing level'),
+            subtitle: Text(day.temperature!.freezingLevel),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildOutlook(BuildContext context) {
-    return const SizedBox.expand(
-      child: Text('Outlook'),
+    return SizedBox.expand(
+      child: ListView(
+        children: [
+          ListTile(
+            title: Text(dateFormatter.format(_forecast!.days[2].validity)),
+            subtitle: Text(_forecast!.days[2].summary!),
+          ),
+          ListTile(
+            title: Text(dateFormatter.format(_forecast!.days[3].validity)),
+            subtitle: Text(_forecast!.days[3].summary!),
+          ),
+          ListTile(
+            title: Text(dateFormatter.format(_forecast!.days[4].validity)),
+            subtitle: Text(_forecast!.days[4].summary!),
+          ),
+        ],
+      ),
     );
   }
 }
