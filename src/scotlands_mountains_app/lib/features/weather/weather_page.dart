@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/features/weather/forecast.dart';
 import 'package:scotlands_mountains_app/features/weather/met_office_client.dart';
 
+import 'area_selector.dart';
 import 'forecast_area.dart';
 
 class WeatherPage extends StatefulWidget {
@@ -11,10 +12,13 @@ class WeatherPage extends StatefulWidget {
   State<WeatherPage> createState() => _WeatherPageState();
 }
 
-class _WeatherPageState extends State<WeatherPage> {
-  List<Area> _forecastAreas = List.empty();
-  Area? _selectedArea;
+class _WeatherPageState extends State<WeatherPage>
+    with SingleTickerProviderStateMixin {
+  List<ForecastArea> _forecastAreas = List.empty();
+  ForecastArea? _selectedArea;
   Forecast? _forecast;
+  bool _showEvening = true;
+  TabController? _tabController;
 
   @override
   void initState() {
@@ -28,14 +32,18 @@ class _WeatherPageState extends State<WeatherPage> {
         }));
   }
 
-  _loadForecast(Area? area) {
+  _loadForecast(ForecastArea? area) {
     setState(() => _selectedArea = area);
 
     if (_selectedArea != null) {
-      MetOfficeClient.getForecast(_selectedArea!)
-          .then((forecast) => setState(() {
-                _forecast = forecast;
-              }));
+      MetOfficeClient.getForecast(_selectedArea!).then((forecast) {
+        _showEvening = forecast.evening != null;
+        setState(() {
+          _tabController =
+              TabController(length: _showEvening ? 4 : 3, vsync: this);
+          _forecast = forecast;
+        });
+      });
     }
   }
 
@@ -45,35 +53,65 @@ class _WeatherPageState extends State<WeatherPage> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return ListView(
-      children: [
-        _buildAreaSelector(),
-        _forecast == null
-            ? const SizedBox.shrink()
-            : Text('${_forecast!.location} - ${_forecast!.type}')
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        AreaSelector(
+          forecastAreas: _forecastAreas,
+          selectedArea: _selectedArea,
+          onSelected: (area) => _loadForecast(area),
+        ),
+        if (_forecast != null)
+          TabBar(
+            controller: _tabController,
+            tabs: <Widget>[
+              if (_forecast!.evening != null) const Tab(text: 'Evening'),
+              const Tab(text: 'Day 0'),
+              const Tab(text: 'Day 1'),
+              const Tab(text: 'Outlook'),
+            ],
+          ),
+        if (_forecast != null)
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                if (_forecast!.evening != null) _buildEvening(context),
+                _buildDay0(context),
+                _buildDay1(context),
+                _buildOutlook(context),
+              ],
+            ),
+          ),
+        if (_selectedArea != null && _forecast == null)
+          const Expanded(
+            child: Center(child: CircularProgressIndicator()),
+          ),
       ],
     );
   }
 
-  Padding _buildAreaSelector() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DropdownButton<Area>(
-            value: _selectedArea,
-            icon: const Icon(Icons.arrow_drop_down),
-            items: _forecastAreas
-                .map((f) => DropdownMenuItem<Area>(
-                      value: f,
-                      child: Text(f.area),
-                    ))
-                .toList(),
-            onChanged: (area) => _loadForecast(area),
-          ),
-        ],
-      ),
+  Widget _buildEvening(BuildContext context) {
+    return const SizedBox.expand(
+      child: Text('Evening'),
+    );
+  }
+
+  Widget _buildDay0(BuildContext context) {
+    return const SizedBox.expand(
+      child: Text('Day 0'),
+    );
+  }
+
+  Widget _buildDay1(BuildContext context) {
+    return const SizedBox.expand(
+      child: Text('Day 1'),
+    );
+  }
+
+  Widget _buildOutlook(BuildContext context) {
+    return const SizedBox.expand(
+      child: Text('Outlook'),
     );
   }
 }

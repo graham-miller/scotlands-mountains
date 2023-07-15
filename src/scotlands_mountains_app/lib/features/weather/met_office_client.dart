@@ -7,7 +7,7 @@ import 'forecast.dart';
 import 'forecast_area.dart';
 
 class MetOfficeClient {
-  static Future<List<Area>> getAreas() async {
+  static Future<List<ForecastArea>> getAreas() async {
     final url =
         'http://datapoint.metoffice.gov.uk/public/data/txt/wxfcs/mountainarea/json/capabilities?key=${dotenv.env['MET_OFFICE_API_KEY']}';
 
@@ -15,16 +15,16 @@ class MetOfficeClient {
     const JsonDecoder decoder = JsonDecoder();
     final parsed = decoder.convert(await file.readAsString());
 
-    final areas = List<Area>.from(parsed['MountainForecastList']
+    final areas = List<ForecastArea>.from(parsed['MountainForecastList']
             ['MountainForecast']
-        .map((json) => Area.fromJson(json))
+        .map((json) => ForecastArea.fromJson(json))
         .where((area) =>
             area.area.contains('Highlands') || area.area.contains('Grampian')));
 
     return areas;
   }
 
-  static Future<Forecast> getForecast(Area area) async {
+  static Future<Forecast> getForecast(ForecastArea area) async {
     final url = area.uri
         .replaceFirst('{format}', 'json')
         .replaceFirst('{key}', dotenv.env['MET_OFFICE_API_KEY']!);

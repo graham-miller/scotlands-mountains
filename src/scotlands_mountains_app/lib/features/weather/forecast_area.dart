@@ -1,4 +1,4 @@
-class Area {
+class ForecastArea {
   final DateTime dataDate;
   final DateTime validFrom;
   final DateTime validTo;
@@ -7,7 +7,7 @@ class Area {
   final String area;
   final String risk;
 
-  const Area._(
+  const ForecastArea._(
       {required this.dataDate,
       required this.validFrom,
       required this.validTo,
@@ -16,8 +16,8 @@ class Area {
       required this.area,
       required this.risk});
 
-  factory Area.fromJson(dynamic json) {
-    return Area._(
+  factory ForecastArea.fromJson(dynamic json) {
+    return ForecastArea._(
         dataDate: DateTime.parse(json['DataDate'].toString()),
         validFrom: DateTime.parse(json['ValidFrom'].toString()),
         validTo: DateTime.parse(json['ValidTo'].toString()),
