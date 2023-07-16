@@ -118,8 +118,11 @@ class _WeatherPageState extends State<WeatherPage>
             title: const Text('Headline'),
             subtitle: Text(day.headline!),
           ),
+          const ListTile(
+            title: Text('Weather'),
+          ),
+          _buildPeriods(context),
           ListTile(
-            title: const Text('Weather'),
             subtitle: Text(day.weather!),
           ),
           ListTile(
@@ -139,6 +142,37 @@ class _WeatherPageState extends State<WeatherPage>
             subtitle: Text(day.visibility!),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildPeriods(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16),
+      child: SizedBox(
+        height: 150,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [
+            ..._forecast!.days[0].periods
+                .map(
+                  (p) => Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Text('${p.start.hour}:00'),
+                          Text(p.weatherCode),
+                          Text(p.weatherDescription),
+                          Text(p.precipitationProbability),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+                .toList()
+          ],
+        ),
       ),
     );
   }
