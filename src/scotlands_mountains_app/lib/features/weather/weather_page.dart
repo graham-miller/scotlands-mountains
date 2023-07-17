@@ -5,6 +5,7 @@ import 'package:scotlands_mountains_app/features/weather/met_office_client.dart'
 
 import 'area_selector.dart';
 import 'forecast_area.dart';
+import 'periods.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -121,7 +122,7 @@ class _WeatherPageState extends State<WeatherPage>
           const ListTile(
             title: Text('Weather'),
           ),
-          _buildPeriods(context),
+          Periods(periods: _forecast!.days[0].periods),
           ListTile(
             subtitle: Text(day.weather!),
           ),
@@ -142,37 +143,6 @@ class _WeatherPageState extends State<WeatherPage>
             subtitle: Text(day.visibility!),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildPeriods(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16),
-      child: SizedBox(
-        height: 150,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            ..._forecast!.days[0].periods
-                .map(
-                  (p) => Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Text('${p.start.hour}:00'),
-                          Text(p.weatherCode),
-                          Text(p.weatherDescription),
-                          Text(p.precipitationProbability),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-                .toList()
-          ],
-        ),
       ),
     );
   }

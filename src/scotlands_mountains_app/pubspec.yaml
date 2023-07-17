@@ -81,6 +81,36 @@ flutter:
     - assets/mapbox-logo-white.svg
     - assets/mapbox-logo-white.png
     - assets/scotlands_mountains.db
+    - assets/weather_icons/0.svg
+    - assets/weather_icons/1.svg
+    - assets/weather_icons/2.svg
+    - assets/weather_icons/3.svg
+    - assets/weather_icons/5.svg
+    - assets/weather_icons/6.svg
+    - assets/weather_icons/7.svg
+    - assets/weather_icons/8.svg
+    - assets/weather_icons/9.svg
+    - assets/weather_icons/10.svg
+    - assets/weather_icons/11.svg
+    - assets/weather_icons/12.svg
+    - assets/weather_icons/13.svg
+    - assets/weather_icons/14.svg
+    - assets/weather_icons/15.svg
+    - assets/weather_icons/16.svg
+    - assets/weather_icons/17.svg
+    - assets/weather_icons/18.svg
+    - assets/weather_icons/19.svg
+    - assets/weather_icons/20.svg
+    - assets/weather_icons/21.svg
+    - assets/weather_icons/22.svg
+    - assets/weather_icons/23.svg
+    - assets/weather_icons/24.svg
+    - assets/weather_icons/25.svg
+    - assets/weather_icons/26.svg
+    - assets/weather_icons/27.svg
+    - assets/weather_icons/28.svg
+    - assets/weather_icons/29.svg
+    - assets/weather_icons/30.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
