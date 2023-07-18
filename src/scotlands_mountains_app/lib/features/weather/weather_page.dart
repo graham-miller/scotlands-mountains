@@ -5,7 +5,8 @@ import 'package:scotlands_mountains_app/features/weather/met_office_client.dart'
 
 import 'area_selector.dart';
 import 'forecast_area.dart';
-import 'periods.dart';
+import 'precipitation_periods.dart';
+import 'temperature_periods.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -119,11 +120,16 @@ class _WeatherPageState extends State<WeatherPage>
             title: const Text('Headline'),
             subtitle: Text(day.headline!),
           ),
-          const ListTile(
-            title: Text('Weather'),
-          ),
-          Periods(periods: _forecast!.days[0].periods),
           ListTile(
+            title: const Text('Weather (at 800m)'),
+            subtitle: PrecipitationPeriods(periods: _forecast!.days[0].periods),
+          ),
+          ListTile(
+            title: const Text('Temperature (°C)'),
+            subtitle: TemperaturePeriods(periods: _forecast!.days[0].periods),
+          ),
+          ListTile(
+            title: const Text('Summary'),
             subtitle: Text(day.weather!),
           ),
           ListTile(

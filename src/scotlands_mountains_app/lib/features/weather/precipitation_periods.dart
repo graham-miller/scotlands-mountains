@@ -3,47 +3,43 @@ import 'package:flutter_svg/svg.dart';
 
 import 'forecast.dart';
 
-class Periods extends StatelessWidget {
+class PrecipitationPeriods extends StatelessWidget {
   final List<Period> periods;
 
-  const Periods({required this.periods, super.key});
+  const PrecipitationPeriods({required this.periods, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16),
-      child: SizedBox(
-        height: 256,
-        child: SingleChildScrollView(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeaderCell(context, 'Period'),
-                  _buildHeaderCell(context, 'Symbol'),
-                  _buildHeaderCell(context, 'Weather'),
-                  _buildHeaderCell(context, 'Chance of rain'),
-                ],
-              ),
-              Flexible(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      ...periods.map(
-                        (p) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [_buildPeriod(context, p)],
-                        ),
+    return SizedBox(
+      child: SingleChildScrollView(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeaderCell(context, 'Period'),
+                _buildHeaderCell(context, 'Weather'),
+                _buildHeaderCell(context, 'Description'),
+                _buildHeaderCell(context, 'Chance of rain'),
+              ],
+            ),
+            Flexible(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ...periods.map(
+                      (p) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [_buildPeriod(context, p)],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
