@@ -26,11 +26,17 @@ class PrecipitationPeriods extends StatelessWidget {
   }
 
   List<Widget> _buildPeriod(BuildContext context, Period period) {
+    // final yrCode = TableUtil.metOfficeToYrCode(period.weatherCode);
+    // Met Office icons
+    final path = 'assets/weather_icons/met_office/${period.weatherCode}.svg';
+    // YR default icons
+    // final path = 'assets/weather_icons/yr/default/$yrCode.svg';
+    // YR shadow icons
+    // final path = 'assets/weather_icons/yr/shadows/$yrCode.svg';
+
     return [
       TextCell(text: TableUtil.formatTime(period.start)),
-      WidgetCell(
-          child: SvgPicture.asset(
-              'assets/weather_icons/${period.weatherCode}.svg')),
+      WidgetCell(child: SvgPicture.asset(path)),
       TextCell(
           text: TableUtil.formatWeatherDescription(period.weatherDescription)),
       TextCell(text: period.precipitationProbability),
