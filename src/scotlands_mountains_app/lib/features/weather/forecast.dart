@@ -15,7 +15,8 @@ class Forecast extends StatefulWidget {
 }
 
 class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
-  final DateFormat dateFormatter = DateFormat('E d LLL');
+  final DateFormat shortDateFormatter = DateFormat('E d LLL');
+  final DateFormat longDateFormatter = DateFormat('EEEE d LLLL');
   bool _showEvening = true;
   TabController? _tabController;
 
@@ -56,9 +57,11 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
       controller: _tabController,
       tabs: [
         if (_showEvening)
-          Tab(text: dateFormatter.format(widget.forecast.evening!.validity)),
-        Tab(text: dateFormatter.format(widget.forecast.days[0].validity)),
-        Tab(text: dateFormatter.format(widget.forecast.days[1].validity)),
+          Tab(
+              text:
+                  shortDateFormatter.format(widget.forecast.evening!.validity)),
+        Tab(text: shortDateFormatter.format(widget.forecast.days[0].validity)),
+        Tab(text: shortDateFormatter.format(widget.forecast.days[1].validity)),
         const Tab(text: 'Outlook'),
       ],
     );
@@ -164,15 +167,18 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
       child: ListView(
         children: [
           ListTile(
-            title: Text(dateFormatter.format(widget.forecast.days[2].validity)),
+            title: Text(
+                longDateFormatter.format(widget.forecast.days[2].validity)),
             subtitle: Text(widget.forecast.days[2].summary!),
           ),
           ListTile(
-            title: Text(dateFormatter.format(widget.forecast.days[3].validity)),
+            title: Text(
+                longDateFormatter.format(widget.forecast.days[3].validity)),
             subtitle: Text(widget.forecast.days[3].summary!),
           ),
           ListTile(
-            title: Text(dateFormatter.format(widget.forecast.days[4].validity)),
+            title: Text(
+                longDateFormatter.format(widget.forecast.days[4].validity)),
             subtitle: Text(widget.forecast.days[4].summary!),
           ),
         ],
