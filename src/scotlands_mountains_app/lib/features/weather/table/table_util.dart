@@ -10,4 +10,8 @@ class TableUtil {
       return '${dateTime.hour}am';
     }
   }
+
+  static String formatWeatherDescription(String s) {
+    return s.replaceAll(' (night)', '');
+  }
 }

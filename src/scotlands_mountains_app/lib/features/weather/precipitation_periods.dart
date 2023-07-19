@@ -31,7 +31,8 @@ class PrecipitationPeriods extends StatelessWidget {
       WidgetCell(
           child: SvgPicture.asset(
               'assets/weather_icons/${period.weatherCode}.svg')),
-      TextCell(text: period.weatherDescription.replaceAll(' (night)', '')),
+      TextCell(
+          text: TableUtil.formatWeatherDescription(period.weatherDescription)),
       TextCell(text: period.precipitationProbability),
     ];
   }
