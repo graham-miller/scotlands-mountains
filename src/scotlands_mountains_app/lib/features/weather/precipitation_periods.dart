@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:scotlands_mountains_app/features/weather/table/table_layout.dart';
 
-import 'forecast.dart';
+import 'models/forecast_model.dart';
 import 'table/table_cell.dart';
 import 'table/table_util.dart';
 

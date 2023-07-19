@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:scotlands_mountains_app/features/weather/forecast.dart';
-import 'package:scotlands_mountains_app/features/weather/met_office_client.dart';
 
 import 'area_selector.dart';
-import 'forecast_area.dart';
+import 'models/forecast_area.dart';
+import 'models/forecast_model.dart';
+import 'met_office_client.dart';
 import 'precipitation_periods.dart';
 import 'temperature_periods.dart';
 
@@ -20,7 +20,7 @@ class _WeatherPageState extends State<WeatherPage>
   final DateFormat dateFormatter = DateFormat('E d LLL');
   List<ForecastArea> _forecastAreas = List.empty();
   ForecastArea? _selectedArea;
-  Forecast? _forecast;
+  ForecastModel? _forecast;
   bool _showEvening = true;
   TabController? _tabController;
 

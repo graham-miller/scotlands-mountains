@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'forecast.dart';
-import 'forecast_area.dart';
+import 'models/forecast_model.dart';
+import 'models/forecast_area.dart';
 
 class MetOfficeClient {
   static Future<List<ForecastArea>> getAreas() async {
@@ -24,7 +24,7 @@ class MetOfficeClient {
     return areas;
   }
 
-  static Future<Forecast> getForecast(ForecastArea area) async {
+  static Future<ForecastModel> getForecast(ForecastArea area) async {
     final url = area.uri
         .replaceFirst('{format}', 'json')
         .replaceFirst('{key}', dotenv.env['MET_OFFICE_API_KEY']!);
@@ -32,7 +32,7 @@ class MetOfficeClient {
     var file = await DefaultCacheManager().getSingleFile(url);
     const JsonDecoder decoder = JsonDecoder();
     final parsed = decoder.convert(await file.readAsString());
-    final forecast = Forecast.fromJson(parsed['Report']);
+    final forecast = ForecastModel.fromJson(parsed['Report']);
 
     return forecast;
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'forecast.dart';
+import 'models/forecast_model.dart';
 import 'table/table_cell.dart';
 import 'table/table_layout.dart';
 import 'table/table_util.dart';

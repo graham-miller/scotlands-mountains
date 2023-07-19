@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'forecast_area.dart';
+import 'models/forecast_area.dart';
 
 class AreaSelector extends StatelessWidget {
   final List<ForecastArea> forecastAreas;

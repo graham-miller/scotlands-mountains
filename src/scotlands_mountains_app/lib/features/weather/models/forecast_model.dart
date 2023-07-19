@@ -1,4 +1,4 @@
-class Forecast {
+class ForecastModel {
   final String location;
   final String issue;
   final DateTime issued;
@@ -7,7 +7,7 @@ class Forecast {
   final Day? evening;
   final List<Day> days;
 
-  const Forecast._(
+  const ForecastModel._(
       {required this.location,
       required this.issue,
       required this.issued,
@@ -16,8 +16,8 @@ class Forecast {
       required this.evening,
       required this.days});
 
-  factory Forecast.fromJson(dynamic json) {
-    return Forecast._(
+  factory ForecastModel.fromJson(dynamic json) {
+    return ForecastModel._(
         location: json['Location'],
         issue: json['Issue'],
         issued: DateTime.parse(json['Issued'].toString()),
