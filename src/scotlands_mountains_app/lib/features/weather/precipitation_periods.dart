@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:scotlands_mountains_app/features/weather/table/table_layout.dart';
 
 import 'forecast.dart';
+import 'table/table_cell.dart';
+import 'table/table_util.dart';
 
 class PrecipitationPeriods extends StatelessWidget {
   final List<Period> periods;
@@ -10,110 +13,26 @@ class PrecipitationPeriods extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: SingleChildScrollView(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeaderCell(context, 'Period'),
-                _buildHeaderCell(context, 'Weather'),
-                _buildHeaderCell(context, 'Description'),
-                _buildHeaderCell(context, 'Chance of rain'),
-              ],
-            ),
-            Flexible(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ...periods.map(
-                      (p) => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [_buildPeriod(context, p)],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+    final headerColumn = [
+      const HeaderCell(text: 'Period'),
+      const HeaderCell(text: 'Weather'),
+      const HeaderCell(text: 'Description'),
+      const HeaderCell(text: 'Chance of rain'),
+    ];
+
+    final dataColumns = periods.map((p) => _buildPeriod(context, p)).toList();
+
+    return TableLayout(headerColumn: headerColumn, dataColumns: dataColumns);
   }
 
-  Widget _buildPeriod(BuildContext context, Period period) {
-    var time = '';
-    if (period.start.hour == 0) {
-      time = 'Midnight';
-    } else if (period.start.hour == 12) {
-      time = 'Midday';
-    } else if (period.start.hour > 12) {
-      time = '${period.start.hour - 12}pm';
-    } else {
-      time = '${period.start.hour}am';
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildDataCell(context, time),
-        _buildSymbolCell(context, period.weatherCode),
-        _buildDataCell(
-            context, period.weatherDescription.replaceAll(' (night)', '')),
-        _buildDataCell(context, period.precipitationProbability),
-      ],
-    );
-  }
-
-  Widget _buildDataCell(BuildContext context, String value) {
-    return _buildCell(
-      Text(
-        value,
-        style: TextStyle(
-            color: Theme.of(context).colorScheme.onSecondaryContainer),
-        textAlign: TextAlign.center,
-      ),
-      Theme.of(context).colorScheme.secondaryContainer,
-    );
-  }
-
-  Widget _buildSymbolCell(BuildContext context, String value) {
-    return _buildCell(
-      SvgPicture.asset('assets/weather_icons/$value.svg'),
-      Theme.of(context).colorScheme.secondaryContainer,
-    );
-  }
-
-  Widget _buildHeaderCell(BuildContext context, String value) {
-    return _buildCell(
-      Text(
-        value,
-        style:
-            TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
-        textAlign: TextAlign.center,
-      ),
-      Theme.of(context).colorScheme.primaryContainer,
-    );
-  }
-
-  Widget _buildCell(Widget child, Color background) {
-    return SizedBox(
-      height: 60,
-      width: 100,
-      child: Padding(
-        padding: const EdgeInsets.only(right: 4, bottom: 4),
-        child: Container(
-          color: background,
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Center(child: child),
-          ),
-        ),
-      ),
-    );
+  List<Widget> _buildPeriod(BuildContext context, Period period) {
+    return [
+      TextCell(text: TableUtil.formatTime(period.start)),
+      WidgetCell(
+          child: SvgPicture.asset(
+              'assets/weather_icons/${period.weatherCode}.svg')),
+      TextCell(text: period.weatherDescription.replaceAll(' (night)', '')),
+      TextCell(text: period.precipitationProbability),
+    ];
   }
 }
