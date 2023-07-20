@@ -12,6 +12,7 @@ class Shell extends StatelessWidget {
     '/classifications',
     '/search',
     '/weather',
+    '/licenses',
     '/about',
   ];
 
@@ -101,6 +102,10 @@ class Shell extends StatelessWidget {
           icon: Icon(Icons.wb_sunny_outlined),
         ),
         Divider(),
+        NavigationDrawerDestination(
+          label: Text('Licenses'),
+          icon: Icon(Icons.verified_outlined),
+        ),
         NavigationDrawerDestination(
           label: Text('About'),
           icon: Icon(Icons.info_outline),
