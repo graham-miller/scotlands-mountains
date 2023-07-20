@@ -77,10 +77,8 @@ class _TemperaturePeriodsState extends State<TemperaturePeriods> {
   List<Widget> _buildPeriod(BuildContext context, Period period) {
     return [
       TextCell(text: TableUtil.formatTime(period.start)),
-      if (!_showFeelsLike)
-        ...period.levels.map((l) => TextCell(text: l.temperature)),
-      if (_showFeelsLike)
-        ...period.levels.map((l) => TextCell(text: l.feelsLike)),
+      ...period.levels.map(
+          (l) => TextCell(text: _showFeelsLike ? l.feelsLike : l.temperature)),
       TextCell(text: period.freezingLevel),
     ];
   }

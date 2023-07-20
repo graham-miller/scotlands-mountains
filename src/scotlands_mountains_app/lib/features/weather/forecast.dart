@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'models/forecast_model.dart';
 import 'precipitation_periods.dart';
 import 'temperature_periods.dart';
+import 'wind_periods.dart';
 
 class Forecast extends StatefulWidget {
   final ForecastModel forecast;
@@ -95,6 +96,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
                 PrecipitationPeriods(periods: widget.forecast.days[0].periods),
           ),
           TemperaturePeriods(periods: widget.forecast.days[0].periods),
+          WindPeriods(periods: widget.forecast.days[0].periods),
           ListTile(
             title: const Text('Summary'),
             subtitle: Text(day.weather!),
