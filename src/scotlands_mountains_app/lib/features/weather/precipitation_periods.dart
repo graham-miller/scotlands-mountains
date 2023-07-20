@@ -22,7 +22,10 @@ class PrecipitationPeriods extends StatelessWidget {
 
     final dataColumns = periods.map((p) => _buildPeriod(context, p)).toList();
 
-    return TableLayout(headerColumn: headerColumn, dataColumns: dataColumns);
+    return ListTile(
+        title: const Text('Weather (at 800m)'),
+        subtitle:
+            TableLayout(headerColumn: headerColumn, dataColumns: dataColumns));
   }
 
   List<Widget> _buildPeriod(BuildContext context, Period period) {
