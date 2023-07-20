@@ -94,11 +94,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
             subtitle:
                 PrecipitationPeriods(periods: widget.forecast.days[0].periods),
           ),
-          ListTile(
-            title: const Text('Temperature (°C)'),
-            subtitle:
-                TemperaturePeriods(periods: widget.forecast.days[0].periods),
-          ),
+          TemperaturePeriods(periods: widget.forecast.days[0].periods),
           ListTile(
             title: const Text('Summary'),
             subtitle: Text(day.weather!),
