@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import 'models/forecast_model.dart';
 import 'table/table_cell.dart';
@@ -7,8 +8,10 @@ import 'table/table_util.dart';
 
 class TemperaturePeriods extends StatefulWidget {
   final List<Period> periods;
+  final LinkedScrollControllerGroup scrollGroup;
 
-  const TemperaturePeriods({required this.periods, super.key});
+  const TemperaturePeriods(
+      {required this.periods, super.key, required this.scrollGroup});
 
   @override
   State<TemperaturePeriods> createState() => _TemperaturePeriodsState();
@@ -30,8 +33,10 @@ class _TemperaturePeriodsState extends State<TemperaturePeriods> {
 
     return ListTile(
         title: _buildToggle(context),
-        subtitle:
-            TableLayout(headerColumn: headerColumn, dataColumns: dataColumns));
+        subtitle: TableLayout(
+            headerColumn: headerColumn,
+            dataColumns: dataColumns,
+            scrollGroup: widget.scrollGroup));
   }
 
   Widget _buildToggle(BuildContext context) {

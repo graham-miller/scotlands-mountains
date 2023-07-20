@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import 'models/forecast_model.dart';
 import 'precipitation_periods.dart';
@@ -18,6 +19,8 @@ class Forecast extends StatefulWidget {
 class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
   final DateFormat shortDateFormatter = DateFormat('E d LLL');
   final DateFormat longDateFormatter = DateFormat('EEEE d LLLL');
+  final LinkedScrollControllerGroup _scrollGroup =
+      LinkedScrollControllerGroup();
   bool _showEvening = true;
   TabController? _tabController;
 
@@ -90,9 +93,18 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
             title: const Text('Headline'),
             subtitle: Text(day.headline!),
           ),
-          PrecipitationPeriods(periods: widget.forecast.days[0].periods),
-          TemperaturePeriods(periods: widget.forecast.days[0].periods),
-          WindPeriods(periods: widget.forecast.days[0].periods),
+          PrecipitationPeriods(
+            periods: widget.forecast.days[0].periods,
+            scrollGroup: _scrollGroup,
+          ),
+          TemperaturePeriods(
+            periods: widget.forecast.days[0].periods,
+            scrollGroup: _scrollGroup,
+          ),
+          WindPeriods(
+            periods: widget.forecast.days[0].periods,
+            scrollGroup: _scrollGroup,
+          ),
           ListTile(
             title: const Text('Summary'),
             subtitle: Text(day.weather!),

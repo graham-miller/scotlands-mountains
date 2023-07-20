@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import "dart:math" show pi;
 
 import 'models/forecast_model.dart';
@@ -8,8 +9,10 @@ import 'table/table_util.dart';
 
 class WindPeriods extends StatefulWidget {
   final List<Period> periods;
+  final LinkedScrollControllerGroup scrollGroup;
 
-  const WindPeriods({required this.periods, super.key});
+  const WindPeriods(
+      {required this.periods, super.key, required this.scrollGroup});
 
   @override
   State<WindPeriods> createState() => _WindPeriodsState();
@@ -30,8 +33,10 @@ class _WindPeriodsState extends State<WindPeriods> {
 
     return ListTile(
         title: _buildToggle(context),
-        subtitle:
-            TableLayout(headerColumn: headerColumn, dataColumns: dataColumns));
+        subtitle: TableLayout(
+            headerColumn: headerColumn,
+            dataColumns: dataColumns,
+            scrollGroup: widget.scrollGroup));
   }
 
   Widget _buildToggle(BuildContext context) {
@@ -43,7 +48,7 @@ class _WindPeriodsState extends State<WindPeriods> {
           if (!_showGusts)
             FilledButton(
               onPressed: () {},
-              child: const Text('Wind'),
+              child: const Text('Wind speed'),
             ),
           if (!_showGusts)
             TextButton(
@@ -61,7 +66,7 @@ class _WindPeriodsState extends State<WindPeriods> {
                   _showGusts = false;
                 });
               },
-              child: const Text('Wind'),
+              child: const Text('Wind speed'),
             ),
           if (_showGusts)
             FilledButton(
