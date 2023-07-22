@@ -21,7 +21,7 @@ class MetOfficeClient {
         .where((area) =>
             area.area.contains('Highlands') || area.area.contains('Grampian')));
 
-    return areas;
+    return _sort(areas);
   }
 
   static Future<ForecastModel> getForecast(ForecastArea area) async {
@@ -36,4 +36,16 @@ class MetOfficeClient {
 
     return forecast;
   }
+
+  static List<ForecastArea> _sort(List<ForecastArea> areas) {
+    areas.sort((a, b) => _order[a.area]!.compareTo(_order[b.area]!));
+    return areas;
+  }
+
+  static final _order = {
+    'Northwest Highlands': 0,
+    'North Grampian': 1,
+    'South Grampian and Southeast Highlands': 2,
+    'Southwest Highlands': 3,
+  };
 }

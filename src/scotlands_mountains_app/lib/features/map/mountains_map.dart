@@ -39,7 +39,6 @@ class _MountainsMapState extends State<MountainsMap> {
       zoom: MapInteractions.defaultZoom,
       minZoom: 5,
       maxZoom: 18,
-      //interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
       onTap: (_, __) {
         ScaffoldMessenger.of(context).clearSnackBars();
       },

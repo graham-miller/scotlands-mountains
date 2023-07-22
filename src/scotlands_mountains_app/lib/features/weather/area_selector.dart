@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scotlands_mountains_app/features/weather/areas_map.dart';
 
 import 'models/forecast_area.dart';
 
@@ -34,40 +35,48 @@ class _AreaSelectorState extends State<AreaSelector> {
   void _openDropdown(BuildContext context) {
     _closeDropdown();
 
-    _overlayEntry = OverlayEntry(builder: (BuildContext _) {
-      return SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(32, top, 32, 32),
-          child: Material(
-            elevation: 8,
-            child: TapRegion(
-              onTapOutside: (_) => _closeDropdown(),
-              child: Container(
-                color: Theme.of(context).colorScheme.background,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ...widget.forecastAreas.map(
-                      (a) {
-                        return ListTile(
-                          title: Text(a.area),
-                          subtitle: Text(_description[a.area]!),
-                          onTap: () {
-                            _closeDropdown();
-                            widget.onSelected(a);
-                          },
-                        );
-                      },
-                    ).toList()
-                  ],
+    _overlayEntry = OverlayEntry(
+      builder: (BuildContext _) {
+        return SafeArea(
+          maintainBottomViewPadding: true,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(32, top, 32, 32),
+            child: Material(
+              elevation: 8,
+              child: TapRegion(
+                onTapOutside: (_) => _closeDropdown(),
+                child: Container(
+                  color: Theme.of(context).colorScheme.background,
+                  child: Column(
+                    children: [
+                      AreasMap(
+                        onSelected: (i) {
+                          _closeDropdown();
+                          widget.onSelected(widget.forecastAreas[i]);
+                        },
+                      ),
+                      ...widget.forecastAreas.asMap().entries.map(
+                        (entry) {
+                          return ListTile(
+                            title:
+                                Text('${entry.key + 1}. ${entry.value.area}'),
+                            subtitle: Text(_description[entry.value.area]!),
+                            onTap: () {
+                              _closeDropdown();
+                              widget.onSelected(entry.value);
+                            },
+                          );
+                        },
+                      ).toList(),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
 
     Overlay.of(context, debugRequiredFor: widget).insert(_overlayEntry!);
   }
