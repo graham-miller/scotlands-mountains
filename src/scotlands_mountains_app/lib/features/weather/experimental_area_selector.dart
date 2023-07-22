@@ -79,3 +79,13 @@ class _ExperimentalAreaSelectorState extends State<ExperimentalAreaSelector> {
     );
   }
 }
+
+/*
+SW Highlands (including Ben Nevis, Glen Coe and the rest of Lochaber, Argyll including the Isles, Loch Lomond, Trossachs and Arran)
+
+South Grampian and SE Highlands (including South Cairngorms, east Aberdeenshire and Angus Hills, Ben Vrackie, Ben Lawers, Loch Tay and Ochils)
+
+North Grampian (including North and Central Cairngorms, Monadhliath, Ben Alder, Creag Meagaidh, Loch Ericht and Loch Rannoch)
+
+North West Highlands (including Sutherland, Ben Wyvis, Wester Ross, The Cuillin, Glen Affric, Glen Shiel and Knoydart)
+*/
