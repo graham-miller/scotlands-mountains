@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'area_selector.dart';
+import 'experimental_area_selector.dart';
 import 'forecast.dart';
 import 'models/forecast_area.dart';
 import 'models/forecast_model.dart';
@@ -52,11 +53,16 @@ class _WeatherPageState extends State<WeatherPage>
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        AreaSelector(
+        ExperimentalAreaSelector(
           forecastAreas: _forecastAreas,
           selectedArea: _selectedArea,
           onSelected: (area) => _loadForecast(area),
         ),
+        // AreaSelector(
+        //   forecastAreas: _forecastAreas,
+        //   selectedArea: _selectedArea,
+        //   onSelected: (area) => _loadForecast(area),
+        // ),
         if (_forecast != null) Forecast(forecast: _forecast!),
         if (_selectedArea != null && _forecast == null)
           const Expanded(

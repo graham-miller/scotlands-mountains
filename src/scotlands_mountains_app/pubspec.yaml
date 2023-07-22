@@ -77,8 +77,6 @@ flutter:
     - .env
     - assets/
     - assets/weather_icons/met_office/
-    - assets/weather_icons/yr/default/
-    - assets/weather_icons/yr/shadows/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
