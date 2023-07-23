@@ -17,7 +17,6 @@ class MapboxAttribution extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset('assets/mapbox-logo-white.png', height: 25),
               ),
-              const Icon(Icons.info_outline, color: Colors.white)
             ],
           ),
           onTap: () => showDialog<String>(

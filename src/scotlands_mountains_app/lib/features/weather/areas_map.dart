@@ -22,10 +22,9 @@ class AreasMap extends StatelessWidget {
         ),
         nonRotatedChildren: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -38,7 +37,7 @@ class AreasMap extends StatelessWidget {
           ),
         ],
         children: [
-          MapboxTileLayer(styleId: 'streets-v12'),
+          MapboxTileLayer.layers[Layer.streets]!,
           PolygonLayer(
             polygons:
                 AreaMapConstants.metadata.values.map((e) => e.polygon).toList(),
