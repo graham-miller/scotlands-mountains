@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../map/controls/map_interactions.dart';
+import '../map/mapbox_attribution.dart';
 import '../map/mapbox_tile_layer.dart';
 import 'areas_map_constants.dart';
 
@@ -20,22 +21,7 @@ class AreasMap extends StatelessWidget {
           zoom: MapInteractions.defaultZoom,
           interactiveFlags: 0,
         ),
-        nonRotatedChildren: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child:
-                        Image.asset('assets/mapbox-logo-white.png', height: 25),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+        nonRotatedChildren: const [MapboxAttribution()],
         children: [
           MapboxTileLayer.layers[Layer.streets]!,
           PolygonLayer(

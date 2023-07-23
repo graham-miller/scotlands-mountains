@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scotlands_mountains_app/features/weather/selected_area.dart';
 
 import 'area_selector.dart';
 import 'forecast.dart';
@@ -18,6 +19,7 @@ class _WeatherPageState extends State<WeatherPage>
   List<ForecastArea> _forecastAreas = List.empty();
   ForecastArea? _selectedArea;
   ForecastModel? _forecast;
+  bool _showAreaSelector = false;
 
   @override
   void initState() {
@@ -32,9 +34,12 @@ class _WeatherPageState extends State<WeatherPage>
   }
 
   _loadForecast(ForecastArea? area) {
-    setState(() => _selectedArea = area);
+    setState(() {
+      _showAreaSelector = false;
+    });
 
-    if (_selectedArea != null) {
+    if (area != null) {
+      setState(() => _selectedArea = area);
       MetOfficeClient.getForecast(_selectedArea!).then((forecast) {
         setState(() {
           _forecast = forecast;
@@ -49,20 +54,33 @@ class _WeatherPageState extends State<WeatherPage>
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        AreaSelector(
-          forecastAreas: _forecastAreas,
-          selectedArea: _selectedArea,
-          onSelected: (area) => _loadForecast(area),
+    return Stack(
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SelectedArea(
+              selectedArea: _selectedArea,
+              onTap: () {
+                setState(() {
+                  _showAreaSelector = true;
+                });
+              },
+            ),
+            if (_forecast != null) Forecast(forecast: _forecast!),
+            if (_selectedArea != null && _forecast == null)
+              const Expanded(
+                child: Center(child: CircularProgressIndicator()),
+              ),
+          ],
         ),
-        if (_forecast != null) Forecast(forecast: _forecast!),
-        if (_selectedArea != null && _forecast == null)
-          const Expanded(
-            child: Center(child: CircularProgressIndicator()),
+        Visibility(
+          visible: _showAreaSelector,
+          child: AreaSelector(
+            forecastAreas: _forecastAreas,
+            onSelected: _loadForecast,
           ),
+        )
       ],
     );
   }
