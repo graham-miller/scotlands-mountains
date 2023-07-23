@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/features/weather/areas_map.dart';
 
+import 'areas_map_constants.dart';
 import 'models/forecast_area.dart';
 
 class AreaSelector extends StatefulWidget {
@@ -19,16 +20,6 @@ class AreaSelector extends StatefulWidget {
 }
 
 class _AreaSelectorState extends State<AreaSelector> {
-  final _description = {
-    'Southwest Highlands':
-        'Including Ben Nevis, Glen Coe and the rest of Lochaber, Argyll including the Isles, Loch Lomond, Trossachs and Arran.',
-    'South Grampian and Southeast Highlands':
-        'Including South Cairngorms, east Aberdeenshire and Angus Hills, Ben Vrackie, Ben Lawers, Loch Tay and Ochils.',
-    'North Grampian':
-        'Including North and Central Cairngorms, Monadhliath, Ben Alder, Creag Meagaidh, Loch Ericht and Loch Rannoch.',
-    'Northwest Highlands':
-        'Including Sutherland, Ben Wyvis, Wester Ross, The Cuillin, Glen Affric, Glen Shiel and Knoydart.',
-  };
   final top = AppBar().preferredSize.height;
   OverlayEntry? _overlayEntry;
 
@@ -60,7 +51,8 @@ class _AreaSelectorState extends State<AreaSelector> {
                           return ListTile(
                             title:
                                 Text('${entry.key + 1}. ${entry.value.area}'),
-                            subtitle: Text(_description[entry.value.area]!),
+                            subtitle: Text(AreaMapConstants
+                                .descriptions[entry.value.area]!),
                             onTap: () {
                               _closeDropdown();
                               widget.onSelected(entry.value);

@@ -3,6 +3,17 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class AreaMapConstants {
+  static const descriptions = {
+    'Southwest Highlands':
+        'Including Ben Nevis, Glen Coe and the rest of Lochaber, Argyll including the Isles, Loch Lomond, Trossachs and Arran.',
+    'South Grampian and Southeast Highlands':
+        'Including South Cairngorms, east Aberdeenshire and Angus Hills, Ben Vrackie, Ben Lawers, Loch Tay and Ochils.',
+    'North Grampian':
+        'Including North and Central Cairngorms, Monadhliath, Ben Alder, Creag Meagaidh, Loch Ericht and Loch Rannoch.',
+    'Northwest Highlands':
+        'Including Sutherland, Ben Wyvis, Wester Ross, The Cuillin, Glen Affric, Glen Shiel and Knoydart.',
+  };
+
   static List<Polygon> polygons() {
     return [
       _polygon(_northGrampianPoints),

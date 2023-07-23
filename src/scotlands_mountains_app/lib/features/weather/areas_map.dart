@@ -22,7 +22,7 @@ class AreasMap extends StatelessWidget {
         ),
         nonRotatedChildren: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
