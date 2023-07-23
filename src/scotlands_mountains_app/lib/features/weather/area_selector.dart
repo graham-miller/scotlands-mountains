@@ -23,6 +23,58 @@ class _AreaSelectorState extends State<AreaSelector> {
   final top = AppBar().preferredSize.height;
   OverlayEntry? _overlayEntry;
 
+  @override
+  void dispose() {
+    _closeDropdown();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+          child: TapRegion(
+            onTapInside: (_) => _openDropdown(context),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                bottom: BorderSide(
+                    width: 0.25,
+                    style: BorderStyle.solid,
+                    color: Theme.of(context).colorScheme.onBackground),
+              )),
+              width: MediaQuery.of(context).size.width - 64,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        widget.selectedArea?.area ?? 'Select forecast area...',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.titleMedium!.fontSize,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    const Icon(Icons.arrow_drop_down)
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   void _openDropdown(BuildContext context) {
     _closeDropdown();
 
@@ -76,58 +128,5 @@ class _AreaSelectorState extends State<AreaSelector> {
   void _closeDropdown() {
     _overlayEntry?.remove();
     _overlayEntry = null;
-  }
-
-  @override
-  void dispose() {
-    // Make sure to remove OverlayEntry when the widget is disposed.
-    _closeDropdown();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-          child: TapRegion(
-            onTapInside: (_) => _openDropdown(context),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                bottom: BorderSide(
-                    width: 0.25,
-                    style: BorderStyle.solid,
-                    color: Theme.of(context).colorScheme.onBackground),
-              )),
-              width: MediaQuery.of(context).size.width - 64,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        widget.selectedArea?.area ?? ' ',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.titleMedium!.fontSize,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    const Icon(Icons.arrow_drop_down)
-                  ],
-                ),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
   }
 }
