@@ -40,51 +40,42 @@ class AreasMap extends StatelessWidget {
         children: [
           MapboxTileLayer(styleId: 'streets-v12'),
           PolygonLayer(
-            polygons: AreaMapConstants.polygons(),
+            polygons:
+                AreaMapConstants.metadata.values.map((e) => e.polygon).toList(),
           ),
           MarkerLayer(
-            markers: [
-              Marker(
-                point: LatLng(57.6779, -5.2214),
-                builder: (_) =>
-                    _buildMarker(text: '1', onPressed: () => onSelected(0)),
-              ),
-              Marker(
-                point: LatLng(57.1225, -4.0237),
-                builder: (_) =>
-                    _buildMarker(text: '2', onPressed: () => onSelected(1)),
-              ),
-              Marker(
-                point: LatLng(56.6975, -3.3733),
-                builder: (_) =>
-                    _buildMarker(text: '3', onPressed: () => onSelected(2)),
-              ),
-              Marker(
-                point: LatLng(56.2051, -5.4379),
-                builder: (_) =>
-                    _buildMarker(text: '4', onPressed: () => onSelected(3)),
-              ),
-            ],
+            markers: AreaMapConstants.metadata.values
+                .map((e) => _buildMarker(
+                    point: e.center,
+                    text: (e.index + 1).toString(),
+                    onPressed: () => onSelected(e.index)))
+                .toList(),
           )
         ],
       ),
     );
   }
 
-  Widget _buildMarker({required String text, required Function onPressed}) {
-    return GestureDetector(
-      onTap: () => onPressed(),
-      child: Container(
-        height: 30,
-        width: 30,
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(color: Colors.white),
+  Marker _buildMarker(
+      {required LatLng point,
+      required String text,
+      required Function onPressed}) {
+    return Marker(
+      point: point,
+      builder: (_) => GestureDetector(
+        onTap: () => onPressed(),
+        child: Container(
+          height: 30,
+          width: 30,
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),

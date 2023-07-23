@@ -2,26 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-class AreaMapConstants {
-  static const descriptions = {
-    'Southwest Highlands':
-        'Including Ben Nevis, Glen Coe and the rest of Lochaber, Argyll including the Isles, Loch Lomond, Trossachs and Arran.',
-    'South Grampian and Southeast Highlands':
-        'Including South Cairngorms, east Aberdeenshire and Angus Hills, Ben Vrackie, Ben Lawers, Loch Tay and Ochils.',
-    'North Grampian':
-        'Including North and Central Cairngorms, Monadhliath, Ben Alder, Creag Meagaidh, Loch Ericht and Loch Rannoch.',
-    'Northwest Highlands':
-        'Including Sutherland, Ben Wyvis, Wester Ross, The Cuillin, Glen Affric, Glen Shiel and Knoydart.',
-  };
+class ForecastAreaMetadata {
+  final int index;
+  final String description;
+  final LatLng center;
+  final Polygon polygon;
 
-  static List<Polygon> polygons() {
-    return [
-      _polygon(_northGrampianPoints),
-      _polygon(_northwestHighlandsPoints),
-      _polygon(_southGrampianAndSoutheastHiglands),
-      _polygon(_southwestHighlands),
-    ];
-  }
+  ForecastAreaMetadata(
+      {required this.index,
+      required this.description,
+      required this.center,
+      required this.polygon});
+}
+
+class AreaMapConstants {
+  static Map<String, ForecastAreaMetadata> metadata = {
+    'Northwest Highlands': ForecastAreaMetadata(
+      index: 0,
+      description:
+          'Including Sutherland, Ben Wyvis, Wester Ross, The Cuillin, Glen Affric, Glen Shiel and Knoydart.',
+      center: LatLng(57.6779, -5.2214),
+      polygon: _polygon(_northwestHighlandsPoints),
+    ),
+    'North Grampian': ForecastAreaMetadata(
+      index: 1,
+      description:
+          'Including North and Central Cairngorms, Monadhliath, Ben Alder, Creag Meagaidh, Loch Ericht and Loch Rannoch.',
+      center: LatLng(57.1225, -4.0237),
+      polygon: _polygon(_northGrampianPoints),
+    ),
+    'South Grampian and Southeast Highlands': ForecastAreaMetadata(
+      index: 2,
+      description:
+          'Including South Cairngorms, east Aberdeenshire and Angus Hills, Ben Vrackie, Ben Lawers, Loch Tay and Ochils.',
+      center: LatLng(56.6975, -3.3733),
+      polygon: _polygon(_southGrampianAndSoutheastHiglands),
+    ),
+    'Southwest Highlands': ForecastAreaMetadata(
+      index: 3,
+      description:
+          'Including Ben Nevis, Glen Coe and the rest of Lochaber, Argyll including the Isles, Loch Lomond, Trossachs and Arran.',
+      center: LatLng(56.2051, -5.4379),
+      polygon: _polygon(_southwestHighlands),
+    )
+  };
 
   static Polygon _polygon(List<List<double>> points) {
     return Polygon(

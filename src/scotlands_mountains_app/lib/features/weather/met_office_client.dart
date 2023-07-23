@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'areas_map_constants.dart';
 import 'models/forecast_model.dart';
 import 'models/forecast_area.dart';
 
@@ -38,14 +39,8 @@ class MetOfficeClient {
   }
 
   static List<ForecastArea> _sort(List<ForecastArea> areas) {
-    areas.sort((a, b) => _order[a.area]!.compareTo(_order[b.area]!));
+    areas.sort((a, b) => AreaMapConstants.metadata[a.area]!.index
+        .compareTo(AreaMapConstants.metadata[b.area]!.index));
     return areas;
   }
-
-  static final _order = {
-    'Northwest Highlands': 0,
-    'North Grampian': 1,
-    'South Grampian and Southeast Highlands': 2,
-    'Southwest Highlands': 3,
-  };
 }

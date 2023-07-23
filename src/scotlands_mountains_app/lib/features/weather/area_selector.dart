@@ -52,7 +52,7 @@ class _AreaSelectorState extends State<AreaSelector> {
                             title:
                                 Text('${entry.key + 1}. ${entry.value.area}'),
                             subtitle: Text(AreaMapConstants
-                                .descriptions[entry.value.area]!),
+                                .metadata[entry.value.area]!.description),
                             onTap: () {
                               _closeDropdown();
                               widget.onSelected(entry.value);
