@@ -40,11 +40,18 @@ class MapboxAttribution extends StatelessWidget {
                             'http://www.openstreetmap.org/about/');
                       }),
                   TextButton(
+                      child: const Text('© Maxar'),
+                      onPressed: () {
+                        Util.openInBrowser('https://www.maxar.com/');
+                      }),
+                  TextButton(
                       child: const Text('Improve this map'),
                       onPressed: () {
                         Util.openInBrowser(
                             'https://www.mapbox.com/map-feedback/');
-                      })
+                      }),
+                  TextButton(
+                      child: const Text('Telemetry settings'), onPressed: () {})
                 ],
               ),
               actions: <Widget>[
