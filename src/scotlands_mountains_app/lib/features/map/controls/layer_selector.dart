@@ -47,6 +47,7 @@ class LayerSelector extends StatelessWidget {
             }
           },
           borderRadius: const BorderRadius.all(Radius.circular(8)),
+          color: Colors.black,
           selectedColor: Theme.of(context).colorScheme.onPrimary,
           fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.8),
           isSelected: List.from([

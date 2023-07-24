@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/features/weather/selected_area.dart';
 
-import 'area_selector.dart';
-import 'forecast.dart';
-import 'models/forecast_area.dart';
-import 'models/forecast_model.dart';
-import 'met_office_client.dart';
+import '../features/weather/area_selector.dart';
+import '../features/weather/forecast.dart';
+import '../features/weather/models/forecast_area.dart';
+import '../features/weather/models/forecast_model.dart';
+import '../features/weather/met_office_client.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});

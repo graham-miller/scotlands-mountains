@@ -3,11 +3,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:scotlands_mountains_app/features/mountain/mountain_photos/photo.dart';
 
 import 'geograph_client.dart';
-import '../common/util.dart';
-import '../../models/mountain.dart';
-import 'photo.dart';
+import '../../common/util.dart';
+import '../../../models/mountain.dart';
 
 class MountainPhotos extends StatefulWidget {
   final Mountain mountain;
@@ -92,11 +92,24 @@ class _MountainPhotosState extends State<MountainPhotos> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Ink(
+                                decoration: const ShapeDecoration(
+                                  color: Color.fromRGBO(255, 255, 255, 0.8),
+                                  shape: CircleBorder(),
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.close,
+                                      color: Colors.black),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

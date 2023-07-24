@@ -92,12 +92,26 @@ class _WindPeriodsState extends State<WindPeriods> {
                 children: [
                   Transform.rotate(
                     angle: _getIconRotate(l.windDirection),
-                    child: const Icon(Icons.navigation, size: 16),
+                    child: Icon(
+                      Icons.navigation,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
                   ),
-                  Text(' ${l.windDirection}')
+                  Text(
+                    ' ${l.windDirection}',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  )
                 ],
               ),
-              Text(_showGusts ? l.maxGust : l.windSpeed),
+              Text(
+                _showGusts ? l.maxGust : l.windSpeed,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondaryContainer,
+                ),
+              ),
             ],
           ),
         ),

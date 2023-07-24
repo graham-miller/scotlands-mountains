@@ -39,6 +39,7 @@ class Button extends StatelessWidget {
                     onPressed();
                   }
                 : null,
+            color: Colors.black,
           ),
         ),
       ),

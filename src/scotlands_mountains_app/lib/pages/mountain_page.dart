@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/features/map/mountains_map.dart';
 
-import '../../models/mountain_graph.dart';
-import '../../repositories/mountains_repository.dart';
-import '../common/util.dart';
-import 'mountain_details.dart';
-import '../mountain_photos/mountain_photos.dart';
+import '../models/mountain_graph.dart';
+import '../repositories/mountains_repository.dart';
+import '../features/common/util.dart';
+import '../features/mountain/mountain_details.dart';
+import '../features/mountain/mountain_photos/mountain_photos.dart';
 
 class MountainPage extends StatefulWidget {
   final int id;

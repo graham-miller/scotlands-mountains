@@ -44,6 +44,7 @@ dependencies:
   flutter_cache_manager:
   cached_network_image:
   linked_scroll_controller:
+  animated_theme_switcher:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

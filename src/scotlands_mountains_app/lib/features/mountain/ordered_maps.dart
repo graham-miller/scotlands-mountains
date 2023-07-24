@@ -131,7 +131,7 @@ class OrderedMaps extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
+                    color: Colors.white,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(25),
                       bottomRight: Radius.circular(25),
@@ -143,8 +143,7 @@ class OrderedMaps extends StatelessWidget {
                   ),
                   child: Text(
                     map.name,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground),
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ),
               )

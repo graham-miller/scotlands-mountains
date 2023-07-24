@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:scotlands_mountains_app/features/mountain_list/list_or_map_of_mountains.dart';
 
-import '../../repositories/mountains_repository.dart';
-import 'classification_selector.dart';
-import '../../models/classification.dart';
-import '../../models/mountain.dart';
-import '../../repositories/classifications_repository.dart';
-import '../map/mountains_map.dart';
-import 'mountains_list.dart';
+import '../repositories/mountains_repository.dart';
+import '../features/mountain_list/classification_selector.dart';
+import '../models/classification.dart';
+import '../models/mountain.dart';
+import '../repositories/classifications_repository.dart';
+import '../features/map/mountains_map.dart';
+import '../features/mountain_list/mountains_list.dart';
 
 class ClassificationsPage extends StatefulWidget {
   const ClassificationsPage({super.key});

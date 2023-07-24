@@ -12,6 +12,7 @@ class Shell extends StatelessWidget {
     '/classifications',
     '/search',
     '/weather',
+    '/settings',
     '/licenses',
     '/about',
   ];
@@ -91,17 +92,15 @@ class Shell extends StatelessWidget {
         //   label: Text('Favourites'),
         //   icon: Icon(Icons.favorite_outline),
         // ),
-        // const Divider(),
-        // const NavigationDrawerDestination(
-        //   label: Text('Settings'),
-        //   icon: Icon(Icons.settings),
-        // ),
-        Divider(),
         NavigationDrawerDestination(
           label: Text('Weather'),
           icon: Icon(Icons.wb_sunny_outlined),
         ),
         Divider(),
+        NavigationDrawerDestination(
+          label: Text('Settings'),
+          icon: Icon(Icons.settings),
+        ),
         NavigationDrawerDestination(
           label: Text('Licenses'),
           icon: Icon(Icons.verified_outlined),

@@ -1,5 +1,5 @@
-import '../../mountain_photos/geograph_api_photo_response.dart';
-import '../../mountain_photos/geograph_api_search_response_item.dart';
+import 'geograph_api_photo_response.dart';
+import 'geograph_api_search_response_item.dart';
 
 class Photo {
   final String guid;
