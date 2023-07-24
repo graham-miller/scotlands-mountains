@@ -28,33 +28,30 @@ class MapboxAttribution extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextButton(
-                      child: const Text('© Mapbox'),
-                      onPressed: () {
-                        Util.openInBrowser(
-                            'https://www.mapbox.com/about/maps/');
-                      }),
+                    child: const Text('© Mapbox'),
+                    onPressed: () {
+                      Util.openInBrowser('https://www.mapbox.com/about/maps/');
+                    },
+                  ),
                   TextButton(
-                      child: const Text('© OpenStreetMap'),
-                      onPressed: () {
-                        Util.openInBrowser(
-                            'http://www.openstreetmap.org/about/');
-                      }),
+                    child: const Text('© OpenStreetMap'),
+                    onPressed: () {
+                      Util.openInBrowser('http://www.openstreetmap.org/about/');
+                    },
+                  ),
                   TextButton(
-                      child: const Text('© Maxar'),
-                      onPressed: () {
-                        Util.openInBrowser('https://www.maxar.com/');
-                      }),
+                    child: const Text('© Maxar'),
+                    onPressed: () {
+                      Util.openInBrowser('https://www.maxar.com/');
+                    },
+                  ),
                   TextButton(
-                      child: const Text('Improve this map'),
-                      onPressed: () {
-                        Util.openInBrowser(
-                            'https://www.mapbox.com/map-feedback/');
-                      }),
-                  TextButton(
-                      child: const Text('Telemetry settings'),
-                      onPressed: () {
-                        // TODO see https://docs.mapbox.com/help/getting-started/attribution/#mapbox-maps-sdk-for-android
-                      }),
+                    child: const Text('Improve this map'),
+                    onPressed: () {
+                      Util.openInBrowser(
+                          'https://www.mapbox.com/map-feedback/');
+                    },
+                  ),
                 ],
               ),
               actions: <Widget>[

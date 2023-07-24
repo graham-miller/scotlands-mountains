@@ -3,6 +3,10 @@ import 'package:flutter_map/flutter_map.dart';
 
 enum Layer { streets, satelliteStreets, satellite, outdoors }
 
+/*
+https://docs.mapbox.com/api/maps/styles/
+https://docs.mapbox.com/api/maps/static-tiles/
+*/
 class MapboxTileLayer extends TileLayer {
   static final Map<Layer, TileLayer> layers = {
     Layer.streets: MapboxTileLayer(styleId: 'streets-v12'),
@@ -14,11 +18,5 @@ class MapboxTileLayer extends TileLayer {
   MapboxTileLayer({super.key, required styleId})
       : super(
             urlTemplate:
-                //'https://api.mapbox.com/styles/v1/mapbox/$styleId/tiles/512/{z}/{x}/{y}@2x?access_token=${dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN']}');
                 'https://api.mapbox.com/styles/v1/mapbox/$styleId/tiles/256/{z}/{x}/{y}?access_token=${dotenv.env['MAPBOX_PUBLIC_ACCESS_TOKEN']}');
 }
-
-/*
-https://docs.mapbox.com/api/maps/styles/
-https://docs.mapbox.com/api/maps/static-tiles/
-*/
