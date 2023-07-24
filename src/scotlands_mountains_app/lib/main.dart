@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'features/about/licenses_page.dart';
 import 'features/home/home_page.dart';
 import 'features/mountain/mountain_page.dart';
-import 'shell.dart';
-import 'features/mountains/classifications_page.dart';
+import 'features/weather/weather_page.dart';
+import 'features/mountain_list/classifications_page.dart';
 import 'features/about/about_page.dart';
-import 'features/mountains/search_page.dart';
+import 'features/mountain_list/search_page.dart';
 import 'repositories/data.dart';
+import 'shell.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // initialRoute: '/home',
-      initialRoute: '/classifications',
+      initialRoute: '/weather',
       routes: {
         '/home': (context) => Shell(child: const HomePage()),
         '/classifications': (context) =>
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
             child: MountainPage(
                 id: ModalRoute.of(context)!.settings.arguments as int)),
         '/search': (context) => Shell(child: const SearchPage()),
+        '/weather': (context) => Shell(child: const WeatherPage()),
+        '/licenses': (context) => Shell(child: const LicensesPage()),
         '/about': (context) => Shell(child: const AboutPage()),
       },
     );

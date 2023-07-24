@@ -1,7 +1,16 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 
+enum Layer { streets, satelliteStreets, satellite, outdoors }
+
 class MapboxTileLayer extends TileLayer {
+  static final Map<Layer, TileLayer> layers = {
+    Layer.streets: MapboxTileLayer(styleId: 'streets-v12'),
+    Layer.satelliteStreets: MapboxTileLayer(styleId: 'satellite-streets-v12'),
+    Layer.satellite: MapboxTileLayer(styleId: 'satellite-v9'),
+    Layer.outdoors: MapboxTileLayer(styleId: 'outdoors-v12'),
+  };
+
   MapboxTileLayer({super.key, required styleId})
       : super(
             urlTemplate:

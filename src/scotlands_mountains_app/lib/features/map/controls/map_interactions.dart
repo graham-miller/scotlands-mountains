@@ -5,8 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../models/mountain.dart';
-
-enum Layer { streets, satelliteStreets, satellite, outdoors }
+import '../mapbox_tile_layer.dart';
 
 class MapInteractions {
   static final defaultCenter = LatLng(56.816922, -4.18265);

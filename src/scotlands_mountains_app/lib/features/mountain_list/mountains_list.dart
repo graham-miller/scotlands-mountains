@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/util.dart';
+import '../common/util.dart';
 
 import '../../models/mountain.dart';
 

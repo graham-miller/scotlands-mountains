@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../mapbox_tile_layer.dart';
 import 'animated_control.dart';
 import 'map_interactions.dart';
 
