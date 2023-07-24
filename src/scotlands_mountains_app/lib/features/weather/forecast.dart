@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
@@ -93,6 +95,23 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
             title: const Text('Headline'),
             subtitle: Text(day.headline!),
           ),
+          ExpansionTile(
+            title: const Text('Hazards'),
+            subtitle: Text(_countHazards()),
+            children: [
+              ...widget.forecast.days[0].hazards
+                  .map((h) => Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(_formatHazard(h)),
+                          ],
+                        ),
+                      ))
+                  .toList()
+            ],
+          ),
           PrecipitationPeriods(
             periods: widget.forecast.days[0].periods,
             scrollGroup: _scrollGroup,
@@ -128,6 +147,36 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
         ],
       ),
     );
+  }
+
+  String _countHazards() {
+    final HashMap<String, int> counts = HashMap();
+
+    for (var hazard in widget.forecast.days[0].hazards) {
+      final likelihood = hazard.likelihood
+          .substring(0, hazard.likelihood.indexOf(' '))
+          .toLowerCase();
+      if (likelihood == 'no') {
+        continue;
+      } else if (counts.containsKey(likelihood)) {
+        counts[likelihood] = counts[likelihood]! + 1;
+      } else {
+        counts[likelihood] = 1;
+      }
+    }
+
+    var text = '';
+    for (var entry in counts.entries) {
+      text = '$text${entry.value} ${entry.key}, ';
+    }
+
+    final pluralize = counts.values.reduce((v, e) => v + e) > 1;
+
+    return '${text.substring(0, text.length - 2)} likelihood hazard${pluralize ? 's' : ''}.';
+  }
+
+  String _formatHazard(Hazard hazard) {
+    return '${hazard.type.substring(0, 1)}${hazard.type.substring(1).toLowerCase()}: ${hazard.likelihood.toLowerCase()}';
   }
 
   Widget _buildDay1(BuildContext context) {
