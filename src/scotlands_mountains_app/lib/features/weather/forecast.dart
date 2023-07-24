@@ -98,6 +98,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
           ExpansionTile(
             title: const Text('Hazards'),
             subtitle: Text(_countHazards()),
+            key: const PageStorageKey('Hazards'),
             children: [
               ...widget.forecast.days[0].hazards
                   .map((h) => Padding(
