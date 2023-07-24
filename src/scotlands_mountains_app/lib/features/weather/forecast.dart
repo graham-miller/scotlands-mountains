@@ -101,6 +101,7 @@ class _ForecastState extends State<Forecast> with TickerProviderStateMixin {
             key: const PageStorageKey('Hazards'),
             children: [
               ...widget.forecast.days[0].hazards
+                  .where((h) => h.likelihood.toLowerCase() != 'no likelihood')
                   .map((h) => Padding(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         child: Row(
