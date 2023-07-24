@@ -51,7 +51,10 @@ class MapboxAttribution extends StatelessWidget {
                             'https://www.mapbox.com/map-feedback/');
                       }),
                   TextButton(
-                      child: const Text('Telemetry settings'), onPressed: () {})
+                      child: const Text('Telemetry settings'),
+                      onPressed: () {
+                        // TODO see https://docs.mapbox.com/help/getting-started/attribution/#mapbox-maps-sdk-for-android
+                      }),
                 ],
               ),
               actions: <Widget>[
