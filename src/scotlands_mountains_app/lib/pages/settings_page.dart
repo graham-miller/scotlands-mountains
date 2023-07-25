@@ -6,26 +6,36 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
-        ThemeSwitcher.withTheme(
-          builder: (_, switcher, theme) {
-            return IconButton(
-              onPressed: () => switcher.changeTheme(
-                theme: ThemeData.from(
-                    colorScheme: ColorScheme.fromSeed(
-                      seedColor: theme.brightness == Brightness.light
-                          ? Colors.blue
-                          : Colors.yellow,
-                      brightness: theme.brightness == Brightness.light
-                          ? Brightness.dark
-                          : Brightness.light,
+        ListTile(
+          title: const Text('Theme'),
+          subtitle: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Use dark theme'),
+              ThemeSwitcher.withTheme(
+                builder: (_, switcher, theme) {
+                  return Switch(
+                    value: theme.brightness == Brightness.dark,
+                    onChanged: (useDark) => switcher.changeTheme(
+                      theme: ThemeData.from(
+                          colorScheme: ColorScheme.fromSeed(
+                            seedColor: theme.brightness == Brightness.light
+                                ? Colors.orange
+                                : Colors.yellow,
+                            brightness: theme.brightness == Brightness.light
+                                ? Brightness.dark
+                                : Brightness.light,
+                          ),
+                          useMaterial3: true),
                     ),
-                    useMaterial3: true),
+                  );
+                },
               ),
-              icon: const Icon(Icons.brightness_3, size: 25),
-            );
-          },
+            ],
+          ),
         ),
       ],
     );
