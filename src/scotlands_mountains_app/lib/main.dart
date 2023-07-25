@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ThemeProvider(
       initTheme: ThemeData(
-        brightness: View.of(context).platformDispatcher.platformBrightness,
+        brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
         useMaterial3: true,
       ),
