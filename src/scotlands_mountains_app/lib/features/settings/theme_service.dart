@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -6,12 +7,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum AppTheme { light, dark, device }
 
 class ThemeService {
-  ThemeService._();
-  static late SharedPreferences _userPreferences;
-  static ThemeService? _instance;
+  ThemeService._() {
+    PlatformDispatcher.instance.onPlatformBrightnessChanged = () {
+      if (appTheme == AppTheme.device) {
+        _streamController.add(appTheme);
+      }
+    };
+  }
 
   static const String _userPreferencesKey = 'app_theme';
+  static late SharedPreferences _userPreferences;
 
+  static ThemeService? _instance;
   static Future<ThemeService> get instance async {
     if (_instance == null) {
       _userPreferences = await SharedPreferences.getInstance();
@@ -19,6 +26,11 @@ class ThemeService {
     }
     return _instance!;
   }
+
+  late final StreamController<AppTheme> _streamController = StreamController();
+
+  late final Stream<AppTheme> stream =
+      _streamController.stream.asBroadcastStream();
 
   AppTheme get appTheme {
     return AppTheme.values.singleWhere((e) =>
@@ -29,6 +41,7 @@ class ThemeService {
 
   set appTheme(AppTheme appTheme) {
     _userPreferences.setString(_userPreferencesKey, appTheme.toString());
+    _streamController.add(appTheme);
   }
 
   ThemeData get themeData {

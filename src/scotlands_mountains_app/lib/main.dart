@@ -1,7 +1,8 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:scotlands_mountains_app/features/settings/theme_manager.dart';
+import 'package:scotlands_mountains_app/features/settings/theme_service.dart';
 import 'package:scotlands_mountains_app/pages/settings_page.dart';
 
 import 'pages/licenses_page.dart';
@@ -18,26 +19,23 @@ Future main() async {
   await dotenv.load(fileName: ".env");
   await Data().initialize();
 
-  final themeService = await ThemeService.instance;
-
-  runApp(MyApp(theme: themeService.themeData));
+  runApp(ScotlandsMountains(themeService: await ThemeService.instance));
 }
 
-class MyApp extends StatelessWidget {
-  final ThemeData theme;
+class ScotlandsMountains extends StatelessWidget {
+  final ThemeService themeService;
 
-  const MyApp({required this.theme, super.key});
+  const ScotlandsMountains({required this.themeService, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ThemeProvider(
-      initTheme: theme,
-      builder: (context, theme) {
+    return StreamBuilder(
+      stream: themeService.stream,
+      builder: (context, snapshot) {
         return MaterialApp(
           title: 'Scotland\'s Mountains',
-          theme: theme,
-          // initialRoute: '/home',
-          initialRoute: '/settings',
+          theme: themeService.themeData,
+          initialRoute: '/home',
           routes: {
             '/home': (context) => Shell(child: const HomePage()),
             '/classifications': (context) =>

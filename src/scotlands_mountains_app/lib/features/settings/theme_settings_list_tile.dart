@@ -1,7 +1,8 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-import 'theme_manager.dart';
+import 'theme_service.dart';
 
 class ThemeSettingsListTile extends StatefulWidget {
   const ThemeSettingsListTile({super.key});
@@ -16,25 +17,37 @@ class _ThemeSettingsListTileState extends State<ThemeSettingsListTile> {
     AppTheme.dark: 'Dark theme',
     AppTheme.device: 'Use device settings',
   };
+
   ThemeService? _themeService;
+  StreamSubscription<AppTheme>? _subscription;
+  AppTheme? _appTheme;
 
   @override
   void initState() {
-    ThemeService.instance.then((value) => setState(
-          () {
-            _themeService = value;
-          },
-        ));
+    ThemeService.instance.then((service) {
+      setState(() {
+        _themeService = service;
+        _appTheme = _themeService!.appTheme;
+      });
+      _subscription = _themeService!.stream.listen((appTheme) {
+        setState(() {
+          _appTheme = appTheme;
+        });
+      });
+    });
     super.initState();
   }
 
-  void _setTheme(
-      AppTheme value, ThemeSwitcherState switcher, ThemeData theme) async {
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
+
+  void _setTheme(AppTheme value) async {
     setState(() {
       _themeService!.appTheme = value;
     });
-
-    switcher.changeTheme(theme: _themeService!.themeData);
   }
 
   @override
@@ -43,23 +56,26 @@ class _ThemeSettingsListTileState extends State<ThemeSettingsListTile> {
       title: const Text('Theme'),
       subtitle: _themeService == null
           ? const Center(child: CircularProgressIndicator())
-          : ThemeSwitcher.withTheme(
-              builder: (_, switcher, theme) {
+          : StreamBuilder<AppTheme>(
+              stream: _themeService!.stream,
+              builder: (_, __) {
                 return Column(
                   children: [
-                    ...AppTheme.values
-                        .map((appTheme) => Row(
-                              children: [
-                                Radio<AppTheme>(
-                                  value: appTheme,
-                                  groupValue: _themeService!.appTheme,
-                                  onChanged: (value) =>
-                                      _setTheme(value!, switcher, theme),
-                                ),
-                                Text(_labels[appTheme]!),
-                              ],
-                            ))
-                        .toList()
+                    ...AppTheme.values.map((appTheme) {
+                      return GestureDetector(
+                        onTap: () => _setTheme(appTheme),
+                        child: Row(
+                          children: [
+                            Radio<AppTheme>(
+                              value: appTheme,
+                              groupValue: _appTheme,
+                              onChanged: (_) => _setTheme(appTheme),
+                            ),
+                            Text(_labels[appTheme]!),
+                          ],
+                        ),
+                      );
+                    }).toList()
                   ],
                 );
               },
