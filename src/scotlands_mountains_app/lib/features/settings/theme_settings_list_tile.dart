@@ -1,7 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 
-enum ThemeSettingOptions { light, dark, device }
+import 'theme_manager.dart';
 
 class ThemeSettingsListTile extends StatefulWidget {
   const ThemeSettingsListTile({super.key});
@@ -11,73 +11,59 @@ class ThemeSettingsListTile extends StatefulWidget {
 }
 
 class _ThemeSettingsListTileState extends State<ThemeSettingsListTile> {
-  ThemeSettingOptions _themeSetting = ThemeSettingOptions.light;
+  final Map<AppTheme, String> _labels = {
+    AppTheme.light: 'Light theme',
+    AppTheme.dark: 'Dark theme',
+    AppTheme.device: 'Use device settings',
+  };
+  ThemeService? _themeService;
+
+  @override
+  void initState() {
+    ThemeService.instance.then((value) => setState(
+          () {
+            _themeService = value;
+          },
+        ));
+    super.initState();
+  }
 
   void _setTheme(
-      ThemeSettingOptions value, ThemeSwitcherState switcher, ThemeData theme) {
+      AppTheme value, ThemeSwitcherState switcher, ThemeData theme) async {
     setState(() {
-      _themeSetting = value;
+      _themeService!.appTheme = value;
     });
 
-    final brightness = _themeSetting == ThemeSettingOptions.device
-        ? View.of(context).platformDispatcher.platformBrightness
-        : _themeSetting == ThemeSettingOptions.light
-            ? Brightness.light
-            : Brightness.dark;
-    final color = brightness == Brightness.light ? Colors.yellow : Colors.blue;
-
-    switcher.changeTheme(
-      theme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: color,
-            brightness: brightness,
-          ),
-          useMaterial3: true),
-    );
+    switcher.changeTheme(theme: _themeService!.themeData);
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: const Text('Theme'),
-      subtitle: ThemeSwitcher.withTheme(
-        builder: (_, switcher, theme) {
-          return Column(
-            children: [
-              Row(
-                children: [
-                  Radio<ThemeSettingOptions>(
-                    value: ThemeSettingOptions.light,
-                    groupValue: _themeSetting,
-                    onChanged: (value) => _setTheme(value!, switcher, theme),
-                  ),
-                  const Text('Light theme'),
-                ],
-              ),
-              Row(
-                children: [
-                  Radio<ThemeSettingOptions>(
-                    value: ThemeSettingOptions.dark,
-                    groupValue: _themeSetting,
-                    onChanged: (value) => _setTheme(value!, switcher, theme),
-                  ),
-                  const Text('Dark theme'),
-                ],
-              ),
-              Row(
-                children: [
-                  Radio<ThemeSettingOptions>(
-                    value: ThemeSettingOptions.device,
-                    groupValue: _themeSetting,
-                    onChanged: (value) => _setTheme(value!, switcher, theme),
-                  ),
-                  const Text('Use device settings'),
-                ],
-              ),
-            ],
-          );
-        },
-      ),
+      subtitle: _themeService == null
+          ? const Center(child: CircularProgressIndicator())
+          : ThemeSwitcher.withTheme(
+              builder: (_, switcher, theme) {
+                return Column(
+                  children: [
+                    ...AppTheme.values
+                        .map((appTheme) => Row(
+                              children: [
+                                Radio<AppTheme>(
+                                  value: appTheme,
+                                  groupValue: _themeService!.appTheme,
+                                  onChanged: (value) =>
+                                      _setTheme(value!, switcher, theme),
+                                ),
+                                Text(_labels[appTheme]!),
+                              ],
+                            ))
+                        .toList()
+                  ],
+                );
+              },
+            ),
     );
   }
 }

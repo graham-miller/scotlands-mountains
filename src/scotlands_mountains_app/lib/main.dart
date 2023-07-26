@@ -1,6 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:scotlands_mountains_app/features/settings/theme_manager.dart';
 import 'package:scotlands_mountains_app/pages/settings_page.dart';
 
 import 'pages/licenses_page.dart';
@@ -17,20 +18,20 @@ Future main() async {
   await dotenv.load(fileName: ".env");
   await Data().initialize();
 
-  runApp(const MyApp());
+  final themeService = await ThemeService.instance;
+
+  runApp(MyApp(theme: themeService.themeData));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ThemeData theme;
+
+  const MyApp({required this.theme, super.key});
 
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
-      initTheme: ThemeData(
-        brightness: Brightness.light,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
-        useMaterial3: true,
-      ),
+      initTheme: theme,
       builder: (context, theme) {
         return MaterialApp(
           title: 'Scotland\'s Mountains',
