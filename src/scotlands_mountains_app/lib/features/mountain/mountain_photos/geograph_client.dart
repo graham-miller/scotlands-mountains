@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:scotlands_mountains_app/features/mountain/mountain_photos/photo.dart';
 
 import 'geograph_api_photo_response.dart';
 import 'geograph_api_search_response.dart';
-import '../../models/mountain.dart';
-import 'photo.dart';
+import '../../../models/mountain.dart';
 
 class GeographClient {
   static Future<List<Photo>> searchPhotos(Mountain mountain) async {

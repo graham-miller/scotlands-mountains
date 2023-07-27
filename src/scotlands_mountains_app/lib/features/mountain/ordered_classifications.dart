@@ -58,7 +58,7 @@ class OrderedClassifications extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: const BorderRadius.all(Radius.circular(25)),
             border: Border.all(
               color: Theme.of(context).colorScheme.primary,
@@ -67,7 +67,8 @@ class OrderedClassifications extends StatelessWidget {
           ),
           child: Text(
             classification.nameSingular,
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimaryContainer),
           ),
         ),
       ),

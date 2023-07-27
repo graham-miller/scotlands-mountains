@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:scotlands_mountains_app/features/settings/theme_service.dart';
+import 'package:scotlands_mountains_app/pages/settings_page.dart';
 
-import 'features/about/licenses_page.dart';
-import 'features/home/home_page.dart';
-import 'features/mountain/mountain_page.dart';
-import 'features/weather/weather_page.dart';
-import 'features/mountain_list/classifications_page.dart';
-import 'features/about/about_page.dart';
-import 'features/mountain_list/search_page.dart';
+import 'pages/licenses_page.dart';
+import 'pages/home_page.dart';
+import 'pages/mountain_page.dart';
+import 'pages/weather_page.dart';
+import 'pages/classifications_page.dart';
+import 'pages/about_page.dart';
+import 'pages/search_page.dart';
 import 'repositories/data.dart';
 import 'shell.dart';
 
@@ -15,38 +19,38 @@ Future main() async {
   await dotenv.load(fileName: ".env");
   await Data().initialize();
 
-  runApp(const MyApp());
+  runApp(ScotlandsMountains(themeService: await ThemeService.instance));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ScotlandsMountains extends StatelessWidget {
+  final ThemeService themeService;
+
+  const ScotlandsMountains({required this.themeService, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Scotland\'s Mountains',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
-        useMaterial3: true,
-      ),
-      // initialRoute: '/home',
-      initialRoute: '/weather',
-      routes: {
-        '/home': (context) => Shell(child: const HomePage()),
-        '/classifications': (context) =>
-            Shell(child: const ClassificationsPage()),
-        '/mountains': (context) => Shell(
-            child: MountainPage(
-                id: ModalRoute.of(context)!.settings.arguments as int)),
-        '/search': (context) => Shell(child: const SearchPage()),
-        '/weather': (context) => Shell(child: const WeatherPage()),
-        '/licenses': (context) => Shell(child: const LicensesPage()),
-        '/about': (context) => Shell(child: const AboutPage()),
+    return StreamBuilder(
+      stream: themeService.changedStream,
+      builder: (context, snapshot) {
+        return MaterialApp(
+          title: 'Scotland\'s Mountains',
+          theme: themeService.themeData,
+          initialRoute: '/home',
+          routes: {
+            '/home': (context) => Shell(child: const HomePage()),
+            '/classifications': (context) =>
+                Shell(child: const ClassificationsPage()),
+            '/mountains': (context) => Shell(
+                child: MountainPage(
+                    id: ModalRoute.of(context)!.settings.arguments as int)),
+            '/search': (context) => Shell(child: const SearchPage()),
+            '/weather': (context) => Shell(child: const WeatherPage()),
+            '/settings': (context) => Shell(child: const SettingsPage()),
+            '/licenses': (context) => Shell(child: const LicensesPage()),
+            '/about': (context) => Shell(child: const AboutPage()),
+          },
+        );
       },
     );
   }
-
-  onInitializationComplete() {}
 }

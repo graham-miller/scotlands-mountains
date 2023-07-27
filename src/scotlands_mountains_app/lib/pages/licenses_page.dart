@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../common/util.dart';
+import '../features/common/util.dart';
 
 class LicensesPage extends StatelessWidget {
   const LicensesPage({super.key});

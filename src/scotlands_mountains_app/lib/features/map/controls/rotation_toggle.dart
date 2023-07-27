@@ -44,6 +44,7 @@ class _RotationToggleState extends State<RotationToggle> {
                   : widget.mapInteractions.enableRotation();
               setState(() {});
             },
+            color: Colors.black,
           ),
         ),
       ),
