@@ -46,7 +46,6 @@ class ScotlandsMountains extends StatelessWidget {
             '/search': (context) => Shell(child: const SearchPage()),
             '/weather': (context) => Shell(child: const WeatherPage()),
             '/settings': (context) => Shell(child: const SettingsPage()),
-            '/licenses': (context) => Shell(child: const LicensesPage()),
             '/about': (context) => Shell(child: const AboutPage()),
           },
         );

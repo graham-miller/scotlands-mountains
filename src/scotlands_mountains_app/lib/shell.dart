@@ -13,7 +13,6 @@ class Shell extends StatelessWidget {
     '/search',
     '/weather',
     '/settings',
-    '/licenses',
     '/about',
   ];
 
@@ -100,10 +99,6 @@ class Shell extends StatelessWidget {
         NavigationDrawerDestination(
           label: Text('Settings'),
           icon: Icon(Icons.settings),
-        ),
-        NavigationDrawerDestination(
-          label: Text('Licenses'),
-          icon: Icon(Icons.verified_outlined),
         ),
         NavigationDrawerDestination(
           label: Text('About'),
