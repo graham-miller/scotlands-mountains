@@ -5,7 +5,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:scotlands_mountains_app/features/settings/theme_service.dart';
 import 'package:scotlands_mountains_app/pages/settings_page.dart';
 
-import 'pages/licenses_page.dart';
 import 'pages/home_page.dart';
 import 'pages/mountain_page.dart';
 import 'pages/weather_page.dart';
