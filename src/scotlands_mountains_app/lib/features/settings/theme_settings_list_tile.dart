@@ -19,7 +19,7 @@ class _ThemeSettingsListTileState extends State<ThemeSettingsListTile> {
   };
 
   ThemeService? _themeService;
-  StreamSubscription<AppTheme>? _subscription;
+  StreamSubscription? _subscription;
   AppTheme? _appTheme;
 
   @override
@@ -29,9 +29,9 @@ class _ThemeSettingsListTileState extends State<ThemeSettingsListTile> {
         _themeService = service;
         _appTheme = _themeService!.appTheme;
       });
-      _subscription = _themeService!.stream.listen((appTheme) {
+      _subscription = _themeService!.changedStream.listen((_) {
         setState(() {
-          _appTheme = appTheme;
+          _appTheme = _themeService!.appTheme;
         });
       });
     });
@@ -56,8 +56,8 @@ class _ThemeSettingsListTileState extends State<ThemeSettingsListTile> {
       title: const Text('Theme'),
       subtitle: _themeService == null
           ? const Center(child: CircularProgressIndicator())
-          : StreamBuilder<AppTheme>(
-              stream: _themeService!.stream,
+          : StreamBuilder(
+              stream: _themeService!.changedStream,
               builder: (_, __) {
                 return Column(
                   children: [

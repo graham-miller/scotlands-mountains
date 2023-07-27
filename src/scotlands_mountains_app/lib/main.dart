@@ -30,7 +30,7 @@ class ScotlandsMountains extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: themeService.stream,
+      stream: themeService.changedStream,
       builder: (context, snapshot) {
         return MaterialApp(
           title: 'Scotland\'s Mountains',

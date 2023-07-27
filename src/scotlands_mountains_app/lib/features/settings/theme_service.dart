@@ -27,9 +27,9 @@ class ThemeService {
     return _instance!;
   }
 
-  late final StreamController<AppTheme> _streamController = StreamController();
+  late final StreamController _streamController = StreamController();
 
-  late final Stream<AppTheme> stream =
+  late final Stream changedStream =
       _streamController.stream.asBroadcastStream();
 
   AppTheme get appTheme {
@@ -41,7 +41,7 @@ class ThemeService {
 
   set appTheme(AppTheme appTheme) {
     _userPreferences.setString(_userPreferencesKey, appTheme.toString());
-    _streamController.add(appTheme);
+    _streamController.add(null);
   }
 
   ThemeData get themeData {
