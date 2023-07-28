@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'features/common/title_logo.dart';
+import 'routes.dart';
 
 class Shell extends StatelessWidget {
   final Widget child;
 
-  Shell({super.key, required this.child});
-
-  final List<String> _routes = [
-    '/home',
-    '/classifications',
-    '/search',
-    '/weather',
-    '/settings',
-    '/about',
-  ];
+  const Shell({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -47,63 +39,18 @@ class Shell extends StatelessWidget {
         },
         child: const TitleLogo(),
       ),
-      actions: const [
-        // Builder(
-        //   builder: (context) {
-        //     return IconButton(
-        //       icon: const Icon(Icons.search),
-        //       onPressed: () {
-        //         Navigator.of(context)
-        //             .pushNamedAndRemoveUntil('/search', (route) => false);
-        //       },
-        //     );
-        //   },
-        // ),
-      ],
     );
   }
 
   Widget _buildDrawer(BuildContext context) {
     return NavigationDrawer(
-      selectedIndex:
-          _routes.indexOf(ModalRoute.of(context)?.settings.name ?? _routes[0]),
-      onDestinationSelected: (value) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil(_routes[value], (route) => false);
-      },
-      children: const [
-        DrawerHeader(
+      selectedIndex: Routes.currentIndex(context),
+      onDestinationSelected: (value) => Routes.navigate(value, context),
+      children: [
+        const DrawerHeader(
           child: TitleLogo(),
         ),
-        NavigationDrawerDestination(
-          label: Text('Home'),
-          icon: Icon(Icons.home),
-        ),
-        NavigationDrawerDestination(
-          label: Text('Classifications'),
-          icon: Icon(Icons.list),
-        ),
-        NavigationDrawerDestination(
-          label: Text('Search'),
-          icon: Icon(Icons.search),
-        ),
-        // const NavigationDrawerDestination(
-        //   label: Text('Favourites'),
-        //   icon: Icon(Icons.favorite_outline),
-        // ),
-        NavigationDrawerDestination(
-          label: Text('Weather'),
-          icon: Icon(Icons.wb_sunny_outlined),
-        ),
-        Divider(),
-        NavigationDrawerDestination(
-          label: Text('Settings'),
-          icon: Icon(Icons.settings),
-        ),
-        NavigationDrawerDestination(
-          label: Text('About'),
-          icon: Icon(Icons.info_outline),
-        ),
+        ...Routes.navigationDrawerItems,
       ],
     );
   }
