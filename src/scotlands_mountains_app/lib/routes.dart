@@ -27,7 +27,7 @@ class Route {
 }
 
 class Routes {
-  static const initialRoute = '/home';
+  static const initialRoute = '/compass';
 
   static final List<Route> all = List.from([
     Route(
@@ -55,7 +55,7 @@ class Routes {
       navigate: (context) => const Shell(child: WeatherPage()),
     ),
     Route(
-      path: '/compasss',
+      path: '/compass',
       displayName: 'Compass',
       icon: Icons.explore_outlined,
       navigate: (context) => const Shell(child: CompassPage()),
