@@ -27,6 +27,7 @@ class ScotlandsMountains extends StatelessWidget {
         return MaterialApp(
           title: 'Scotland\'s Mountains',
           theme: themeService.themeData,
+          debugShowCheckedModeBanner: false,
           initialRoute: Routes.initialRoute,
           routes: Routes.routingTable,
         );

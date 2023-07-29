@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math_64.dart';
 
 import '../features/compass/compass.dart';
 
@@ -7,11 +8,16 @@ class CompassPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Compass(),
+        Expanded(
+          child: Transform.rotate(
+            angle: radians(0),
+            child: const Compass(),
+          ),
+        )
       ],
     );
   }
