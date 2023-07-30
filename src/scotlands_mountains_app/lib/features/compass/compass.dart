@@ -9,18 +9,17 @@ class Compass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Stack(
-        alignment: Alignment.center,
-        fit: StackFit.expand,
-        children: [
-          const Face(),
-          Transform.rotate(
-            angle: radians(42.5),
-            child: const Needle(),
-          ),
-        ],
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      fit: StackFit.expand,
+      children: [
+        const Face(),
+        //const Needle(),
+        Transform.rotate(
+          angle: radians(42.5),
+          child: const Needle(),
+        ),
+      ],
     );
   }
 }

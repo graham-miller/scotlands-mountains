@@ -9,10 +9,8 @@ class Needle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: CustomPaint(
-        painter: NeedlePainter(context: context),
-      ),
+    return CustomPaint(
+      painter: NeedlePainter(context: context),
     );
   }
 }

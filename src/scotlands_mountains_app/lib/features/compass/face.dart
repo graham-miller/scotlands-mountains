@@ -8,10 +8,8 @@ class Face extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: CustomPaint(
-        painter: FacePainter(context: context),
-      ),
+    return CustomPaint(
+      painter: FacePainter(context: context),
     );
   }
 }
