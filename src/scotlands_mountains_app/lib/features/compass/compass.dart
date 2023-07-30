@@ -48,18 +48,56 @@ class _CompassState extends State<Compass> {
   }
 
   void _updateBearing(DragUpdateDetails details) {
-    var quadrant = details.localPosition.dy < ((context.size?.height ?? 0) / 2)
-        ? details.localPosition.dx < ((context.size?.width ?? 0) / 2)
-            ? 4
-            : 1
-        : details.localPosition.dx < ((context.size?.width ?? 0) / 2)
-            ? 3
-            : 2;
+    final quadrant =
+        details.localPosition.dy < ((context.size?.height ?? 0) / 2)
+            ? details.localPosition.dx < ((context.size?.width ?? 0) / 2)
+                ? 4
+                : 1
+            : details.localPosition.dx < ((context.size?.width ?? 0) / 2)
+                ? 3
+                : 2;
 
-    print(quadrant.toString());
+    final horizontal = details.delta.dx < 0
+        ? -1
+        : details.delta.dx > 0
+            ? 1
+            : 0;
+    final vertical = details.delta.dy < 0
+        ? -1
+        : details.delta.dy > 0
+            ? 1
+            : 0;
+
+    int direction = 0;
+
+    if (quadrant == 1) {
+      if (horizontal > 0 || vertical > 0) {
+        direction = 1;
+      } else if (horizontal < 0 || vertical < 0) {
+        direction = -1;
+      }
+    } else if (quadrant == 2) {
+      if (horizontal < 0 || vertical > 0) {
+        direction = 1;
+      } else if (horizontal > 0 || vertical < 0) {
+        direction = -1;
+      }
+    } else if (quadrant == 3) {
+      if (horizontal < 0 || vertical < 0) {
+        direction = 1;
+      } else if (horizontal > 0 || vertical > 0) {
+        direction = -1;
+      }
+    } else if (quadrant == 4) {
+      if (horizontal > 0 || vertical < 0) {
+        direction = 1;
+      } else if (horizontal < 0 || vertical > 0) {
+        direction = -1;
+      }
+    }
 
     setState(() {
-      _bearing += details.localPosition.direction;
+      _bearing += (details.localPosition.direction * direction);
     });
   }
 }
