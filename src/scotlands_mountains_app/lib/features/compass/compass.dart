@@ -28,22 +28,36 @@ class _CompassState extends State<Compass> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanUpdate: (details) => _updateBearing(details),
-      child: Stack(
-        alignment: Alignment.center,
-        fit: StackFit.expand,
-        children: [
-          Transform.rotate(
-            angle: radians(_bearing),
-            child: const Face(),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text('Heading: ${_heading.round().toString()}'),
+            Text('Bearing: ${_bearing.round().toString()}'),
+          ],
+        ),
+        Expanded(
+          child: GestureDetector(
+            onPanUpdate: (details) => _updateBearing(details),
+            child: Stack(
+              alignment: Alignment.center,
+              fit: StackFit.expand,
+              children: [
+                Transform.rotate(
+                  angle: radians(_bearing),
+                  child: const Face(),
+                ),
+                Transform.rotate(
+                  angle: -1 * radians(_heading),
+                  child: const Needle(),
+                ),
+              ],
+            ),
           ),
-          Transform.rotate(
-            angle: -1 * radians(_heading),
-            child: const Needle(),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -62,6 +76,7 @@ class _CompassState extends State<Compass> {
         : details.delta.dx > 0
             ? 1
             : 0;
+
     final vertical = details.delta.dy < 0
         ? -1
         : details.delta.dy > 0
