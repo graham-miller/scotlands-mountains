@@ -60,11 +60,11 @@ class NeedleIteration {
       ..strokeWidth = 1;
     _textN = TextStyle(
       color: Colors.white,
-      fontSize: Theme.of(_context).textTheme.titleLarge!.fontSize,
+      fontSize: Theme.of(_context).textTheme.titleMedium!.fontSize,
     );
     _textS = TextStyle(
       color: Theme.of(_context).colorScheme.background,
-      fontSize: Theme.of(_context).textTheme.titleLarge!.fontSize,
+      fontSize: Theme.of(_context).textTheme.titleMedium!.fontSize,
     );
     _pivot = Paint()
       ..color = Theme.of(_context).colorScheme.background
@@ -93,11 +93,11 @@ class NeedleIteration {
         Path()
           ..addPolygon([
             _center,
-            Offset(_center.dx + 10, _center.dy),
-            Offset(_center.dx + 10, _center.dy - _radius + 60),
-            Offset(_center.dx, _center.dy - _radius + 50),
-            Offset(_center.dx - 10, _center.dy - _radius + 60),
-            Offset(_center.dx - 10, _center.dy),
+            Offset(_center.dx + 7, _center.dy),
+            Offset(_center.dx + 7, _center.dy - _radius + 65),
+            Offset(_center.dx, _center.dy - _radius + 55),
+            Offset(_center.dx - 7, _center.dy - _radius + 65),
+            Offset(_center.dx - 7, _center.dy),
           ], true),
         paint);
 
@@ -109,6 +109,6 @@ class NeedleIteration {
     textPainterS.paint(
         _canvas,
         Offset(
-            _center.dx - (textPainterS.width / 2), _center.dy - _radius + 60));
+            _center.dx - (textPainterS.width / 2), _center.dy - _radius + 65));
   }
 }

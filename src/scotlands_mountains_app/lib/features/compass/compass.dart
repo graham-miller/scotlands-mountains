@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:vector_math/vector_math_64.dart';
@@ -13,17 +15,24 @@ class Compass extends StatefulWidget {
 }
 
 class _CompassState extends State<Compass> {
-  double _heading = 0.00;
-  double _bearing = 0.00;
+  double _needleDegrees = 0.00;
+  double _bezelDegrees = 0.00;
+  StreamSubscription<CompassEvent>? subscription;
 
   @override
   void initState() {
-    FlutterCompass.events?.listen((event) {
+    subscription = FlutterCompass.events?.listen((event) {
       setState(() {
-        _heading = event.heading ?? 0.0;
+        _needleDegrees = -1 * (event.heading ?? 0.0);
       });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -34,8 +43,7 @@ class _CompassState extends State<Compass> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('Heading: ${_heading.round().toString()}'),
-            Text('Bearing: ${_bearing.round().toString()}'),
+            Text('Bearing: ${(360 - _needleDegrees).round().toString()}'),
           ],
         ),
         Expanded(
@@ -46,11 +54,11 @@ class _CompassState extends State<Compass> {
               fit: StackFit.expand,
               children: [
                 Transform.rotate(
-                  angle: radians(_bearing),
+                  angle: radians(_bezelDegrees),
                   child: const Face(),
                 ),
                 Transform.rotate(
-                  angle: -1 * radians(_heading),
+                  angle: radians(_needleDegrees),
                   child: const Needle(),
                 ),
               ],
@@ -111,8 +119,16 @@ class _CompassState extends State<Compass> {
       }
     }
 
+    var newBearing =
+        _bezelDegrees += (details.localPosition.direction * direction);
+    if (newBearing < 0) {
+      newBearing += 360;
+    } else if (newBearing > 360) {
+      newBearing -= 360;
+    }
+
     setState(() {
-      _bearing += (details.localPosition.direction * direction);
+      _bezelDegrees = newBearing;
     });
   }
 }
