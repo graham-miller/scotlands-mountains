@@ -43,7 +43,7 @@ class _CompassState extends State<Compass> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('Bearing: ${(360 - _needleDegrees).round().toString()}'),
+            Text('Bearing: ${(360 - _bezelDegrees).round().toString()}'),
           ],
         ),
         Expanded(

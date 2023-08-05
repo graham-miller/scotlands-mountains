@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
 
+import 'palette.dart';
+
 class Needle extends StatelessWidget {
   const Needle({super.key});
 
@@ -32,60 +34,34 @@ class NeedlePainter extends CustomPainter {
 }
 
 class NeedleIteration {
-  final BuildContext _context;
   final Canvas _canvas;
   late final double _maxSize;
   late final Offset _center;
   late final double _radius;
-  late final Paint _north;
-  late final Paint _south;
-  late final TextStyle _textN;
-  late final TextStyle _textS;
-  late final Paint _pivot;
+  late final Palette _palette;
 
   NeedleIteration(
       {required BuildContext context, required Canvas canvas, required size})
-      : _canvas = canvas,
-        _context = context {
+      : _canvas = canvas {
     _maxSize = min(size.height, size.width);
     _center = Offset(size.width / 2, size.height / 2);
     _radius = (_maxSize - 64) / 2;
-    _north = Paint()
-      ..color = Colors.red
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 1;
-    _south = Paint()
-      ..color = Theme.of(_context).colorScheme.onBackground
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 1;
-    _textN = TextStyle(
-      color: Colors.white,
-      fontSize: Theme.of(_context).textTheme.titleMedium!.fontSize,
-    );
-    _textS = TextStyle(
-      color: Theme.of(_context).colorScheme.background,
-      fontSize: Theme.of(_context).textTheme.titleMedium!.fontSize,
-    );
-    _pivot = Paint()
-      ..color = Theme.of(_context).colorScheme.background
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 10;
+    _palette = Palette(context);
   }
 
   void paint() {
-    _drawEnd('N', _north, _textN);
+    _drawEnd('N', _palette.redFill, _palette.textMediumWhite);
 
     _canvas.save();
     _canvas.translate(_center.dx, _center.dy);
     _canvas.rotate(radians(180));
     _canvas.translate(-_center.dx, -_center.dy);
 
-    _drawEnd('S', _south, _textS);
+    _drawEnd('S', _palette.fill, _palette.textMediumAlt);
 
     _canvas.restore();
 
-    _canvas.drawPoints(PointMode.points, [_center], _pivot);
+    _canvas.drawPoints(PointMode.points, [_center], _palette.thickRoundLine);
   }
 
   void _drawEnd(String label, Paint paint, TextStyle textStyle) {
